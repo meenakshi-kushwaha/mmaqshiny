@@ -15,5 +15,5 @@ mmaqshiny_run <- function() {
   }
 
   shiny::runApp(Directory, display.mode = "normal")
-  print("Running the app succesfully!")
+  print("Running the app succesfully! Play")
 }
