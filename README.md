@@ -11,7 +11,7 @@ The goal of mmaqshiny is to explore air quality mobile monitoring data collected
 You can install the released version of mmaqshiny from [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
-install.packages("mmaqshiny")
+devtools::install_github("mmaqshiny")
 ```
 
 ## Example
