@@ -9,7 +9,7 @@
 #' }
 #' @export
 mmaqshiny_run <- function() {
-  Directory <- system.file("namma_app_shiny", package = "mmaqshiny")
+  Directory <- system.file("shiny", package = "mmaqshiny")
   if (Directory == "") {
     stop("Try reinstalling the package `mmaqshiny`.", call. = FALSE)
   }

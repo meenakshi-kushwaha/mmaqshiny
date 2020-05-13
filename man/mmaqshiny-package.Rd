@@ -19,6 +19,14 @@ The R-Shiny package here is for analysing, visualising and spatial-mapping of hi
     default value is 1). The package joins the raw, cleaned and corrected data from the above said instruments and outputs as a 
     downloadable csv file. It accepts multiple files for each parameter.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/meenakshi-kushwaha/mmaqshiny}
+  \item Report bugs at \url{https://github.com/meenakshi-kushwaha/mmaqshiny/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Adithi Upadhya \email{adithi@ilklabs.com}
 
