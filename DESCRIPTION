@@ -18,9 +18,42 @@ Description: The R-Shiny package here is for analysing, visualising and spatial-
     For the number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; 
     default value is 1). The package joins the raw, cleaned and corrected data from the above said instruments and outputs as a 
     downloadable csv file. It accepts multiple files for each parameter. 
+Depends: 
+  R (>= 3.5.1)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Imports: 
+    htmltools,
+    sf,
+    purrr,
+    keyring,
+    scales,
+    lubridate,
+    xts,
+    zoo,
+    curl,
+    caTools,
+    rsconnect,
+    ggplot2,
+    tibble,
+    data.table,
+    DT,
+    dplyr,
+    tidyr,
+    readr,
+    sf,
+    leaflet,
+    sp,
+    stringr,
+    tidyverse,
+    shiny,
+    rgdal,
+    XML,
+    devtools,
+    usethis,
+    forcats,
+    plotly
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
 URL: https://github.com/meenakshi-kushwaha/mmaqshiny
