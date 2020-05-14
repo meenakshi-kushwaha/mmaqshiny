@@ -8,7 +8,7 @@ The goal of mmaqshiny is to explore air quality mobile monitoring data collected
 
 ## Installation
 
-You can install the released version of mmaqshiny from [CRAN](https://CRAN.R-project.org) with:
+You can install the released version of mmaqshiny from [GITHUB](https://github.com/) with:
 
 ``` r
 devtools::install_github("mmaqshiny")
@@ -16,7 +16,7 @@ devtools::install_github("mmaqshiny")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is how the app can be used- 
 
 ``` r
 library(mmaqshiny)
