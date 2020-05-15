@@ -174,7 +174,8 @@ ui <- fluidPage(
 
 
 server <- function(input, output, session) {
-
+  options(shiny.maxRequestSize = 30*1024^2, shiny.launch.browser = TRUE)
+  
   CPC_f_date<- reactive({
     inFile<-input$file4
     if(is.null(input$file4)){
