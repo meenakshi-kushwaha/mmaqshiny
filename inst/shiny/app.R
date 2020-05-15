@@ -13,7 +13,7 @@ library(tidyverse)
 library(keyring)
 library(leaflet)
 library(htmltools)
-library(lubridate) # Timestamp maniupulation
+library(lubridate) 
 library(rgdal)
 library(sp)
 library(sf)
@@ -176,6 +176,8 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   options(shiny.maxRequestSize = 30*1024^2, shiny.launch.browser = TRUE)
   
+  ## date verification
+  
   CPC_f_date<- reactive({
     inFile<-input$file4
     if(is.null(input$file4)){
@@ -296,6 +298,8 @@ server <- function(input, output, session) {
       return(CO2_f_date)
     }  })
 
+  ## GPS and pollutant file joining 
+  
   CO2_f<- reactive({
     inFile<-input$file6
     if(is.null(input$file6)){
@@ -479,6 +483,9 @@ server <- function(input, output, session) {
     }
 
   })
+  
+  ## file name matching 
+  
   file_name_CPC <- reactive({
     inFile <- input$file4
     if (is.null(inFile))
@@ -593,7 +600,9 @@ server <- function(input, output, session) {
       return(name_DT)
     }
   })
-
+  
+ ## preloaded table
+  
   data_blank<-reactive({
     if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4) & is.null(input$file5) & is.null(input$file6)){
       pfile2 <-htmlTreeParse("2019_09_25_h091000_KAN_Garmin_3.gpx",error = function (...) {}, useInternalNodes = T)
@@ -994,7 +1003,9 @@ server <- function(input, output, session) {
     joined<-joined[!duplicated(joined$date), ]
     return(joined)
   })
-
+  
+## Final corrected, joined table
+  
   output$table1<- DT::renderDataTable({
     if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4) & is.null(input$file5) & is.null(input$file6)){
       data_joined<-data_blank()
@@ -1020,6 +1031,9 @@ server <- function(input, output, session) {
     data_joined
   })
 
+  
+   ## Download the csv generated
+  
   output$download <- downloadHandler(
     filename = function(){"joined_file.csv"},
     content = function(fname){
@@ -1035,6 +1049,8 @@ server <- function(input, output, session) {
     }
   )
 
+  ## Summary Statistics
+  
   output$table<- DT::renderDataTable({
     if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4) & is.null(input$file5) & is.null(input$file6)){
       data<-data_blank()
@@ -1081,6 +1097,8 @@ server <- function(input, output, session) {
     tmp<-t(tmp)
   })
 
+    ## Alarms and settings
+    
   output$table4 <- DT::renderDataTable({
     inFile<-input$file3
     if(is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) & is.null(RH_f()) & is.null(CO2_f())){
@@ -1170,6 +1188,8 @@ server <- function(input, output, session) {
     }
   })
 
+    ## Raw pollutants/GPS plot
+    
   output$plot5 <- renderPlotly({
     if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4) & is.null(input$file5) & is.null(input$file6)){
       data<-data_blank()
@@ -1377,6 +1397,8 @@ server <- function(input, output, session) {
     updateSelectInput(session, "palleInp", choices = names(data_joined))
   })
 
+    ## Mapping pollutant
+    
   output$map <- renderLeaflet({
     if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4) & is.null(input$file5) & is.null(input$file6)){
       data<-data_blank()
@@ -1418,7 +1440,7 @@ server <- function(input, output, session) {
       addLegend("bottomright", pal = pal, values = ~data[[input$palleInp]],  title=paste(input$palleInp))
   })
 }
-
+## Run app
 shinyApp(ui, server)
 
 
