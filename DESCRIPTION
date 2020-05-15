@@ -26,6 +26,7 @@ LazyData: true
 Imports: 
     htmltools,
     sf,
+    Cairo,
     purrr,
     keyring,
     scales,
