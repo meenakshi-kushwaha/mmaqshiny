@@ -13,7 +13,7 @@ library(tidyverse)
 library(keyring)
 library(leaflet)
 library(htmltools)
-library(lubridate) 
+library(lubridate)
 library(rgdal)
 library(sp)
 library(sf)
@@ -175,9 +175,9 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   options(shiny.maxRequestSize = 30*1024^2, shiny.launch.browser = TRUE)
-  
+
   ## date verification
-  
+
   CPC_f_date<- reactive({
     inFile<-input$file4
     if(is.null(input$file4)){
@@ -298,8 +298,8 @@ server <- function(input, output, session) {
       return(CO2_f_date)
     }  })
 
-  ## GPS and pollutant file joining 
-  
+  ## GPS and pollutant file joining
+
   CO2_f<- reactive({
     inFile<-input$file6
     if(is.null(input$file6)){
@@ -483,16 +483,16 @@ server <- function(input, output, session) {
     }
 
   })
-  
-  ## file name matching 
-  
+
+  ## file name matching
+
   file_name_CPC <- reactive({
     inFile <- input$file4
     if (is.null(inFile))
       return(NULL)
     else{
       z<-sub(".csv$", "", basename(input$file4$name))
-      name_CPC<-substr(z, 1, 23)
+      name_CPC<-substr(z, 1, 10)
       return(name_CPC)
     }
   })
@@ -556,7 +556,7 @@ server <- function(input, output, session) {
       return(NULL)
     else{
       y<-sub(".csv$", "", basename(input$file6$name))
-      name_CO2<-substr(y, 1, 23)
+      name_CO2<-substr(y, 1, 10)
       return(name_CO2)
     }
   })
@@ -566,7 +566,7 @@ server <- function(input, output, session) {
       return(NULL)
     else{
       x<-sub(".csv$", "", basename(input$file5$name))
-      name_RH<-substr(x, 1, 23)
+      name_RH<-substr(x, 1, 10)
       return(name_RH)
     }
   })
@@ -576,7 +576,7 @@ server <- function(input, output, session) {
       return(NULL)
     else{
       x<-sub(".csv$", "", basename(input$file1$name))
-      name_GPS<-substr(x, 1, 23)
+      name_GPS<-substr(x, 1, 10)
       return(name_GPS)
     }
   })
@@ -586,7 +586,7 @@ server <- function(input, output, session) {
       return(NULL)
     else{
       y<-sub(".csv$", "", basename(input$file2$name))
-      name_BC<-substr(y, 1, 23)
+      name_BC<-substr(y, 1, 10)
       return(name_BC)
     }
   })
@@ -596,13 +596,13 @@ server <- function(input, output, session) {
       return(NULL)
     else{
       w<-sub(".csv$", "", basename(input$file3$name))
-      name_DT<-substr(w, 1, 23)
+      name_DT<-substr(w, 1, 10)
       return(name_DT)
     }
   })
-  
+
  ## preloaded table
-  
+
   data_blank<-reactive({
     if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4) & is.null(input$file5) & is.null(input$file6)){
       pfile2 <-htmlTreeParse("2019_09_25_h091000_KAN_Garmin_3.gpx",error = function (...) {}, useInternalNodes = T)
@@ -1003,9 +1003,9 @@ server <- function(input, output, session) {
     joined<-joined[!duplicated(joined$date), ]
     return(joined)
   })
-  
+
 ## Final corrected, joined table
-  
+
   output$table1<- DT::renderDataTable({
     if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4) & is.null(input$file5) & is.null(input$file6)){
       data_joined<-data_blank()
@@ -1031,9 +1031,9 @@ server <- function(input, output, session) {
     data_joined
   })
 
-  
+
    ## Download the csv generated
-  
+
   output$download <- downloadHandler(
     filename = function(){"joined_file.csv"},
     content = function(fname){
@@ -1050,7 +1050,7 @@ server <- function(input, output, session) {
   )
 
   ## Summary Statistics
-  
+
   output$table<- DT::renderDataTable({
     if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4) & is.null(input$file5) & is.null(input$file6)){
       data<-data_blank()
@@ -1098,7 +1098,7 @@ server <- function(input, output, session) {
   })
 
     ## Alarms and settings
-    
+
   output$table4 <- DT::renderDataTable({
     inFile<-input$file3
     if(is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) & is.null(RH_f()) & is.null(CO2_f())){
@@ -1189,7 +1189,7 @@ server <- function(input, output, session) {
   })
 
     ## Raw pollutants/GPS plot
-    
+
   output$plot5 <- renderPlotly({
     if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4) & is.null(input$file5) & is.null(input$file6)){
       data<-data_blank()
@@ -1398,7 +1398,7 @@ server <- function(input, output, session) {
   })
 
     ## Mapping pollutant
-    
+
   output$map <- renderLeaflet({
     if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4) & is.null(input$file5) & is.null(input$file6)){
       data<-data_blank()
