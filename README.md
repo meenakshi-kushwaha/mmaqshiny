@@ -11,7 +11,7 @@ The goal of mmaqshiny is to explore air quality mobile monitoring data collected
 You can install the released version of mmaqshiny from [GITHUB](https://github.com/) with:
 
 ``` r
-devtools::install_github("mmaqshiny")
+devtools::install_github("meenakshi-kushwaha/mmaqshiny")
 ```
 
 ## Example
