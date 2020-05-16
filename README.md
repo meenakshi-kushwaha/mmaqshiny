@@ -128,5 +128,5 @@ CPC 3007 is an alcohol based handheld instrument by TSI used to measure ultrafin
 
 ## Acknowledgements
 
-We wish to thank Dr. Julian Marshall, Dr. Joshua Apte, Dr Maelle Salmon,Dr. Florencia D'Andrea and R Ladies community for their help and support.
+We wish to thank Dr. Julian Marshall (University of Washington, Seattle), Dr. Joshua Apte (University of California, Berkeley), Dr. Maelle Salmon, Dr. Florencia D'Andrea and R Ladies community for their help and support.
 
