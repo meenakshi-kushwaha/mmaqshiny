@@ -24,15 +24,15 @@ All the raw and processed data will be displayed in the `Joined File` tab, while
 
 ## Limitations
 
-1) Handles single day data at a time,
-2) only provision for linear correction coefficients of PM2.5,
-3) instrument specific, 
-4) file renaming is required.
+1) handles single day data at a time
+2) only provision for linear correction coefficients of PM2.5
+3) instrument specific 
+4) file renaming is required
 
 
 ## Installation
 
-You can install the released version of `mmaqshiny` from [GITHUB](https://github.com/) with:
+`mmaqshiny` can be intsalled from [GITHUB](https://github.com/) with:
 
 ``` r
 devtools::install_github("meenakshi-kushwaha/mmaqshiny")
@@ -40,11 +40,11 @@ devtools::install_github("meenakshi-kushwaha/mmaqshiny")
 
 ## Example
 
-- A preloaded data appears which is a joined file of existing data collected during the mobile monitoring campaign in Bangalore, India.
+- A sample data collected during the mobile monitoring campaign in Bangalore, India appears upon running the app as a preloaded data.
 
-- There are warning messages if different dates of data are being joined. 
+- App warns if there is a mismatch in the file names.
 
-- This is how the app can be used- 
+- App can run using the code below- 
 
 ``` r
 library(mmaqshiny)
@@ -53,51 +53,51 @@ mmaqshiny::mmaqshiny_run()
 
 ## User Guide
 
-1. The user needs to add the input timezone in the the text box. 
+1. User needs to add the . 
 
-2. Add .gpx files for the GPSMAP64s - location file inputs. 
+2. Add .gpx files. 
+
+3. Add .csv files for pollutant data.
+
+4. User can add slope and intercept if a linear correction equation is available for the measured PM2.5. 
+
+5. User can input Dilution factor is diluter is used along with CPC - 3007. 
+
+6. Click join button. 
+
+7. Click download button to download the joined file as a csv file.
 
 ![\label{fig:example}](007.png)
 
-3. Add .csv files for the pollutant data available (multiple files are to be selected all at once).
-
-4. User can add the slope and intercept if a linear correction equation is available for the PM2.5 reference grade corrected. 
-
-5. User can also input the Dilution factor is diluter is used for monitoring. 
-
-6. Click the join button to give a single joined file. 
-
-7. Download button to download the joined file as a single csv.
-
-8. Summary tab allows user to check the summary statistics of each pollutant, which helps to check for the for distribution. 
+8. Summary tab allows user to check the summary statistics for each of the pollutant. 
 
 ![\label{fig:example}](008.png)
 
-9. The Plot tab helps in plotting the raw pollutant data, which helps to check for the instrument working time. 
+9. Plots tab displays the time series of parameters collected. 
 
 ![\label{fig:example}](005.png)
 
-10. The Map tab helps to spatially visualise the any pollutant at a finer resolution.
+10. Map tab visualises the selected pollutants spatially.
 
 ![\label{fig:example}](002.png)
 
-11. Alarms and Settins tab check for any staus errors and notes in each pollutant to keep a track of health of the instrument. 
+11. Alarms and Settings displays the concerns and settings of each instrument. 
 
 ![\label{fig:example}](003.png)
 
 
 ## Glossary
-- `Latitude`:Latitude;
-- `Longitude`: Longitude;
-- `AE51_BC`: Raw BC data; 
-- `AE51_BC_NR`: Noise removed BC; 
-- `AE51_BC_NR_LC`: Noise removed and loading corrected BC; 
-- `DT8530_PM2.5`: Raw PM2.5; 
-- `DT8530_PM2.5_RHC`: RH corrected PM2.5; 
-- `DT8530_PM2.5_RHC_Ref`: Reference and RH corrected PM2.5; 
-- `DT8530_PM2.5_Ref`: Reference corrected PM2.5; 
-- `CPC3007_Particle Concentration`: Dilution corrected ultra-fine particle number concentration;
-- `CO2`: CO2 concentration
+- `Latitude`:Latitude
+- `Longitude`: Longitude
+- `AE51_BC`: Raw BC data 
+- `AE51_BC_NR`: Noise removed BC 
+- `AE51_BC_NR_LC`: Noise removed and loading corrected BC
+- `DT8530_PM2.5`: Raw PM2.5
+- `DT8530_PM2.5_RHC`: RH corrected PM2.5
+- `DT8530_PM2.5_RHC_Ref`: Reference and RH corrected PM2.5
+- `DT8530_PM2.5_Ref`: Reference corrected PM2.5
+- `CPC3007_Particle Concentration`: Dilution corrected ultra-fine particle number concentration
+- `LI-COR 850`: CO2 data
 
 
 ## Community guidelines
@@ -113,20 +113,34 @@ Contribution to the software:
 
 ## Instrument Description
 
-1. DustTrak
+1. DustTrak 8530
 
-DustTrak 8530 Aerosol Monitor was used to measure PM 2.5 concentrations. It utilises the well-established aerosol light scattering technique to estimate the real-time aerosol mass loadings and works at a flow rate of 3 LPM (liters per minute).
+DustTrak 8530 Aerosol Monitor utilises the well-established aerosol light scattering technique to estimate the real-time aerosol mass loadings and works at a flow rate of 3 LPM (liters per minute).  Detailed specifications can be found here - https://tsi.com/products/aerosol-and-dust-monitors/dust-monitors/dusttrak-ii-aerosol-monitor-8530/
+
 
 2. MicroAeth AE51
 
-It is a highly sensitive, palm-held and battery-operated instrument designed for measuring the optically-absorbing Black Carbon (BC) component of aerosol particles.It measures the rate of change in absorption of transmitted light (880 nm) due to continuous collection of aerosols load on to the filter ticket and has a wide dynamic range of measurement from 0 to 1 mg/m³.
+MicroAeth AE51 is a highly sensitive, palm-held and battery-operated instrument designed for measuring the optically-absorbing Black Carbon (BC) component of aerosol particles.It measures the rate of change in absorption of transmitted light (880 nm) due to continuous collection of aerosols load on to the filter ticket and has a wide dynamic range of measurement from 0 to 1 mg/m³. More details of AE51 can be found here -  https://aethlabs.com/microaeth/ae51/overview.
 
-3. Condensation Particle Counter (CPC 3007)
+3. Condensation Particle Counter 3007 (CPC)
 
-CPC 3007 is an alcohol based handheld instrument by TSI used to measure ultrafine particles. It works on the optical detection principle, and operates at a flow rate of 0.7 LPM.The instrument detects and measures the particles in the size range of 10 nm to > 1 µm. 
+CPC 3007 is an alcohol based handheld instrument by TSI used to measure ultrafine particles. It works on the optical detection principle, and operates at a flow rate of 0.7 LPM.The instrument detects and measures the particles in the size range of 10 nm to > 1 µm. More technical details of the instrument can be found here - https://www.tsi.com/condensation-particle-counter-3007/
+
+4. LI-COR 850
+
+LI-850 is a CO2/H2O gas analyzer which has a measurement range of 0-20,000 ppm and accuracy of 1.5%. For logging the data it requires a laptop with the software called LI-COR. More details can be found at https://www.licor.com/env/products/gas_analysis/LI-830_LI-850/ 
+
+5. RH-USB
+
+Omega RH-USB is an instrument used for measuring RH and temperature. It has an accuracy of ±3% for Relative humidity and  ±1°C (±1.8°F) for temperature. It requires a software to log the data called TRH central. The frequency of data logging can be changed as per need using this software. For more information visit https://www.omega.com/en-us/calibration-equipment/handheld-calibrator/p/RH-USB-Series
+
+6. GPSMAP-64s
+
+GPSMAP-64s (Garmin, USA) works on the ‘trilateration’ mathematical principle of GPS and usually connects to 4 satellites to give the accurate location. More technical details of the instrument can be found at https://www.garmin.co.in/products/outdoor/gpsmap64s-sea/
+
 
 
 ## Acknowledgements
 
-We wish to thank Dr. Julian Marshall, Dr. Joshua Apte, Dr Maelle Salmon,Dr. Florencia D'Andrea and R Ladies community for their help and support.
+We wish to thank Prof. Julian Marshall (University of Washington, Seattle), Prof. Joshua Apte (University of California, Berkeley), Dr. Maelle Salmon, Dr. Florencia D'Andrea and R Ladies community for their help and support.
 
