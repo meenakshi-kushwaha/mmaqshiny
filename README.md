@@ -53,7 +53,7 @@ mmaqshiny::mmaqshiny_run()
 
 ## User Guide
 
-1. User needs to add the . 
+1. User needs to add the timezone of data collection. 
 
 2. Add .gpx files. 
 
