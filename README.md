@@ -10,11 +10,11 @@ Mobile monitoring of air pollution is being gradually adapted by research groups
 
 The R-Shiny package `mmaqshiny` is for analysing, visualising and spatial-mapping of high-resolution air-pollution data collected by specific devices installed on a moving platform. 
 
-1-Hz data of PM2.5 (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide along with GPS coordinates and relative humidity (RH) data collected by some popular portable instruments (`TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-830, Garmin GPSMAP 64s, Omega USB RH probe` respectively) can be handled by this package. It incorporates device-specific cleaning and correction algorithms. RH correction is applied to DustTrak PM2.5 following Chakrabarti et al., (2004). Provision is given to input linear regression coefficients for correcting the PM2.5 data (if required). BC data will be cleaned for the vibration generated noise, by adopting the statistical procedure as explained in Apte et al., (2011), followed by a loading correction as suggested by Ban-Weiss et al., (2009). For the number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; default value is 1).
+`1-Hz` data of PM2.5 (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide along with GPS coordinates and relative humidity (RH) data collected by some popular portable instruments (`TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-830, Garmin GPSMAP 64s, Omega USB RH probe` respectively) can be handled by this package. It incorporates device-specific cleaning and correction algorithms. RH correction is applied to DustTrak PM2.5 following Chakrabarti et al., (2004). Provision is given to input linear regression coefficients for correcting the PM2.5 data (if required). BC data will be cleaned for the vibration generated noise, by adopting the statistical procedure as explained in Apte et al., (2011), followed by a loading correction as suggested by Ban-Weiss et al., (2009). For the number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; default value is 1).
 
 The package joins the raw, cleaned and corrected data from the above said instruments and outputs as a downloadable csv file. It accepts multiple files for each parameter. The raw files downloaded from each instrument have to be renamed as `yyyy_mm_dd`, for using as inputs into the package, since it matches the first 10 characters of the file name to check for consistency.
 
-The package will require GPS file as a mandatory input along with the timezone of the at which the data is collected (a link to all accepted timezone in R is also included). All other pollutant files can be optional. 
+The package will require GPS file (.gpx) as a mandatory input along with the timezone of the at which the data is collected (a link to all accepted timezones in R is also included). All other pollutant files can be optional. 
 
 All the raw and processed data will be displayed in the `Joined File` tab, while a basic statistical summary of each parameter is provided in the `Summary` tab. The `Plots` tab displays interactive  time series line plots (using plotly) for select parameters, while the `Map` tab provides a spatial map for the user selected pollutant. `Alarm and Settings` tab displays each instruments’ settings and alarms (if any).
 
@@ -66,7 +66,7 @@ mmaqshiny::mmaqshiny_run()
 
 ## User Guide
 
-- A preloaded table is 
+1. Add the input timezone in the the text box
 
 
 ## Community guidelines
@@ -78,6 +78,22 @@ Report Issues:
 Contribution to the software:
 
 - Please open an issue in the issue tracker of the project that describes the changes you would like to make to the software and open a pull request with the changes. The description of the pull request must references the corresponding issue.
+
+
+## Instrument Description
+
+1. DustTrak
+
+DustTrak 8530 Aerosol Monitor was used to measure PM 2.5 concentrations. It utilises the well-established aerosol light scattering technique to estimate the real-time aerosol mass loadings and works at a flow rate of 3 LPM (liters per minute).
+
+2. MicroAeth AE51
+
+It is a highly sensitive, palm-held and battery-operated instrument designed for measuring the optically-absorbing Black Carbon (BC) component of aerosol particles.It measures the rate of change in absorption of transmitted light (880 nm) due to continuous collection of aerosols load on to the filter ticket and has a wide dynamic range of measurement from 0 to 1 mg/m³.
+
+3. Condensation Particle Counter (CPC 3007)
+
+CPC 3007 is an alcohol based handheld instrument by TSI used to measure ultrafine particles. It works on the optical detection principle, and operates at a flow rate of 0.7 LPM.The instrument detects and measures the particles in the size range of 10 nm to > 1 µm. 
+
 
 ## Acknowledgements
 
