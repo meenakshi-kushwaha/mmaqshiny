@@ -66,7 +66,27 @@ mmaqshiny::mmaqshiny_run()
 
 ## User Guide
 
-1. Add the input timezone in the the text box
+1. The user needs to add the input timezone in the the text box. 
+
+2. Add .gpx files for the GPSMAP64s - location file inputs. 
+
+3. Add .csv files for the pollutant data available (multiple files are to be selected all at once).
+
+4. If a linear correction equation is available for the PM2.5 reference grade corrected, user can add the slope and intercept. 
+
+5. User can also input the Dilution factor is diluter is used for monitoring. 
+
+6. Click the join button to give a single joined file. 
+
+7. Download button to download the joined file as a single csv.
+
+8. Summary tab allows user to check the summary statistics of each pollutant, which helps to check for the for distribution. 
+
+9. The Plot tab helps in plotting the raw pollutant data, which helps to check for the instrument working time. 
+
+10. Alarms and Settins tab check for any staus errors and notes in each pollutant to keep a track of health of the instrument. 
+
+
 
 
 ## Community guidelines
