@@ -74,6 +74,7 @@ mmaqshiny::mmaqshiny_run()
 10. Alarms and Settins tab check for any staus errors and notes in each pollutant to keep a track of health of the instrument. 
 
 
+
 ## Glossary
 - `Latitude`:Latitude;
 - `Longitude`: Longitude;
