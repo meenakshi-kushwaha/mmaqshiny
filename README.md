@@ -102,13 +102,17 @@ mmaqshiny::mmaqshiny_run()
 
 ## Community guidelines
 
-Report Issues:
+1. Contribute to the software
 
-- Questions, feedback, bug reports: please open an issue in the issue tracker of the project here.
+- Please open an issue in the issue tracker of the project that describes the changes you would like to make to the software and open a pull request with the changes.
 
-Contribution to the software:
+2. Report issues or problems with the software
 
-- Please open an issue in the issue tracker of the project that describes the changes you would like to make to the software and open a pull request with the changes. The description of the pull request must references the corresponding issue.
+- Please open an issue in the issue tracker of the project.
+
+3. Seek support
+
+- Please open and issue in the issue tracker of the project.
 
 
 ## Instrument Description
@@ -143,4 +147,5 @@ GPSMAP-64s (Garmin, USA) works on the ‘trilateration’ mathematical principle
 ## Acknowledgements
 
 We wish to thank Prof. Julian Marshall (University of Washington, Seattle), Prof. Joshua Apte (University of California, Berkeley), Dr. Maelle Salmon, Dr. Florencia D'Andrea and R Ladies community for their help and support.
+
 
