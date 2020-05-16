@@ -1,14 +1,51 @@
 
-# mmaqshiny
+# mmaqshiny v1.0: R-Shiny package to explore air-pollution mobile monitoring data 
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of mmaqshiny is to explore air quality mobile monitoring data collected by specific instruments.
+## Summary
+
+Mobile monitoring of air pollution is being gradually adapted by research groups and governments to complement their existing stationary monitoring facilities, to understand the hyper-local nature of the air-pollution levels.
+
+The R-Shiny package `mmaqshiny` is for analysing, visualising and spatial-mapping of high-resolution air-pollution data collected by specific devices installed on a moving platform. 
+
+1-Hz data of PM2.5 (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide along with GPS coordinates and relative humidity (RH) data collected by some popular portable instruments (`TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-830, Garmin GPSMAP 64s, Omega USB RH probe` respectively) can be handled by this package. It incorporates device-specific cleaning and correction algorithms. RH correction is applied to DustTrak PM2.5 following Chakrabarti et al., (2004). Provision is given to input linear regression coefficients for correcting the PM2.5 data (if required). BC data will be cleaned for the vibration generated noise, by adopting the statistical procedure as explained in Apte et al., (2011), followed by a loading correction as suggested by Ban-Weiss et al., (2009). For the number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; default value is 1).
+
+The package joins the raw, cleaned and corrected data from the above said instruments and outputs as a downloadable csv file. It accepts multiple files for each parameter. The raw files downloaded from each instrument have to be renamed as `yyyy_mm_dd`, for using as inputs into the package, since it matches the first 10 characters of the file name to check for consistency.
+
+The package will require GPS file as a mandatory input along with the timezone of the at which the data is collected (a link to all accepted timezone in R is also included). All other pollutant files can be optional. 
+
+All the raw and processed data will be displayed in the `Joined File` tab, while a basic statistical summary of each parameter is provided in the `Summary` tab. The `Plots` tab displays interactive  time series line plots (using plotly) for select parameters, while the `Map` tab provides a spatial map for the user selected pollutant. `Alarm and Settings` tab displays each instruments’ settings and alarms (if any).
+
+
+## Limitations
+
+1) Handles single day data at a time,
+2) only provision for linear correction coefficients of PM2.5,
+3) instrument specific, 
+4) file renaming is required.
+
+## Glossary
+- `Latitude`:Latitude;
+- `Longitude`: Longitude;
+- `AE51_BC`: Raw BC data; 
+- `AE51_BC_NR`: Noise removed BC; 
+- `AE51_BC_NR_LC`: Noise removed and loading corrected BC; 
+- `DT8530_PM2.5`: Raw PM2.5; 
+- `DT8530_PM2.5_RHC`: RH corrected PM2.5; 
+- `DT8530_PM2.5_RHC_Ref`: Reference and RH corrected PM2.5; 
+- `DT8530_PM2.5_Ref`: Reference corrected PM2.5; 
+- `CPC3007_Particle Concentration`: Dilution corrected ultra-fine particle number concentration;
+- `CO2`: CO2 concentration
+
+
+In summary, `mmaqshiny` handles high-resolution mobile monitoring air-pollution data, automates several data cleaning and correction algorithms, outputs a combined csv file and generates interactive time series plots and spatial maps on an OpenStreetMap background. THe joined fie can then ne used for further analysis.
+
 
 ## Installation
 
-You can install the released version of mmaqshiny from [GITHUB](https://github.com/) with:
+You can install the released version of `mmaqshiny` from [GITHUB](https://github.com/) with:
 
 ``` r
 devtools::install_github("meenakshi-kushwaha/mmaqshiny")
@@ -16,10 +53,33 @@ devtools::install_github("meenakshi-kushwaha/mmaqshiny")
 
 ## Example
 
-This is how the app can be used- 
+- A preloaded data appears which is a joined file of existing data collected during the mobile monitoring campaign in Bangalore, India.
+
+- There are warning messages if different dates of data are being joined. 
+
+- This is how the app can be used- 
 
 ``` r
 library(mmaqshiny)
 mmaqshiny::mmaqshiny_run()
 ```
+
+## User Guide
+
+- A preloaded table is 
+
+
+## Community guidelines
+
+Report Issues:
+
+- Questions, feedback, bug reports: please open an issue in the issue tracker of the project here.
+
+Contribution to the software:
+
+- Please open an issue in the issue tracker of the project that describes the changes you would like to make to the software and open a pull request with the changes. The description of the pull request must references the corresponding issue.
+
+## Acknowledgements
+
+We wish to thank Dr. Julian Marshall, Dr. Joshua Apte, Dr Maelle Salmon,Dr. Florencia D'Andrea and R Ladies community for their help and support.
 
