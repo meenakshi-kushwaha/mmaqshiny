@@ -79,11 +79,11 @@ mmaqshiny::mmaqshiny_run()
 
 10. The Map tab helps to spatially visualise the any pollutant at a finer resolution.
 
-![\label{fig:example}](011.png)
+![\label{fig:example}](002.png)
 
 11. Alarms and Settins tab check for any staus errors and notes in each pollutant to keep a track of health of the instrument. 
 
-![\label{fig:example}](012.png)
+![\label{fig:example}](003.png)
 
 
 ## Glossary
