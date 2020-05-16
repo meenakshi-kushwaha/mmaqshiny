@@ -57,9 +57,11 @@ mmaqshiny::mmaqshiny_run()
 
 2. Add .gpx files for the GPSMAP64s - location file inputs. 
 
+![\label{fig:example}](007.png)
+
 3. Add .csv files for the pollutant data available (multiple files are to be selected all at once).
 
-4. If a linear correction equation is available for the PM2.5 reference grade corrected, user can add the slope and intercept. 
+4. User can add the slope and intercept if a linear correction equation is available for the PM2.5 reference grade corrected. 
 
 5. User can also input the Dilution factor is diluter is used for monitoring. 
 
@@ -69,10 +71,19 @@ mmaqshiny::mmaqshiny_run()
 
 8. Summary tab allows user to check the summary statistics of each pollutant, which helps to check for the for distribution. 
 
+![\label{fig:example}](008.png)
+
 9. The Plot tab helps in plotting the raw pollutant data, which helps to check for the instrument working time. 
 
-10. Alarms and Settins tab check for any staus errors and notes in each pollutant to keep a track of health of the instrument. 
+![\label{fig:example}](001.png)
 
+10. The Map tab helps to spatially visualise the any pollutant at a finer resolution.
+
+![\label{fig:example}](011.png)
+
+11. Alarms and Settins tab check for any staus errors and notes in each pollutant to keep a track of health of the instrument. 
+
+![\label{fig:example}](012.png)
 
 
 ## Glossary
