@@ -24,6 +24,7 @@ library(curl)
 library(devtools)
 library(XML)
 library(purrr)
+library(shinyjs)
 
 # Sys.setenv(JAVA_HOME = "C:/Program Files/Java/jre1.8.0_211/")
 # library(shinytest)
@@ -67,7 +68,7 @@ ui <- fluidPage(
                                    helpText("Choose mobile monitoring files."),
                                    tags$hr(),
                                    test <- a("Input Timezone* (link to supported timezones)", href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones", style = "font-size:14px; ",target="_blank"),
-                                   textInput("timezone", "", value = "", width = NULL,
+                                   textInput("timezone", value = "", width = NULL,
                                              placeholder = "eg: UTC; Asia/Kolkata"),
                                    tags$hr(),
                                    fileInput("file1",
@@ -175,6 +176,15 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   options(shiny.maxRequestSize = 30*1024^2, shiny.launch.browser = TRUE)
+
+  observe({
+    if(is.null(input$timezone) || input$timezone == ""){
+      disable("join_button")
+    }
+    else{
+      enable("join_button")
+    }
+  })
 
   ## date verification
 
