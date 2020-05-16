@@ -12,7 +12,7 @@ The R-Shiny package `mmaqshiny` is for analysing, visualising and spatial-mappin
 
 `1-Hz` data of PM2.5 (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide along with GPS coordinates and relative humidity (RH) data collected by some popular portable instruments (`TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-830, Garmin GPSMAP 64s, Omega USB RH probe` respectively) can be handled by this package. It incorporates device-specific cleaning and correction algorithms. RH correction is applied to DustTrak PM2.5 following Chakrabarti et al., (2004). Provision is given to input linear regression coefficients for correcting the PM2.5 data (if required). BC data will be cleaned for the vibration generated noise, by adopting the statistical procedure as explained in Apte et al., (2011), followed by a loading correction as suggested by Ban-Weiss et al., (2009). For the number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; default value is 1).
 
-The package joins the raw, cleaned and corrected data from the above said instruments and outputs as a downloadable csv file. It accepts multiple files for each parameter. The raw files downloaded from each instrument have to be renamed as `yyyy_mm_dd`, for using as inputs into the package, since it matches the first 10 characters of the file name to check for consistency.
+The package joins the raw, cleaned and corrected data from the above said instruments and outputs as a downloadable csv file. It accepts multiple files for each parameter. The raw files downloaded from each instrument have to be renamed starting with `yyyy_mm_dd`, for using as inputs into the package, since it matches the first 10 characters of the file name to check for consistency.
 
 The package will require GPS file (.gpx) as a mandatory input along with the timezone of the at which the data is collected (a link to all accepted timezones in R is also included). All other pollutant files can be optional. 
 
@@ -75,15 +75,15 @@ mmaqshiny::mmaqshiny_run()
 
 9. The Plot tab helps in plotting the raw pollutant data, which helps to check for the instrument working time. 
 
-![\label{fig:example}](001.png)
+![\label{fig:example}](005.png)
 
 10. The Map tab helps to spatially visualise the any pollutant at a finer resolution.
 
-![\label{fig:example}](011.png)
+![\label{fig:example}](002.png)
 
 11. Alarms and Settins tab check for any staus errors and notes in each pollutant to keep a track of health of the instrument. 
 
-![\label{fig:example}](012.png)
+![\label{fig:example}](003.png)
 
 
 ## Glossary
