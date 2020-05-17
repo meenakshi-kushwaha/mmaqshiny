@@ -10,7 +10,7 @@ Mobile monitoring of air pollution is being gradually adapted by research groups
 
 The R-Shiny package `mmaqshiny` is for analysing, visualising and spatial-mapping of high-resolution air-pollution data collected by specific devices installed on a moving platform. 
 
-`1-Hz` data of PM2.5 (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide along with GPS coordinates and relative humidity (RH) data collected by some popular portable instruments (`TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-830, Garmin GPSMAP 64s, Omega USB RH probe` respectively) can be handled by this package. It incorporates device-specific cleaning and correction algorithms. RH correction is applied to DustTrak PM2.5 following [@Chakrabarti:2004]. Provision is given to input linear regression coefficients for correcting the PM2.5 data (if required). BC data will be cleaned for the vibration generated noise, by adopting the statistical procedure as explained in [@Apte:2011], followed by a loading correction as suggested by [@Ban-Weiss:2009]. For the number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; default value is 1).
+`1-Hz` data of PM2.5 (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide along with GPS coordinates and relative humidity (RH) data collected by some popular portable instruments (`TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-830, Garmin GPSMAP 64s, Omega USB RH probe` respectively) can be handled by this package. All the measured pollutant data can be obtained in csv format. It incorporates device-specific cleaning and correction algorithms. RH correction is applied to DustTrak PM2.5 following [@Chakrabarti:2004]. Provision is given to input linear regression coefficients for correcting the PM2.5 data (if required). BC data will be cleaned for the vibration generated noise, by adopting the statistical procedure as explained in [@Apte:2011], followed by a loading correction as suggested by [@Ban-Weiss:2009]. For the number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; default value is 1).
 
 The package joins the raw, cleaned and corrected data from the above said instruments and outputs as a downloadable csv file. It accepts multiple files for each parameter. The raw files downloaded from each instrument have to be renamed starting with `yyyy_mm_dd`, for using as inputs into the package, since it matches the first 10 characters of the file name to check for consistency.
 
@@ -42,6 +42,8 @@ devtools::install_github("meenakshi-kushwaha/mmaqshiny")
 
 - A sample data collected during the mobile monitoring campaign in Bangalore, India appears upon running the app as a preloaded data.
 
+- Sample datasets are available in this package. 
+
 - App warns if there is a mismatch in the file names.
 
 - App can run using the code below- 
@@ -57,7 +59,7 @@ mmaqshiny::mmaqshiny_run()
 
 2. Add .gpx files. 
 
-3. Add .csv files for pollutant data.
+3. Add raw pollutant .csv files.
 
 4. User can add slope and intercept if a linear correction equation is available for the measured PM2.5. 
 
@@ -97,7 +99,7 @@ mmaqshiny::mmaqshiny_run()
 - `DT8530_PM2.5_RHC_Ref`: Reference and RH corrected PM2.5
 - `DT8530_PM2.5_Ref`: Reference corrected PM2.5
 - `CPC3007_Particle Concentration`: Dilution corrected ultra-fine particle number concentration
-- `LI-COR 850`: CO2 data
+- `Li-COR_CO2`: CO2 data
 
 
 ## Community guidelines
@@ -134,7 +136,7 @@ CPC 3007 is an alcohol based handheld instrument by TSI used to measure ultrafin
 
 LI-850 is a CO2/H2O gas analyzer which has a measurement range of 0-20,000 ppm and accuracy of 1.5%. For logging the data it requires a laptop with the software called LI-COR. More details can be found at https://www.licor.com/env/products/gas_analysis/LI-830_LI-850/ 
 
-5. RH-USB
+5. Omega RH-USB
 
 Omega RH-USB is an instrument used for measuring RH and temperature. It has an accuracy of ±3% for Relative humidity and  ±1°C (±1.8°F) for temperature. It requires a software to log the data called TRH central. The frequency of data logging can be changed as per need using this software. For more information visit https://www.omega.com/en-us/calibration-equipment/handheld-calibrator/p/RH-USB-Series
 
