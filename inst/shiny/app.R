@@ -176,16 +176,6 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   options(shiny.maxRequestSize = 30*1024^2, shiny.launch.browser = TRUE)
-
-  observe({
-    if(is.null(input$timezone) || input$timezone == ""){
-      disable("join_button")
-    }
-    else{
-      enable("join_button")
-    }
-  })
-
   ## date verification
 
   CPC_f_date<- reactive({
@@ -981,6 +971,7 @@ server <- function(input, output, session) {
 
 
   data_joined<- eventReactive(input$join_button,{
+
     joined_GPS_CPC<- joined_GPS_CPC()
     joined_GPS_CO2<- joined_GPS_CO2()
     joined_GPS_BC<-joined_GPS_BC()
