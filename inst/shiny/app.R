@@ -981,6 +981,12 @@ server <- function(input, output, session) {
 
 
   data_joined<- eventReactive(input$join_button,{
+    validate(
+      need(try(is.null(input$timezone)), "Add a valid timezone")
+    )
+    validate(
+      need(try(input$timezone==""), "Add a valid timezone")
+    )
     joined_GPS_CPC<- joined_GPS_CPC()
     joined_GPS_CO2<- joined_GPS_CO2()
     joined_GPS_BC<-joined_GPS_BC()
