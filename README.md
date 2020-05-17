@@ -6,20 +6,26 @@
 
 ## Summary
 
-Mobile monitoring of air pollution is being gradually adapted by research groups and governments to complement their existing stationary monitoring facilities, to understand the hyper-local nature of the air-pollution levels.
+Mobile monitoring of air quality is being gradually adapted by research groups and governments to complement their existing stationary monitoring facilities, to understand the hyper-local nature of the air quality levels.
 
-The R-Shiny package `mmaqshiny` is for analysing, visualising and spatial-mapping of high-resolution air-pollution data collected by specific devices installed on a moving platform. 
+The R-Shiny package `mmaqshiny` is for analysing, visualising and spatial-mapping of high-resolution air quality data collected by specific devices installed on a moving platform. 
 
-`1-Hz` data of PM2.5 (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide along with GPS coordinates and relative humidity (RH) data collected by some popular portable instruments (`TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-850, Garmin GPSMAP 64s, Omega USB RH probe` respectively) can be handled by this package. All the measured pollutant data can be obtained in csv format. It incorporates device-specific cleaning and correction algorithms. RH correction is applied to DustTrak PM2.5 following [@Chakrabarti:2004]. Provision is given to input linear regression coefficients for correcting the PM2.5 data (if required). BC data will be cleaned for the vibration generated noise, by adopting the statistical procedure as explained in [@Apte:2011], followed by a loading correction as suggested by [@Ban-Weiss:2009]. For the number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; default value is 1).
+High frequency `1-Hz` data of PM2.5 (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide along with GPS coordinates and relative humidity (RH) data are collected by some popular portable instruments (`TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-830, Garmin GPSMAP 64s, Omega USB RH probe` respectively) can be handled by this package. The package incorporates device-specific cleaning and correction algorithms. RH correction is packagelied to DustTrak PM2.5 following a method described in [@Chakrabarti:2004]. If required, user can also input input linear regression coefficients for correcting the PM2.5 data. The package cleans BC data for the vibration generated noise, by adopting a statistical procedure as explained in [@Apte:2011], followed by a loading correction as suggested by [@Ban-Weiss:2009]. For the ultra-fine particle number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; default value is 1). 
 
-The package joins the raw, cleaned and corrected data from the above said instruments and outputs as a downloadable csv file. It accepts multiple files for each parameter. The raw files downloaded from each instrument have to be renamed starting with `yyyy_mm_dd`, for using as inputs into the package, since it matches the first 10 characters of the file name to check for consistency.
+The package joins the raw, cleaned and corrected data from the above mentioned instruments and generates a downloadable csv file. It accepts multiple files for each parameter. The input files should have a date prefix of the format `yyyy_mm_dd`. The package can process files from the same date at one time and the file prefix is used to perform the check. If the user inputs files from different dates an error message will be generated.
 
-The package will require GPS file (.gpx) as a mandatory input along with the timezone of the at which the data is collected (a link to all accepted timezones in R is also included). All other pollutant files can be optional. 
+The package requires GPS file (.gpx) as a mandatory input along with the input timezone (a link to all accepted timezone formats in R is also included). All other pollutant files are optional.  
 
 All the raw and processed data will be displayed in the `Joined File` tab, while a basic statistical summary of each parameter is provided in the `Summary` tab. The `Plots` tab displays interactive  time series line plots (using plotly) for select parameters, while the `Map` tab provides a spatial map for the user selected pollutant. `Alarm and Settings` tab displays each instruments’ settings and alarms (if any).
 
 
-`mmaqshiny` handles high-resolution mobile monitoring air-pollution data, automates several data cleaning and correction algorithms, outputs a combined csv file and generates interactive time series plots and spatial maps on an OpenStreetMap background. The joined fie can then ne used for further analysis.
+The output is displayed in five different tabs.
+
+1) `Joined File` displays all cleaned and joined data 
+2) `Summary` displays summary statistics for each parameter,
+3)  `Plots` displays interactive  time series line plots for all parameters. 
+4) `Map` provides a spatial map for the user selected pollutant on an OpenStreetMap background. 
+5) `Alarm and Settings` tab displays each instrument's settings and alarms (if any).
 
 
 ## Limitations
@@ -27,37 +33,34 @@ All the raw and processed data will be displayed in the `Joined File` tab, while
 1) handles single day data at a time
 2) only provision for linear correction coefficients of PM2.5
 3) instrument specific 
-4) file renaming is required
+4) file renaming (with date prefix) is required
 
 
 ## Installation
 
-`mmaqshiny` can be intsalled from [GITHUB](https://github.com/) with:
+`mmaqshiny` can be intsalled from [github](https://github.com/) with:
 
 ``` r
 devtools::install_github("meenakshi-kushwaha/mmaqshiny")
 ```
 
-## Example
+## Demo
 
-- A sample data collected during the mobile monitoring campaign in Bangalore, India appears upon running the app as a preloaded data.
-
-- Sample datasets are available in this package. 
-
-- App warns if there is a mismatch in the file names.
-
-- App can run using the code below- 
+Load and run the app as follows: 
 
 ``` r
 library(mmaqshiny)
 mmaqshiny::mmaqshiny_run()
 ```
+A preloaded dataset appears which is a joined file of sample data collected during a mobile monitoring campaign in Bangalore, India.
 
 ## User Guide
 
+To use the app for your own data follow the steps below.
+
 1. User needs to add the timezone of data collection. 
 
-2. Add .gpx files. 
+2. Add .gpx files for the GPSMAP64s - location file inputs. NOTE: A warning message will appear if input files are from different dates. 
 
 3. Add raw pollutant .csv files.
 
@@ -65,11 +68,11 @@ mmaqshiny::mmaqshiny_run()
 
 ![\label{fig:example}](1_2_3.JPG)
 
-5. User can input Dilution factor is diluter is used along with CPC - 3007. 
+5. User can also input a Dilution factor if diluter is used for CPC-3007. Default value is 1 (no dilutor).
 
 6. Click join button. 
 
-7. Click download button to download the joined file as a csv file.
+7. Click the download button to download the joined csv file.
 
 ![\label{fig:example}](4_5.JPG)
 
@@ -79,17 +82,17 @@ mmaqshiny::mmaqshiny_run()
 
 ![\label{fig:example}](Summary.JPG)
 
-9. Plots tab displays the time series of parameters collected. 
+9. The Plots tab displays time series plots for instant checks on instrument operation on field. 
 
 ![\label{fig:example}](plot.JPG)
 
-10. Map tab visualises the selected pollutants spatially.
+10. The Map tab visualises interactive maps for spatial visualization of selected pollutant.
 
 ![\label{fig:example}](Map.JPG)
 
 ![\label{fig:example}](SelectPoll.JPG)
 
-11. Alarms and Settings displays the concerns and settings of each instrument. 
+11. Alarms and Settings tab display any staus errors and settings during data collection. 
 
 ![\label{fig:example}](Alarms.JPG)
 
@@ -127,33 +130,33 @@ mmaqshiny::mmaqshiny_run()
 
 1. DustTrak 8530
 
-DustTrak 8530 Aerosol Monitor utilises the well-established aerosol light scattering technique to estimate the real-time aerosol mass loadings and works at a flow rate of 3 LPM (liters per minute).  Detailed specifications can be found here - https://tsi.com/products/aerosol-and-dust-monitors/dust-monitors/dusttrak-ii-aerosol-monitor-8530/
+It utilises the well-established aerosol light scattering technique to estimate the real-time aerosol mass loadings and works at a flow rate of 3 LPM (liters per minute). Detailed specifications can be found here - https://tsi.com/products/aerosol-and-dust-monitors/dust-monitors/dusttrak-ii-aerosol-monitor-8530/
 
 
 2. MicroAeth AE51
 
-MicroAeth AE51 is a highly sensitive, palm-held and battery-operated instrument designed for measuring the optically-absorbing Black Carbon (BC) component of aerosol particles.It measures the rate of change in absorption of transmitted light (880 nm) due to continuous collection of aerosols load on to the filter ticket and has a wide dynamic range of measurement from 0 to 1 mg/m³. More details of AE51 can be found here -  https://aethlabs.com/microaeth/ae51/overview.
+It is a highly sensitive, palm-held and battery-operated instrument designed for measuring the optically-absorbing BC component of aerosol particles.It measures the rate of change in absorption of transmitted light (880 nm) due to continuous collection of aerosols load on to the filter ticket and has a wide dynamic range of measurement from 0 to 1 mg/m³. More details of AE51 can be found here -  https://aethlabs.com/microaeth/ae51/overview.
 
 3. Condensation Particle Counter 3007 (CPC)
 
-CPC 3007 is an alcohol based handheld instrument by TSI used to measure ultrafine particles. It works on the optical detection principle, and operates at a flow rate of 0.7 LPM.The instrument detects and measures the particles in the size range of 10 nm to > 1 µm. More technical details of the instrument can be found here - https://www.tsi.com/condensation-particle-counter-3007/
+It is an alcohol based handheld instrument used to measure ultrafine particles. It works on the optical detection principle, and operates at a flow rate of 0.7 LPM.The instrument detects and measures the particles in the size range of 10 nm to > 1 µm.  More technical details of the instrument can be found here - https://www.tsi.com/condensation-particle-counter-3007/
 
 4. LI-COR 850
 
-LI-850 is a CO2/H2O gas analyzer which has a measurement range of 0-20,000 ppm and accuracy of 1.5%. For logging the data it requires a laptop with the software called LI-COR. More details can be found at https://www.licor.com/env/products/gas_analysis/LI-830_LI-850/ 
+It is a CO2/H2O gas analyzer which has a measurement range of 0-20,000 ppm and accuracy of 1.5%. For logging the data it requires a laptop with the software called LI-COR. More details can be found at https://www.licor.com/env/products/gas_analysis/LI-830_LI-850/ 
 
 5. Omega RH-USB
 
-Omega RH-USB is an instrument used for measuring RH and temperature. It has an accuracy of ±3% for Relative humidity and  ±1°C (±1.8°F) for temperature. It requires a software to log the data called TRH central. The frequency of data logging can be changed as per need using this software. For more information visit https://www.omega.com/en-us/calibration-equipment/handheld-calibrator/p/RH-USB-Series
+It is an instrument used for measuring RH and temperature. It has an accuracy of ±3% for Relative humidity and  ±1°C (±1.8°F) for temperature. It requires a software to log the data called TRH central. The frequency of data logging can be changed as per need using this software. For more information visit https://www.omega.com/en-us/calibration-equipment/handheld-calibrator/p/RH-USB-Series
 
 6. GPSMAP-64s
 
-GPSMAP-64s (Garmin, USA) works on the ‘trilateration’ mathematical principle of GPS and usually connects to 4 satellites to give the accurate location. More technical details of the instrument can be found at https://www.garmin.co.in/products/outdoor/gpsmap64s-sea/
+It works on the ‘trilateration’ mathematical principle of GPS and usually connects to 4 satellites to give the accurate location. More technical details of the instrument can be found at https://www.garmin.co.in/products/outdoor/gpsmap64s-sea/
 
 
 
 ## Acknowledgements
 
-We wish to thank Prof. Julian Marshall (University of Washington, Seattle), Prof. Joshua Apte (University of California, Berkeley), Dr. Maelle Salmon, Dr. Florencia D'Andrea and R Ladies community for their help and support.
+We wish to thank Prof. Julian Marshall (University of Washington, Seattle), Prof. Joshua Apte (University of California, Berkeley), Dr. Maëlle Salmon, Dr. Florencia D'Andrea and R Ladies community for their help and support.
 
 
