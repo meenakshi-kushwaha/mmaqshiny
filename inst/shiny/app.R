@@ -68,7 +68,7 @@ ui <- fluidPage(
                                    helpText("Choose mobile monitoring files."),
                                    tags$hr(),
                                    test <- a("Input Timezone* (link to supported timezones)", href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones", style = "font-size:14px; ",target="_blank"),
-                                   textInput("timezone", value = "", width = NULL,
+                                   textInput("timezone","", value = "", width = NULL,
                                              placeholder = "eg: UTC; Asia/Kolkata"),
                                    tags$hr(),
                                    fileInput("file1",
@@ -194,12 +194,12 @@ server <- function(input, output, session) {
       return(NULL)
     }else{
       df_list <- lapply(inFile$datapath, function(y){
-        JSON_csv =read.csv(y, header=FALSE, sep=",", row.names=NULL, skip=4)
+        JSON_csv =read.delim(y, header=FALSE, sep=",", row.names=NULL, skip=4)
         JSON_csv_date<-as.character(JSON_csv[1,2])
         JSON_csv_date<-as.Date(JSON_csv_date, format="%m/%d/%y")
         if(is.na(JSON_csv_date))
         {
-          JSON_csv<-read.csv(y, header=FALSE, sep=",", row.names=NULL, skip=4)
+          JSON_csv<-read.delim(y, header=FALSE, sep=",", row.names=NULL, skip=4)
           JSON_csv_date<-as.character(JSON_csv[1,2])
           JSON_csv_date<-as.Date(JSON_csv_date, format="%m-%d-%Y")
         }
@@ -246,9 +246,9 @@ server <- function(input, output, session) {
         return(data[completeVec, ])
       }
       df_list <- lapply(inFile$datapath, function(y){
-        JSON_csv_header =read.csv(y, header = FALSE, sep=",", skip = 15, row.names=NULL, stringsAsFactors = FALSE)
+        JSON_csv_header =read.delim(y, header = FALSE, sep=",", skip = 15, row.names=NULL, stringsAsFactors = FALSE)
         JSON_csv_header<-JSON_csv_header[1,]
-        JSON_csv= read.csv(y, skip = 17, header = FALSE, sep =",")
+        JSON_csv= read.delim(y, skip = 17, header = FALSE, sep =",")
         colnames( JSON_csv ) <- unlist(JSON_csv_header)
         JSON_csv<-completeFun(JSON_csv, c("BC"))
         JSON_csv$date1<- with(JSON_csv, as.POSIXct(paste(as.Date(Date, format="%Y/%m/%d"), Time), tz=input$timezone))
@@ -274,12 +274,12 @@ server <- function(input, output, session) {
       return(NULL)
     }else{
       df_list <- lapply(inFile$datapath, function(y){
-        JSON_csv =read.csv(y, header=TRUE, sep=",", row.names=NULL, skip=29)
+        JSON_csv =read.delim(y, header=TRUE, sep=",", row.names=NULL, skip=29)
         JSON_csv_date<-as.character(JSON_csv[1,1])
         JSON_csv_date<-as.Date(JSON_csv_date, format="%d-%m-%Y")
         if(is.na(JSON_csv_date))
         {
-          JSON_csv<-read.csv(y, header=TRUE, sep=",", row.names=NULL, skip=29)
+          JSON_csv<-read.delim(y, header=TRUE, sep=",", row.names=NULL, skip=29)
           JSON_csv_date<-as.character(JSON_csv[1,1])
           JSON_csv_date<-as.Date(JSON_csv_date, format="%m/%d/%Y")
         }
@@ -294,12 +294,12 @@ server <- function(input, output, session) {
       return(NULL)
     }else{
       df_list <- lapply(inFile$datapath, function(y){
-        JSON_csv =read.csv(y, header=TRUE, sep=";", row.names=NULL, skip=2)
+        JSON_csv =read.delim(y, header=TRUE, sep=";", row.names=NULL, skip=2)
         JSON_csv_date<-as.character(JSON_csv[1,1])
         JSON_csv_date<-as.Date(JSON_csv_date, format="%d-%m-%Y")
         if(is.na(JSON_csv_date))
         {
-          JSON_csv<-read.csv(y, header=TRUE, sep=",", row.names=NULL, skip=29)
+          JSON_csv<-read.delim(y, header=TRUE, sep=",", row.names=NULL, skip=29)
           JSON_csv_date<-as.character(JSON_csv[1,1])
           JSON_csv_date<-as.Date(JSON_csv_date, format="%Y-%m-%d")
         }
@@ -316,7 +316,7 @@ server <- function(input, output, session) {
       return(NULL)
     }else{
       df_list <- lapply(inFile$datapath, function(y){
-        JSON_csv<-read.csv(y, skip=1, sep=",", header=TRUE, row.names=NULL,stringsAsFactors=FALSE)
+        JSON_csv<-read.delim(y, skip=1, sep=",", header=TRUE, row.names=NULL,stringsAsFactors=FALSE)
         JSON_csv<-JSON_csv[,1:3]
         names(JSON_csv)<-c("Date", "Time", "CO2")
         JSON_csv
@@ -372,9 +372,9 @@ server <- function(input, output, session) {
         return(data[completeVec, ])
       }
       df_list <- lapply(inFile$datapath, function(y){
-        JSON_csv_header =read.csv(y, header = FALSE, sep=",", skip = 15, row.names=NULL, stringsAsFactors = FALSE)
+        JSON_csv_header =read.delim(y, header = FALSE, sep=",", skip = 15, row.names=NULL, stringsAsFactors = FALSE)
         JSON_csv_header<-JSON_csv_header[1,]
-        JSON_csv= read.csv(y, skip = 17, header = FALSE, sep =",")
+        JSON_csv= read.delim(y, skip = 17, header = FALSE, sep =",")
         colnames( JSON_csv ) <- unlist(JSON_csv_header)
         JSON_csv<-completeFun(JSON_csv, c("BC"))
         JSON_csv$date1<- with(JSON_csv, as.POSIXct(paste(as.Date(Date, format="%Y/%m/%d"), Time), tz=input$timezone))
@@ -469,7 +469,7 @@ server <- function(input, output, session) {
       return(NULL)
     }else{
       df_list <- lapply(inFile$datapath, function(y){
-        JSON_csv<-read.csv(y, header=TRUE, sep=",", row.names=NULL, skip=28)
+        JSON_csv<-read.delim(y, header=TRUE, sep=",", row.names=NULL, skip=28)
         names(JSON_csv)<-c("Date","Time", "PM2.5")
         JSON_csv
       })
@@ -514,7 +514,7 @@ server <- function(input, output, session) {
       return(NULL)
     }else{
       df_list <- lapply(inFile$datapath, function(y){
-        JSON_csv =read.csv(y, header=TRUE, sep=",", row.names=NULL, skip=17,stringsAsFactors=FALSE, fileEncoding="latin1")
+        JSON_csv =read.delim(y, header=TRUE, sep=",", row.names=NULL, skip=17,stringsAsFactors=FALSE, fileEncoding="latin1")
         JSON_csv
       })
       data<-do.call(rbind, df_list)
@@ -536,7 +536,7 @@ server <- function(input, output, session) {
     if(is.null(input$file5)){
       return(NULL)
     }else{
-      RH_f<-data.frame(read.csv(input$file5$datapath, header=TRUE, sep=",",skip=6, row.names=NULL))
+      RH_f<-data.frame(read.delim(input$file5$datapath, header=TRUE, sep=",",skip=6, row.names=NULL))
       RH_f_Date<-RH_f[,2]
       RH_f_Time<-RH_f[,3]
       RH<-RH_f[ , grepl( "RH" , names( RH_f ) ) ]
@@ -631,7 +631,7 @@ server <- function(input, output, session) {
       setkey(GPS_f, date)
 
 
-      CO2_f<-read.csv("2019_09_25_h091000_KAN_CO2.csv", skip=1, sep=",", header=TRUE, row.names=NULL,stringsAsFactors=FALSE)
+      CO2_f<-read.delim("2019_09_25_h091000_KAN_CO2.csv", skip=1, sep=",", header=TRUE, row.names=NULL,stringsAsFactors=FALSE)
       CO2_f<-CO2_f[,1:3]
       names(CO2_f)<-c("Date", "Time", "CO2")
       CO2_f$date<- with(CO2_f, as.POSIXct(paste(as.Date(Date, format="%d-%m-%Y"), Time), tz="Asia/Kolkata"))#"%Y-%m-%d"; "%d-%m-%Y"
@@ -646,9 +646,9 @@ server <- function(input, output, session) {
         completeVec <- complete.cases(data[, desiredColumns])
         return(data[completeVec, ])
       }
-      BC_f_header =read.csv("2019_09_25_h091000_KAN_AE12.csv", header = FALSE, sep=",", skip = 15, row.names=NULL, stringsAsFactors = FALSE)
+      BC_f_header =read.delim("2019_09_25_h091000_KAN_AE12.csv", header = FALSE, sep=",", skip = 15, row.names=NULL, stringsAsFactors = FALSE)
       BC_f_header<-BC_f_header[1,]
-      BC_f= read.csv("2019_09_25_h091000_KAN_AE12.csv", skip = 17, header = FALSE, sep =",")
+      BC_f= read.delim("2019_09_25_h091000_KAN_AE12.csv", skip = 17, header = FALSE, sep =",")
       colnames( BC_f ) <- unlist(BC_f_header)
       BC_f<-completeFun(BC_f, c("BC"))
       BC_f$date1<- with(BC_f, as.POSIXct(paste(as.Date(Date, format="%Y/%m/%d"), Time), tz="Asia/Kolkata"))
@@ -723,7 +723,7 @@ server <- function(input, output, session) {
       attributes(BC_Final$date)$tzone <- "Asia/Kolkata"
       setkey(BC_Final, date)
 
-      DT_f<-read.csv("2019_09_25_h091000_KAN_DT809.csv", header=TRUE, sep=",", row.names=NULL, skip=28)
+      DT_f<-read.delim("2019_09_25_h091000_KAN_DT809.csv", header=TRUE, sep=",", row.names=NULL, skip=28)
       names(DT_f)<-c("Date","Time", "PM2.5")
       Date1<-DT_f[1,1]
       Date1<-as.Date(Date1,format = "%d-%m-%Y" )
@@ -741,7 +741,7 @@ server <- function(input, output, session) {
       setkey(DT_f, date)
 
 
-      CPC_f =read.csv("2019_09_25_h091000_KAN_CPC.csv", header=TRUE, sep=",", row.names=NULL, skip=17,stringsAsFactors=FALSE, fileEncoding="latin1")
+      CPC_f =read.delim("2019_09_25_h091000_KAN_CPC.csv", header=TRUE, sep=",", row.names=NULL, skip=17,stringsAsFactors=FALSE, fileEncoding="latin1")
       CPC_f<-CPC_f[,1:2]
       names(CPC_f)<-c("Time", "Particle_conc")
       CPC_f$Particle_conc<-CPC_f$Particle_conc*5.5
@@ -752,7 +752,7 @@ server <- function(input, output, session) {
       setkey(CPC_f, date)
 
 
-      RH_f<-data.frame(read.csv("2019_09_25_h091000_KAN_RHUSB.csv", header=TRUE, sep=",",skip=6, row.names=NULL))
+      RH_f<-data.frame(read.delim("2019_09_25_h091000_KAN_RHUSB.csv", header=TRUE, sep=",",skip=6, row.names=NULL))
       RH_f_Date<-RH_f[,2]
       RH_f_Time<-RH_f[,3]
       RH<-RH_f[ , grepl( "RH" , names( RH_f ) ) ]
@@ -1038,7 +1038,8 @@ server <- function(input, output, session) {
     data_joined<-data_joined %>%
       dplyr::select(date,Latitude,Longitude, BC,BC_NR,BC_NR_LC, PM2.5,PM2.5_RHC,PM2.5_RHC_Ref,PM2.5_Ref, RH, Particle_conc,  CO2)
     names(data_joined)<-c("date", "Latitude", "Longitude",  "AE51_BC (ug/m3)","AE51_BC_NR (ug/m3)","AE51_BC_NR_LC (ug/m3)",  "DT8530_PM2.5 (ug/m3)","DT8530_PM2.5_RHC (ug/m3)","DT8530_PM2.5_RHC_Ref (ug/m3)","DT8530_PM2.5_Ref (ug/m3)","RH(%)", "CPC3007_Particle Concentration (#/cm3)",  "LI-COR_CO2 (ppmv)")
-    data_joined
+
+    datatable(data_joined, options = list("pageLength" = 25))
   })
 
 
@@ -1105,6 +1106,7 @@ server <- function(input, output, session) {
     tmp$p25<-round(as.numeric(as.character(tmp$p25)), digits = 2)
     tmp
     tmp<-t(tmp)
+    datatable(tmp, options = list("pageLength" = 13))
   })
 
     ## Alarms and settings
@@ -1112,15 +1114,15 @@ server <- function(input, output, session) {
   output$table4 <- DT::renderDataTable({
     inFile<-input$file3
     if(is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) & is.null(RH_f()) & is.null(CO2_f())){
-      DT_f<-read.csv("2019_09_25_h091000_KAN_DT809.csv", header=FALSE, sep=",", row.names=NULL, skip=2)
+      DT_f<-read.delim("2019_09_25_h091000_KAN_DT809.csv", header=FALSE, sep=",", row.names=NULL, skip=2)
       DT_f<-DT_f[1:11,]
       DT_f<-DT_f[,1:2]
-      DT_f
+      datatable(DT_f, options = list("pageLength" = 11))
     }
     else if(is.null(DT_f() )) {}
     else if(!is.null(DT_f() )){
       files3 = lapply(inFile$datapath, function(y){
-        JSON_csv =read.csv(y, header=FALSE, sep=",", row.names=NULL, skip=2)
+        JSON_csv =read.delim(y, header=FALSE, sep=",", row.names=NULL, skip=2)
         names(JSON_csv)<-c("Setting", "Value")
         JSON_csv<-JSON_csv[1:11,]
         JSON_csv<-JSON_csv[,1:2]
@@ -1128,22 +1130,22 @@ server <- function(input, output, session) {
       })
       data<-do.call(rbind, files3)
       DT_f<-data
-      DT_f
+      datatable(DT_f, options = list("pageLength" = 11))
     }
   })
   output$table3<- DT::renderDataTable({
     inFile<-input$file4
     if(is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) & is.null(RH_f()) & is.null(CO2_f())){
-      CPC_f<-read.csv("2019_09_25_h091000_KAN_CPC.csv", header=FALSE, sep=",", row.names=NULL, skip=1)
+      CPC_f<-read.delim("2019_09_25_h091000_KAN_CPC.csv", header=FALSE, sep=",", row.names=NULL, skip=1)
       names(CPC_f)<-c("Setting", "Value")
       CPC_f<-CPC_f[1:13,]
       CPC_f<-CPC_f[,1:2]
-      CPC_f
+      datatable(CPC_f, options = list("pageLength" = 13))
     }
     else if(is.null(CPC_f() )) {}
     else if(!is.null(CPC_f() )){
       files3 = lapply(inFile$datapath, function(y){
-        JSON_csv =read.csv(y, header=FALSE, sep=",", row.names=NULL, skip=1)
+        JSON_csv =read.delim(y, header=FALSE, sep=",", row.names=NULL, skip=1)
         names(JSON_csv)<-c("Setting", "Value")
         JSON_csv<-JSON_csv[1:13,]
         JSON_csv<-JSON_csv[,1:2]
@@ -1151,7 +1153,7 @@ server <- function(input, output, session) {
       })
       data<-do.call(rbind, files3)
       CPC_f<-data
-      CPC_f
+      datatable(CPC_f, options = list("pageLength" = 13))
     }
   })
   output$table2 <- DT::renderDataTable({
@@ -1159,9 +1161,9 @@ server <- function(input, output, session) {
     if(is.null(BC_f() )) {}
     else if(!is.null(BC_f() )){
       files3 = lapply(inFile$datapath, function(y){
-        JSON_csv_header =read.csv(y, header = FALSE, sep=",", skip = 15, row.names=NULL, stringsAsFactors = FALSE)
+        JSON_csv_header =read.delim(y, header = FALSE, sep=",", skip = 15, row.names=NULL, stringsAsFactors = FALSE)
         JSON_csv_header<-JSON_csv_header[1,]
-        JSON_csv= read.csv(y, skip = 17, header = FALSE, sep =",")
+        JSON_csv= read.delim(y, skip = 17, header = FALSE, sep =",")
         colnames( JSON_csv ) <- unlist(JSON_csv_header)
         JSON_csv
       })
@@ -1179,22 +1181,23 @@ server <- function(input, output, session) {
   output$table5 <-DT::renderDataTable({
     inFile<-input$file2
     if(is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) & is.null(RH_f()) & is.null(CO2_f())){
-      BC_f<-read.csv("2019_09_25_h091000_KAN_AE12.csv", header=FALSE, sep=" ", skip = 1, row.names=NULL)
+      BC_f<-read.delim("2019_09_25_h091000_KAN_AE12.csv", header=FALSE, sep=" ", skip = 1, row.names=NULL)
       BC_f<-BC_f[1:14, ]
       names(BC_f)<-c("Setting")
-      BC_f
+      datatable(BC_f, options = list("pageLength" = 14))
     }
     else if(is.null(BC_f() )) {"No AE51 files available"}
     else if(!is.null(BC_f() )){
       files3 = lapply(inFile$datapath, function(y){
-        JSON_csv =read.csv(y, header=FALSE, sep=" ", skip = 1, row.names=NULL)
+        JSON_csv =read.delim(y, header=FALSE, sep=" ", skip = 1, row.names=NULL)
         JSON_csv<-JSON_csv[1:14, ]
         JSON_csv
       })
       data<-do.call(rbind, files3)
       BC_f<-data
       names(BC_f)<-c("Setting")
-      BC_f
+      datatable(BC_f, options = list("pageLength" = 14))
+
     }
   })
 
