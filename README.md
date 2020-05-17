@@ -10,7 +10,7 @@ Mobile monitoring of air pollution is being gradually adapted by research groups
 
 The R-Shiny package `mmaqshiny` is for analysing, visualising and spatial-mapping of high-resolution air-pollution data collected by specific devices installed on a moving platform. 
 
-`1-Hz` data of PM2.5 (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide along with GPS coordinates and relative humidity (RH) data collected by some popular portable instruments (`TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-830, Garmin GPSMAP 64s, Omega USB RH probe` respectively) can be handled by this package. All the measured pollutant data can be obtained in csv format. It incorporates device-specific cleaning and correction algorithms. RH correction is applied to DustTrak PM2.5 following [@Chakrabarti:2004]. Provision is given to input linear regression coefficients for correcting the PM2.5 data (if required). BC data will be cleaned for the vibration generated noise, by adopting the statistical procedure as explained in [@Apte:2011], followed by a loading correction as suggested by [@Ban-Weiss:2009]. For the number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; default value is 1).
+`1-Hz` data of PM2.5 (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide along with GPS coordinates and relative humidity (RH) data collected by some popular portable instruments (`TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-850, Garmin GPSMAP 64s, Omega USB RH probe` respectively) can be handled by this package. All the measured pollutant data can be obtained in csv format. It incorporates device-specific cleaning and correction algorithms. RH correction is applied to DustTrak PM2.5 following [@Chakrabarti:2004]. Provision is given to input linear regression coefficients for correcting the PM2.5 data (if required). BC data will be cleaned for the vibration generated noise, by adopting the statistical procedure as explained in [@Apte:2011], followed by a loading correction as suggested by [@Ban-Weiss:2009]. For the number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; default value is 1).
 
 The package joins the raw, cleaned and corrected data from the above said instruments and outputs as a downloadable csv file. It accepts multiple files for each parameter. The raw files downloaded from each instrument have to be renamed starting with `yyyy_mm_dd`, for using as inputs into the package, since it matches the first 10 characters of the file name to check for consistency.
 
@@ -63,29 +63,35 @@ mmaqshiny::mmaqshiny_run()
 
 4. User can add slope and intercept if a linear correction equation is available for the measured PM2.5. 
 
+![\label{fig:example}](1_2_3.JPG)
+
 5. User can input Dilution factor is diluter is used along with CPC - 3007. 
 
 6. Click join button. 
 
 7. Click download button to download the joined file as a csv file.
 
-![\label{fig:example}](007.png)
+![\label{fig:example}](4_5.JPG)
+
+![\label{fig:example}](joined.JPG)
 
 8. Summary tab allows user to check the summary statistics for each of the pollutant. 
 
-![\label{fig:example}](008.png)
+![\label{fig:example}](Summary.JPG)
 
 9. Plots tab displays the time series of parameters collected. 
 
-![\label{fig:example}](005.png)
+![\label{fig:example}](plot.JPG)
 
 10. Map tab visualises the selected pollutants spatially.
 
-![\label{fig:example}](002.png)
+![\label{fig:example}](Map.JPG)
+
+![\label{fig:example}](SelectPoll.JPG)
 
 11. Alarms and Settings displays the concerns and settings of each instrument. 
 
-![\label{fig:example}](003.png)
+![\label{fig:example}](Alarms.JPG)
 
 
 ## Glossary
