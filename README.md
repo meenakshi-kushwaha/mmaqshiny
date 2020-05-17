@@ -6,56 +6,58 @@
 
 ## Summary
 
-Mobile monitoring of air pollution is being gradually adapted by research groups and governments to complement their existing stationary monitoring facilities, to understand the hyper-local nature of the air-pollution levels.
+Mobile monitoring of air quality is being gradually adapted by research groups and governments to complement their existing stationary monitoring facilities, to understand the hyper-local nature of air pollution.
 
-The R-Shiny package `mmaqshiny` is for analysing, visualising and spatial-mapping of high-resolution air-pollution data collected by specific devices installed on a moving platform. 
+The R-Shiny package `mmaqshiny` is for analysing, visualising and spatial-mapping of high-resolution air quality data collected by specific devices installed on a moving platform. 
 
-`1-Hz` data of PM2.5 (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide along with GPS coordinates and relative humidity (RH) data collected by some popular portable instruments (`TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-830, Garmin GPSMAP 64s, Omega USB RH probe` respectively) can be handled by this package. It incorporates device-specific cleaning and correction algorithms. RH correction is applied to DustTrak PM2.5 following Chakrabarti et al., (2004). Provision is given to input linear regression coefficients for correcting the PM2.5 data (if required). BC data will be cleaned for the vibration generated noise, by adopting the statistical procedure as explained in Apte et al., (2011), followed by a loading correction as suggested by Ban-Weiss et al., (2009). For the number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; default value is 1).
+High frequency `1-Hz` data of PM2.5 (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide along with GPS coordinates and relative humidity (RH) data are collected by some popular portable instruments (`TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-830, Garmin GPSMAP 64s, Omega USB RH probe` respectively) can be handled by this package. The package incorporates device-specific cleaning and correction algorithms. RH correction is packagelied to DustTrak PM2.5 following a method described in Chakrabarti et al., (2004). If required, user can also input input linear regression coefficients for correcting the PM2.5 data. The package cleans BC data for the vibration generated noise, by adopting a statistical procedure as explained in Apte et al., (2011), followed by a loading correction as suggested by Ban-Weiss et al., (2009). For the ultra-fine particle number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; default value is 1).
 
-The package joins the raw, cleaned and corrected data from the above said instruments and outputs as a downloadable csv file. It accepts multiple files for each parameter. The raw files downloaded from each instrument have to be renamed starting with `yyyy_mm_dd`, for using as inputs into the package, since it matches the first 10 characters of the file name to check for consistency.
+The package joins the raw, cleaned and corrected data from the above mentioned instruments and generates a downloadable csv file. It accepts multiple files for each parameter. The input files should have a date prefix of the format `yyyy_mm_dd`. The package can process files from the same date at one time and the file prefix is used to perform the check. If the user inputs files from different dates an error message will be generated. 
 
-The package will require GPS file (.gpx) as a mandatory input along with the timezone of the at which the data is collected (a link to all accepted timezones in R is also included). All other pollutant files can be optional. 
+The package requires GPS file (.gpx) as a mandatory input along with the input timezone (a link to all accepted timezone formats in R is also included). All other pollutant files are optional. 
 
-All the raw and processed data will be displayed in the `Joined File` tab, while a basic statistical summary of each parameter is provided in the `Summary` tab. The `Plots` tab displays interactive  time series line plots (using plotly) for select parameters, while the `Map` tab provides a spatial map for the user selected pollutant. `Alarm and Settings` tab displays each instruments’ settings and alarms (if any).
+The output is displayed in five different tabs.
 
-
-`mmaqshiny` handles high-resolution mobile monitoring air-pollution data, automates several data cleaning and correction algorithms, outputs a combined csv file and generates interactive time series plots and spatial maps on an OpenStreetMap background. The joined fie can then ne used for further analysis.
-
+1) `Joined File` displays all cleaned and joined data 
+2) `Summary` displays summary statistics for each parameter,
+3)  `Plots` displays interactive  time series line plots for all parameters. 
+4) `Map` provides a spatial map for the user selected pollutant on an OpenStreetMap background. 
+5) `Alarm and Settings` tab displays each instrument's settings and alarms (if any).
 
 ## Limitations
 
 1) Handles single day data at a time,
 2) only provision for linear correction coefficients of PM2.5,
 3) instrument specific, 
-4) file renaming is required.
+4) file renaming (with date prefix) is required
 
 
 ## Installation
 
-You can install the released version of `mmaqshiny` from [GITHUB](https://github.com/) with:
+You can install the released version of `mmaqshiny` from [github](https://github.com/) with:
 
 ``` r
 devtools::install_github("meenakshi-kushwaha/mmaqshiny")
 ```
 
-## Example
+## Demo
 
-- A preloaded data appears which is a joined file of existing data collected during the mobile monitoring campaign in Bangalore, India.
-
-- There are warning messages if different dates of data are being joined. 
-
-- This is how the app can be used- 
+Load and run the app as follows: 
 
 ``` r
 library(mmaqshiny)
 mmaqshiny::mmaqshiny_run()
 ```
 
+A preloaded dataset appears which is a joined file of sample data collected during a mobile monitoring campaign in Bangalore, India.
+
 ## User Guide
+
+To use the app for your own data follow the steps below.
 
 1. The user needs to add the input timezone in the the text box. 
 
-2. Add .gpx files for the GPSMAP64s - location file inputs. 
+2. Add .gpx files for the GPSMAP64s - location file inputs. NOTE: A warning message will appear if input files are from different dates.
 
 ![\label{fig:example}](007.png)
 
@@ -63,25 +65,25 @@ mmaqshiny::mmaqshiny_run()
 
 4. User can add the slope and intercept if a linear correction equation is available for the PM2.5 reference grade corrected. 
 
-5. User can also input the Dilution factor is diluter is used for monitoring. 
+5. User can also input a Dilution factor if diluter is used for data collection. Default value is 1 (no dilutor).
 
-6. Click the join button to give a single joined file. 
+6. Click the join button to generate a single joined file. 
 
-7. Download button to download the joined file as a single csv.
+7. Click the download button to download the joined csv file.
 
-8. Summary tab allows user to check the summary statistics of each pollutant, which helps to check for the for distribution. 
+8. Summary tab allows user to check the summary statistics of each pollutant.
 
 ![\label{fig:example}](008.png)
 
-9. The Plot tab helps in plotting the raw pollutant data, which helps to check for the instrument working time. 
+9. The Plot tab displays time series plots for instant checks on instrument operation on field.
 
 ![\label{fig:example}](005.png)
 
-10. The Map tab helps to spatially visualise the any pollutant at a finer resolution.
+10. The Map tab displays interactive maps for spatial visualization of select pollutant.
 
 ![\label{fig:example}](002.png)
 
-11. Alarms and Settins tab check for any staus errors and notes in each pollutant to keep a track of health of the instrument. 
+11. Alarms and Settings tab display any staus errors and settings during data collection. 
 
 ![\label{fig:example}](003.png)
 
@@ -113,17 +115,17 @@ Contribution to the software:
 
 ## Instrument Description
 
-1. DustTrak
+1. DustTrak 8530
 
-DustTrak 8530 Aerosol Monitor was used to measure PM 2.5 concentrations. It utilises the well-established aerosol light scattering technique to estimate the real-time aerosol mass loadings and works at a flow rate of 3 LPM (liters per minute).
+A DustTrak is a portable mid-range monitoring instrument to measure PM 2.5 concentrations. It utilises the well-established aerosol light scattering technique to estimate the real-time aerosol mass loadings and works at a flow rate of 3 LPM (liters per minute).
 
 2. MicroAeth AE51
 
-It is a highly sensitive, palm-held and battery-operated instrument designed for measuring the optically-absorbing Black Carbon (BC) component of aerosol particles.It measures the rate of change in absorption of transmitted light (880 nm) due to continuous collection of aerosols load on to the filter ticket and has a wide dynamic range of measurement from 0 to 1 mg/m³.
+It is a highly sensitive, palm-held and battery-operated instrument designed for measuring the optically-absorbing BC component of aerosol particles.It measures the rate of change in absorption of transmitted light (880 nm) due to continuous collection of aerosols load on to the filter ticket and has a wide dynamic range of measurement from 0 to 1 mg/m³.
 
 3. Condensation Particle Counter (CPC 3007)
 
-CPC 3007 is an alcohol based handheld instrument by TSI used to measure ultrafine particles. It works on the optical detection principle, and operates at a flow rate of 0.7 LPM.The instrument detects and measures the particles in the size range of 10 nm to > 1 µm. 
+It is an alcohol based handheld instrument used to measure ultrafine particles. It works on the optical detection principle, and operates at a flow rate of 0.7 LPM.The instrument detects and measures the particles in the size range of 10 nm to > 1 µm. 
 
 
 ## Acknowledgements
