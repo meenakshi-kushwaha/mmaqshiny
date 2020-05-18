@@ -67,8 +67,6 @@ The output is displayed in five different tabs.
 devtools::install_github("meenakshi-kushwaha/mmaqshiny")
 ```
 
-## Demo
-
 Load and run the app as follows:
 
 ``` r
@@ -76,6 +74,30 @@ library(mmaqshiny)
 mmaqshiny::mmaqshiny_run()
 ```
 A preloaded dataset appears which is a joined file of sample data collected during a mobile monitoring campaign in Bangalore, India.
+
+## Glossary
+- `Latitude`:Latitude
+- `Longitude`: Longitude
+- `AE51_BC`: Raw BC data 
+- `AE51_BC_NR`: Noise removed BC 
+- `AE51_BC_NR_LC`: Noise removed and loading corrected BC
+- `DT8530_PM2.5`: Raw PM2.5
+- `DT8530_PM2.5_RHC`: RH corrected PM2.5
+- `DT8530_PM2.5_RHC_Ref`: Reference and RH corrected PM2.5
+- `DT8530_PM2.5_Ref`: Reference corrected PM2.5
+- `CPC3007_Particle Concentration`: Dilution corrected ultra-fine particle number concentration
+- `Li-COR_CO2`: CO2 data
+
+## Community guidelines
+
+1. Contribute to the software
+
+- Please open an issue in the issue tracker of the project that describes the changes you would like to make to the software and open a pull request with the changes.
+
+2. Report issues or problems with the software / Seek Support
+
+- Please open an issue in the [issue tracker of the project.](https://github.com/meenakshi-kushwaha/mmaqshiny/issues)
+
 
 # Acknowledgements
 
