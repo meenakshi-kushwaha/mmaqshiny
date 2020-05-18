@@ -17,7 +17,7 @@ authors:
   - name: Meenakshi Kushwaha
     affiliation: "1"
 affiliations:
- - name: ILK Labs
+ - name: Innovation Leadership Knowledge Labs
    index: "1"
  - name: CSTEP
    index: "2"
@@ -44,7 +44,7 @@ All the raw and processed data will be displayed in the `Joined File` tab, while
 
 The output is displayed in five different tabs.
 
-1) `Joined File` displays all cleaned and joined data
+1) `Joined File` displays raw, cleaned and corrected data
 2) `Summary` displays summary statistics for each parameter,
 3)  `Plots` displays interactive  time series line plots for all parameters.
 4) `Map` provides a spatial map for the user selected pollutant on an OpenStreetMap background.
