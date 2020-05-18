@@ -108,13 +108,10 @@ To use the app for your own data follow the steps below.
 
 - Please open an issue in the issue tracker of the project that describes the changes you would like to make to the software and open a pull request with the changes.
 
-2. Report issues or problems with the software
+2. Report issues or problems with the software / Seek Support
 
-- Please open an issue in the issue tracker of the project.
+- Please open an issue in the [issue tracker of the project.](https://github.com/meenakshi-kushwaha/mmaqshiny/issues)
 
-3. Seek support
-
-- Please open and issue in the issue tracker of the project.
 
 
 ## Instrument Description
