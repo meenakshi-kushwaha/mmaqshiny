@@ -1,6 +1,6 @@
 Package: mmaqshiny
 Title: R-Shiny package to explore Air-Pollution Mobile Monitoring data 
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: 
     as.person(c(
     "Adithi Upadhya <adithi@ilklabs.com> [aut, cre]", 
