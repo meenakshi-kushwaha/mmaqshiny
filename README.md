@@ -66,7 +66,7 @@ To use the app for your own data follow the steps below.
 
 4. User can add slope and intercept if a linear correction equation is available for the measured PM2.5. 
 
-![\label{fig:example}](1_2_3.JPG)
+![\label{fig:example}](Image1.JPG)
 
 5. User can also input a Dilution factor if diluter is used for CPC-3007. Default value is 1 (no dilutor).
 
@@ -74,27 +74,27 @@ To use the app for your own data follow the steps below.
 
 7. Click the download button to download the joined csv file.
 
-![\label{fig:example}](4_5.JPG)
+![\label{fig:example}](Image2.JPG)
 
-![\label{fig:example}](joined.JPG)
+![\label{fig:example}](Image3.JPG)
 
 8. Summary tab allows user to check the summary statistics for each of the pollutant. 
 
-![\label{fig:example}](Summary.JPG)
+![\label{fig:example}](Image4.JPG)
 
 9. The Plots tab displays time series plots for instant checks on instrument operation on field. 
 
-![\label{fig:example}](plot.JPG)
+![\label{fig:example}](Image5.JPG)
 
 10. The Map tab visualises interactive maps for spatial visualization of selected pollutant.
 
-![\label{fig:example}](Map.JPG)
+![\label{fig:example}](Image6.JPG)
 
-![\label{fig:example}](SelectPoll.JPG)
+![\label{fig:example}](Image7.JPG)
 
 11. Alarms and Settings tab display any staus errors and settings during data collection. 
 
-![\label{fig:example}](Alarms.JPG)
+![\label{fig:example}](Image8.JPG)
 
 
 ## Glossary
