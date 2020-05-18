@@ -1,20 +1,21 @@
 
 # mmaqshiny v1.0: R-Shiny package to explore air-pollution mobile monitoring data 
 
-<!-- badges: start -->
-<!-- badges: end -->
-
 ## Summary
 
 Mobile monitoring of air quality is being gradually adapted by research groups and governments to complement their existing stationary monitoring facilities, to understand the hyper-local nature of the air quality levels.
 
 The R-Shiny package `mmaqshiny` is for analysing, visualising and spatial-mapping of high-resolution air quality data collected by specific devices installed on a moving platform. 
 
-High frequency (1-Hz) data of PM2.5 (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide along with GPS coordinates and relative humidity (RH) data are collected by some popular portable instruments (TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-850, Garmin GPSMAP 64s, Omega USB RH probe, respectively) can be handled by this package. The package incorporates device-specific cleaning and correction algorithms. RH correction is packagelied to DustTrak PM2.5 following a method described in [@Chakrabarti:2004]. If required, user can also input input linear regression coefficients for correcting the PM2.5 data. The package cleans BC data for the vibration generated noise, by adopting a statistical procedure as explained in [@Apte:2011], followed by a loading correction as suggested by [@Ban-Weiss:2009]. For the ultra-fine particle number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; default value is 1).
 
-The package joins the raw, cleaned and corrected data from the above mentioned instruments and generates a downloadable csv file. It accepts multiple files for each parameter. The input files should have a date prefix of the format `yyyy_mm_dd`. The package can process files from the same date at one time and the file prefix is used to perform the check. If the user inputs files from different dates an error message will be generated.
+High frequency `1-Hz` data of PM2.5 (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide along with GPS coordinates and relative humidity (RH) data are collected by some popular portable instruments (`TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-850, Garmin GPSMAP 64s, Omega USB RH probe` respectively) can be handled by this package. The package incorporates device-specific cleaning and correction algorithms. RH correction is applied to DustTrak PM2.5 following a method described in @Chakrabarti:2004. If required, user can also input linear regression coefficients for correcting the PM2.5 data. The package cleans BC data for the vibration generated noise, by adopting a statistical procedure as explained in @Apte:2011, followed by a loading correction as suggested by @Ban-Weiss:2009. For the ultra-fine particle number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; default value is 1). 
 
-The package requires GPS file (.gpx) as a mandatory input along with the input timezone (a link to all accepted timezone formats in R is also included). All other pollutant files are optional.  
+
+The package joins the raw, cleaned and corrected data from the above mentioned instruments and generates a downloadable csv file. It accepts multiple files for each parameter. The input files should have a date prefix of the format `yyyy_mm_dd` in their file names. The package can process multiple files from a given date at a time and the file name prefix is used to perform the check. If user inputs files with different file name prefix, then an error message will be generated. 
+
+
+The package requires GPS file (.gpx) as a mandatory input along with timezone (a link to all accepted timezone formats in R is also included). All other pollutant files are optional.  
+
 
 The output is displayed in five different tabs.
 
@@ -154,6 +155,9 @@ It works on the ‘trilateration’ mathematical principle of GPS and usually co
 
 ## Acknowledgements
 
-We wish to thank Prof. Julian Marshall (University of Washington, Seattle), Prof. Joshua Apte (University of California, Berkeley), Dr. Maëlle Salmon, Dr. Florencia D'Andrea and R Ladies community for their help and support.
+We wish to thank Prof. Julian Marshall (University of Washington, Seattle), Prof. Joshua Apte (University of California, Berkeley), Dr. Jai Asundi (CSTEP), Dr. Maëlle Salmon, Dr. Florencia D'Andrea and R Ladies community for their help and support.
+
+
+
 
 
