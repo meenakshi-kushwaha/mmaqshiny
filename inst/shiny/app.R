@@ -175,7 +175,7 @@ ui <- fluidPage(
 
 
 server <- function(input, output, session) {
-  options(shiny.maxRequestSize = 30*1024^2, shiny.launch.browser = TRUE)
+  options(shiny.maxRequestSize = 30*1024^2)
   ## date verification
 
   CPC_f_date<- reactive({
