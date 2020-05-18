@@ -1,5 +1,5 @@
 ---
-title: 'mmaqshiny v1.0: R-Shiny package to explore air-pollution mobile monitoring data'
+title: 'mmaqshiny v1.0: R-Shiny package to explore air quality mobile monitoring data'
 tags:
   - R
   - Mobile monitoring 

@@ -1,12 +1,12 @@
 Package: mmaqshiny
-Title: R-Shiny package to explore Air-Pollution Mobile Monitoring data 
+Title: R-Shiny package to explore Air-Quality Mobile Monitoring data 
 Version: 1.0.0
 Authors@R: 
     as.person(c(
     "Adithi Upadhya <adithi@ilklabs.com> [aut, cre]", 
     "Meenakshi Kushwaha <meenakshi@ilklabs.com> [aut]"
   ))
-Description: The R-Shiny package here is for analysing, visualising and spatial-mapping of high-resolution air-pollution 
+Description: The R-Shiny package here is for analysing, visualising and spatial-mapping of high-resolution air quality
     data collected by specific devices installed on a moving platform. 1-Hz data of PM2.5 (mass concentrations of particulate 
     matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, 
     carbon-di-oxide along with GPS coordinates and relative humidity (RH) data collected by some popular portable instruments 
@@ -17,7 +17,7 @@ Description: The R-Shiny package here is for analysing, visualising and spatial-
     procedure as explained in Apte et al., (2011), followed by a loading correction as suggested by Ban-Weiss et al., (2009). 
     For the number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; 
     default value is 1). The package joins the raw, cleaned and corrected data from the above said instruments and outputs as a 
-    downloadable csv file. It accepts multiple files for each parameter. 
+    downloadable csv file. 
 Depends: 
   R (>= 3.5.1)
 License: MIT + file LICENSE

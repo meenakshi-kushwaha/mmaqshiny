@@ -2,12 +2,12 @@
 % Please edit documentation in R/mmaqshiny_run.R
 \name{mmaqshiny_run}
 \alias{mmaqshiny_run}
-\title{mmaqshiny: R-Shiny package to explore air-pollution mobile monitoring data}
+\title{mmaqshiny: R-Shiny package to explore air quality mobile monitoring data}
 \usage{
 mmaqshiny_run()
 }
 \description{
-The R-Shiny package we present here is for analysing, visualising and spatial-mapping of high-resolution air-pollution data collected by specific devices installed on a moving platform.
+The R-Shiny package we present here is for analysing, visualising and spatial-mapping of high-resolution air quality data collected by specific devices installed on a moving platform.
 }
 \examples{
 \dontrun{
