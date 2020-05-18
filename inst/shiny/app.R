@@ -25,7 +25,7 @@ library(devtools)
 library(XML)
 library(purrr)
 library(shinyjs)
-
+# Sys.setenv(TMPDIR = 'C:/R/tmp_R') #Sys.getenv('TMPDIR')
 # Sys.setenv(JAVA_HOME = "C:/Program Files/Java/jre1.8.0_211/")
 # library(shinytest)
 # recordTest("D:/Dropbox/APMfull/Codes/GitHub Codes/ILKConsultancy")
