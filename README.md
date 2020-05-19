@@ -145,7 +145,7 @@ It works on the ‘trilateration’ mathematical principle of GPS and usually co
 
 ## Acknowledgements
 
-We wish to thank Prof. Julian Marshall (University of Washington, Seattle), Prof. Joshua Apte (University of California, Berkeley), Dr. Jai Asundi (CSTEP), Dr. Maëlle Salmon, Dr. Florencia D'Andrea and R Ladies community for their help and support.
+We wish to thank Prof. Julian Marshall (University of Washington, Seattle), Prof. Joshua Apte (University of California, Berkeley), Dr. Jai Asundi (CSTEP), Dr. Maëlle Salmon, Dr. María Florencia D’Andrea and R Ladies community for their help and support.
 
 
 
