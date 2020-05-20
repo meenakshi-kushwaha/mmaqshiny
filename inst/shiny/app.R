@@ -380,7 +380,7 @@ server <- function(input, output, session) {
       ef_file<-ef_file[ef_file$Status==0,]
       ef_file<-dplyr::select(ef_file, Date, ATN, BC)
       ATN<-ef_file[1,2]
-      ef_file$ATN<-ef_file$ATN-(ATN)
+      # ef_file$ATN<-ef_file$ATN-(ATN) # for new filter
       names(ef_file)<-c("Date", "ATN","BC")
       ef_file$BC1<-(ef_file$BC/1000)
       BC_Final<-ef_file
