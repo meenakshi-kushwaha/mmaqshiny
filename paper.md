@@ -9,7 +9,7 @@ authors:
   - name: Adithi R. Upadhya
     orcid: 0000-0002-1764-1379
     affiliation: "1"
-  - name: Pratyush Agarwal
+  - name: Pratyush Agrawal
     affiliation: "1"
   - name: Sreekanth Vakacherla
     orcid: 0000-0003-0400-6584
