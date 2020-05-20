@@ -12,7 +12,14 @@ High frequency (1-Hz) data of PM2.5 (mass concentrations of particulate matter w
 The package joins the raw, cleaned and corrected data from the above mentioned instruments and generates a downloadable csv file. It accepts multiple files for each parameter. The input files should have a date prefix of the format `yyyy_mm_dd` in their file names. The package can process multiple files for a given date at a time and the file name prefix is used to perform the check. An error message will be generated if the prefix is not matched between various pollutant filenames.
 
 
-The package requires GPS file (.gpx) as a mandatory input along with timezone (a link to all accepted timezone formats in R is also included). All other pollutant files are optional.  
+The package requires GPS file (.gpx) as a mandatory input along with timezone (a link to all accepted timezone formats in R is also included). All other pollutant files are optional. A testing data set is provided in the data folder inside shiny. 
+The file extension of 
+- xxx_Garmin is input for GPSMAP 64s - location files
+- xxx_AE12 is input for AE51 - BC files
+- xxx_DT809 is infput for DT8530 - PM2.5 files
+- xxx_RHUSB is input for RH files
+- xxx_CPC is input for CPC3007 -Particle Concentration files
+- xxx_CO2 is input for LI-COR - CO2 files
 
 
 The output is displayed in five different tabs.
