@@ -4,6 +4,8 @@ Version: 1.0.0
 Authors@R: 
     as.person(c(
     "Adithi Upadhya <adithi@ilklabs.com> [aut, cre]", 
+    "Pratyush Agrawal <pratyush@ilklabs.com> [dtc]",
+    "Sreekanth Vakacherla <sree.hcu@gmail.com> [aui, ctb]",
     "Meenakshi Kushwaha <meenakshi@ilklabs.com> [aut]"
   ))
 Description: The R-Shiny package here is for analysing, visualising and spatial-mapping of high-resolution air quality

@@ -67,9 +67,9 @@ ui <- fluidPage(
                                    tags$hr(),
                                    helpText("Choose mobile monitoring files."),
                                    tags$hr(),
+                                   useShinyjs(),
                                    test <- a("Input Timezone* (link to supported timezones)", href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones", style = "font-size:14px; ",target="_blank"),
-                                   textInput("timezone","", value = "", width = NULL,
-                                             placeholder = "eg: UTC; Asia/Kolkata"),
+                                   textInput("timezone","", value = "Asia/Kolkata", width = NULL),
                                    tags$hr(),
                                    fileInput("file1",
                                              "GPSMAP 64s - location files",
@@ -145,13 +145,13 @@ ui <- fluidPage(
                               tabPanel(
                                 value=2,
                                 title = "Plots",
-                                plotlyOutput("plot5"),
-                                plotlyOutput("plot6"),
-                                plotlyOutput("plot2"),
-                                plotlyOutput("plot"),
-                                plotlyOutput("plot4"),
-                                plotlyOutput("plot3"),
-                                plotlyOutput("plot7")
+                                plotlyOutput("plot5", width = 800),
+                                plotlyOutput("plot6", width = 800),
+                                plotlyOutput("plot2", width = 800),
+                                plotlyOutput("plot", width = 800),
+                                plotlyOutput("plot4", width = 800),
+                                plotlyOutput("plot3", width = 800),
+                                plotlyOutput("plot7", width = 800)
                               ),
 
                               tabPanel(
@@ -968,7 +968,9 @@ server <- function(input, output, session) {
     setkey(joined_GPS_CPC, date)
     return(joined_GPS_CPC)
   })
-
+  observeEvent(input$timezone,{
+    toggleState(id="join_button", condition = (input$timezone != "" | is.null(input$timezone) | is.na(input$timezone)) )
+  })
 
   data_joined<- eventReactive(input$join_button,{
 

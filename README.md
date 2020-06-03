@@ -123,30 +123,31 @@ To use the app for your own data follow the steps below.
 
 ## Instrument Description
 
+
 1. DustTrak 8530
 
-It utilises the well-established aerosol light scattering technique to estimate the real-time aerosol mass loadings and works at a flow rate of 3 LPM (liters per minute). Detailed specifications can be found here - https://tsi.com/products/aerosol-and-dust-monitors/dust-monitors/dusttrak-ii-aerosol-monitor-8530/
+It utilises the well-established aerosol light scattering technique to estimate the real-time aerosol mass loadings and works at a flow rate of 3 LPM (liters per minute). Detailed specifications can be [found here.](https://tsi.com/products/aerosol-and-dust-monitors/dust-monitors/dusttrak-ii-aerosol-monitor-8530/)
 
 
 2. MicroAeth AE51
 
-It is a highly sensitive, palm-held and battery-operated instrument designed for measuring the optically-absorbing BC component of aerosol particles.It measures the rate of change in absorption of transmitted light (880 nm) due to continuous collection of aerosols load on to the filter ticket and has a wide dynamic range of measurement from 0 to 1 mg/m³. More details of AE51 can be found here -  https://aethlabs.com/microaeth/ae51/overview.
+It is a highly sensitive, palm-held and battery-operated instrument designed for measuring the optically-absorbing BC component of aerosol particles.It measures the rate of change in absorption of transmitted light (880 nm) due to continuous collection of aerosols load on to the filter ticket and has a wide dynamic range of measurement from 0 to 1 mg/m³. More details of AE51 can be [found here.]( https://aethlabs.com/microaeth/ae51/overview)
 
 3. Condensation Particle Counter 3007 (CPC)
 
-It is an alcohol based handheld instrument used to measure ultrafine particles. It works on the optical detection principle, and operates at a flow rate of 0.7 LPM.The instrument detects and measures the particles in the size range of 10 nm to > 1 µm.  More technical details of the instrument can be found here - https://www.tsi.com/condensation-particle-counter-3007/
+It is an alcohol based handheld instrument used to measure ultrafine particles. It works on the optical detection principle, and operates at a flow rate of 0.7 LPM.The instrument detects and measures the particles in the size range of 10 nm to > 1 µm.  More technical details of the instrument can be [found here.](https://www.tsi.com/condensation-particle-counter-3007/)
 
 4. LI-COR 850
 
-It is a CO2/H2O gas analyzer which has a measurement range of 0-20,000 ppm and accuracy of 1.5%. For logging the data it requires a laptop with the software called LI-COR. More details can be found at https://www.licor.com/env/products/gas_analysis/LI-830_LI-850/ 
+It is a CO2/H2O gas analyzer which has a measurement range of 0-20,000 ppm and accuracy of 1.5%. For logging the data it requires a laptop with the software called LI-COR. More details can be [found here.]( https://www.licor.com/env/products/gas_analysis/LI-830_LI-850/)
 
 5. Omega RH-USB
 
-It is an instrument used for measuring RH and temperature. It has an accuracy of ±3% for Relative humidity and  ±1°C (±1.8°F) for temperature. It requires a software to log the data called TRH central. The frequency of data logging can be changed as per need using this software. For more information visit https://www.omega.com/en-us/calibration-equipment/handheld-calibrator/p/RH-USB-Series
+It is an instrument used for measuring RH and temperature. It has an accuracy of ±3% for Relative humidity and  ±1°C (±1.8°F) for temperature. It requires a software to log the data called TRH central. The frequency of data logging can be changed as per need using this software. For more [information click here.]( https://www.omega.com/en-us/calibration-equipment/handheld-calibrator/p/RH-USB-Series)
 
 6. GPSMAP-64s
 
-It works on the ‘trilateration’ mathematical principle of GPS and usually connects to 4 satellites to give the accurate location. More technical details of the instrument can be found at https://www.garmin.co.in/products/outdoor/gpsmap64s-sea/
+It works on the ‘trilateration’ mathematical principle of GPS and usually connects to 4 satellites to give the accurate location. More technical details of the instrument can be [found here.]( https://www.garmin.co.in/products/outdoor/gpsmap64s-sea/)
 
 
 
