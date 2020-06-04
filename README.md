@@ -40,7 +40,7 @@ The output is displayed in five different tabs.
 
 1) `Joined File` displays all cleaned and joined data 
 2) `Summary` displays summary statistics for each parameter,
-3)  `Plots` displays interactive  time series line plots for all parameters. 
+3)  `Plots` displays interactive  time series line plots for raw parameters. 
 4) `Map` provides a spatial map for the user selected pollutant on an OpenStreetMap background. 
 5) `Alarm and Settings` tab displays each instrument's settings and alarms (if any).
 
