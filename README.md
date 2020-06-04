@@ -7,7 +7,6 @@ The R-Shiny package `mmaqshiny` is for analysing, visualising and spatial-mappin
 
 High frequency (1-Hz) data of PM<sub>2.5</sub> (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide (CO<sub>2</sub>) along with GPS coordinates and relative humidity (RH) data are collected by some popular portable instruments (TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-850, Garmin GPSMAP 64s, Omega USB RH probe respectively) can be handled by this package. The package incorporates device-specific cleaning and correction algorithms. RH correction is applied to DustTrak PM<sub>2.5</sub> following a method described in @Chakrabarti:2004. If required, user can also input linear regression coefficients for correcting the PM<sub>2.5</sub> data.
 An example of PM<sub>2.5</sub> raw and reference corrected DustTrak data, Using Slope=0.21, Intercept=11.1 is shown below.
-Eg: PM<sub>2.5</sub> raw and reference corrected data, Using Slope=0.21, Intercept=11.1
 
 | ![\Uncorrected{fig: `DT8530_PM2.5`}](Image9.JPG) | 
 |:--:| 
