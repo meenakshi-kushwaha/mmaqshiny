@@ -28,12 +28,12 @@ The package requires GPS file (.gpx) as a mandatory input along with timezone (a
 
 The example data included [here](https://github.com/meenakshi-kushwaha/mmaqshiny/tree/master/inst/shiny/data) contain file extensions- 
 
-- xxx_Garmin is input for GPSMAP 64s - location files
-- xxx_AE51 is input for AE51 - BC files
-- xxx_DT8530 is infput for DT8530 - PM<sub>2.5</sub> files
-- xxx_RH is input for RH files
-- xxx_CPC3007 is input for CPC3007 -Particle Concentration files
-- xxx_LI_COR is input for LI-COR - CO<sub>2</sub> files
+- xxx_Garmin correspond to location files
+- xxx_AE51 correspond to BC files
+- xxx_DT8530 correspond to PM<sub>2.5</sub> files
+- xxx_RH correspond to RH files
+- xxx_CPC3007 correspond to CPC3007 -Particle Concentration files
+- xxx_LI_COR correspond to LI-COR - CO<sub>2</sub> files
 
 
 The output is displayed in five different tabs.
