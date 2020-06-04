@@ -9,13 +9,12 @@ High frequency (1-Hz) data of PM<sub>2.5</sub> (mass concentrations of particula
 The linear correction is important to understand the actual on road concentrations for <sub>2.5</sub> collected using DustTrak 8530 in Bangalore. The linear equation can be derived using a gold standard instrument. 
 
 
-Uncorrected PM<sub>2.5</sub> data represented by `DT8530_PM2.5`, is represented in the joined file -  
+PM<sub>2.5</sub> data, Using Slope=0.21, Intercept=11.1
 
-![\label{fig:example}](Image9.JPG)
+![\Uncorrected{fig: `DT8530_PM2.5`}](Image9.JPG)
 
-Corrected PM<sub>2.5</sub> data using Slope=0.21, Intercept=11.1, is represented by `DT8530_PM2.5_Ref` in joined file -
 
-![\label{fig:example}](Image10.JPG)
+![\Corrected {fig: `DT8530_PM2.5_Ref`}](Image10.JPG)
 
 The package cleans BC data for the vibration generated noise, by adopting a statistical procedure as explained in @Apte:2011, followed by a loading correction as suggested by @Ban-Weiss:2009. For the ultra-fine particle number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; default value is 1). 
 
@@ -54,7 +53,7 @@ The output is displayed in five different tabs.
 
 ## Installation
 
-`mmaqshiny` can be intsalled from [github](https://github.com/).
+`mmaqshiny` can be installed from [github](https://github.com/).
 
 Load and run `mmaqshiny` as follows:
 
