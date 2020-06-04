@@ -1,44 +1,46 @@
 ---
 title: 'mmaqshiny v1.0: R-Shiny package to explore air quality mobile monitoring data'
-tags:
-  - R
-  - Mobile monitoring 
-  - air quality
-  - shiny
 authors:
-  - name: Adithi R. Upadhya
-    orcid: 0000-0002-1764-1379
-    affiliation: "1"
-  - name: Pratyush Agrawal
-    affiliation: "1"
-  - name: Sreekanth Vakacherla
-    orcid: 0000-0003-0400-6584
-    affiliation: "2"
-  - name: Meenakshi Kushwaha
-    affiliation: "1"
-affiliations:
- - name: ILK Labs, Bengaluru, India
-   index: "1"
- - name: Center for Study of Science, Technology & Policy, Bengaluru, India
-   index: "2"
-date: 19 May 2020
+- affiliation: '1'
+  name: Adithi R. Upadhya
+  orcid: 0000-0002-1764-1379
+- affiliation: '1'
+  name: Pratyush Agrawal
+- affiliation: '2'
+  name: Sreekanth Vakacherla
+  orcid: 0000-0003-0400-6584
+- affiliation: '1'
+  name: Meenakshi Kushwaha
+date: "19 May 2020"
 bibliography: paper.bib
-
+tags:
+- R
+- Mobile monitoring
+- air quality
+- shiny
+affiliations:
+- index: '1'
+  name: ILK Labs, Bengaluru, India
+- index: '2'
+  name: Center for Study of Science, Technology & Policy, Bengaluru, India
 ---
 
-## Summary
+# Summary
+
+Stationary air quality monitors do not capture spatial variations in air pollution. Mobile monitoring or “sensors on a mobile platform” is an increasingly popular approach to measure high resolution pollution data at the street level. Coupled with location data, spatial visualization of air quality parameters helps locate localized areas of high air-pollution, also called hotspots. In this approach, portable sensors are mounted on a vehicle and driven on predetermined routes to collect high frequency data (1 Hz). Analyzing this data involves cleaning and combining location data with pollutant data from different instruments. Some instruments are sensitive to factors like signal attenuation, humidity, vibrations and require additional correction algorithms unique to each instrument. A typical measurement campaign involves collecting millions of data points and a high burden of quality assurance and quality control. Our package attempts to automate and simplify the process using a shiny app.
+
+The R-Shiny package `mmaqshiny` is for analysing, visualising and spatial-mapping of high-resolution air quality data collected by specific devices installed on a moving platform.  With the click of a button, the app generates: summary statistics, time series plots and spatial map of pollutant concentrations. This app reduces the time consumed for analysing each pollutant individually. It helps check the quality of the data at near real time (same day) and instantly visualise pollution hotspots. The time series plots of each pollutant help in understanding the temporal patterns of concentrations and performance of the instruments. This app will help both air pollution researchers and citizen scientists interested in conducting mobile measurements. 
+
+Specific details of instruments and parameters measured can be found in the “Instrument Details” section. Briefly, high frequency (1 Hz) data of  PM<sub>2.5</sub> (mass concentrations of particulate matter with size less than 2.5 microns); black carbon mass concentrations (BC); ultra-fine particle number concentrations; carbon-di-oxide; GPS coordinates and relative humidity (RH) data are collected by some popular portable instruments (TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-850, Garmin GPSMAP 64s and Omega USB RH probe, respectively), can be handled by this package. 
+
+Under the hood, this app performs two basic functions - data correction and joining (location data + pollutant concentration data). As mentioned before, air-pollution measurements, especially BC from microAeth, on a mobile platform is susceptible to vibration-related noise because of the road conditions and vehicle suspension efficiency. The package incorporates an algorithm to remove this noise following @Apte:2011 method, followed by a loading correction as suggested by @Ban-Weiss:2009. PM<sub>2.5</sub> measurements from optical instruments are also sensitive to Relative Humidity (RH). To correct for RH, an algorithm is applied to DustTrak  PM<sub>2.5</sub> following @Chakrabarti:2004 method. Among other correction procedures, DustTrak PM<sub>2.5</sub> calibration equation depends on the study location. Hence, several linear calibration equations are available in literature from individual studies. Individual researchers can derive their own equation as well. Accommodating for these choices, the app allows users to input linear regression coefficients of their choice for calibrating the  PM<sub>2.5</sub> data. On-road concentrations can be much higher than ambient concentrations and sometimes even exceed the measurement range of sensors. CPC3007 has a fixed dynamic measurement range, and number concentration measurements above the range can be biased. Traditionally, this is addressed by applying a diluter (characterised by a dilution factor) to the instrument inlet. Therefore, for the ultra-fine particle number concentration data from CPC3007, provision is made for a dilution correction factor (default value is 1, implying no diluter used). After data correction, the app joins the data to generate a downloadable csv file. 
+
+The app is designed to accept multiple files for each parameter from a single day of measurements. The input file names should have a date prefix of the format `yyyy_mm_dd`. The app uses this prefix to check that all input files are from the same date and generates an error message if the prefixes don’t match. The package requires GPS file (.gpx) as a mandatory input along with timezone (a link to all accepted timezone formats in R is also included). All other pollutant files are optional.
+
+Mobile monitoring has been a relatively new technique and the instruments used are also highly customised. As of now, there are no applications which have been able to integrate the above mentioned devices. To the authors’ knowledge there are a few apps that deal with cleaning,  and visualization from a single instrument [@Salmon:2017]. In contrast, this app integrates data from the above mentioned devices along with location data, combined with unique correction algorithms for different instruments and parameters as described above. 
 
 
-Mobile monitoring of air quality is being gradually adapted by research groups and governments to complement their existing stationary monitoring facilities, in order to understand the hyper-local nature of air pollution levels.
-
-The R-Shiny package `mmaqshiny` is for analysing, visualising and spatial-mapping of high-resolution air quality data collected by specific devices installed on a moving platform.
-
-High frequency (1-Hz) data of PM2.5 (mass concentrations of particulate matter with size less than 2.5 microns); black carbon mass concentrations (BC); ultra-fine particle number concentrations; carbon-di-oxide; GPS coordinates and relative humidity (RH) data are collected by some popular portable instruments (TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-850, Garmin GPSMAP 64s and Omega USB RH probe, respectively), can be handled by this package. The package incorporates device-specific cleaning and correction algorithms. RH correction is applied to DustTrak PM2.5 following a method described in [@Chakrabarti:2004]. If required, user can also input linear regression coefficients for correcting the PM2.5 data. The package cleans BC data for the vibration generated noise, by adopting a statistical procedure as explained in [@Apte:2011], followed by a loading correction as suggested by [@Ban-Weiss:2009]. For the ultra-fine particle number concentration data, provision is made for dilution correction factor (if a diluter is used with CPC3007; default value is 1).
-
-The package joins the raw, cleaned and corrected data from the above mentioned instruments and generates a downloadable csv file. It accepts multiple files for each parameter. The input files should have a date prefix of the format `yyyy_mm_dd` in their file names. The package can process multiple files for a given date at a time and the file name prefix is used to perform the check. An error message will be generated if the prefix is not matched between various pollutant filenames.
-
-The package requires GPS file (.gpx) as a mandatory input along with timezone (a link to all accepted timezone formats in R is also included). All other pollutant files are optional.
-
+### App Display
 
 The output is displayed in five different tabs.
 
@@ -49,17 +51,17 @@ The output is displayed in five different tabs.
 5) `Alarm and Settings` tab displays each instruments settings and alarms (if any)
 
 
-## Limitations
+### Limitations
 
 1) it can handle only single day data at a time
-2) there is provision for linear correction coefficients of PM2.5 only
+2) there is provision for linear correction coefficients of PM<sub>2.5</sub> only
 3) it is instrument specific
 4) file renaming (with date prefix) is required
 
 
-## Installation
+### Installation
 
-`mmaqshiny` can be intsalled from [github](https://github.com/).
+`mmaqshiny` can be installed from [github](https://github.com/).
 
 Load and run `mmaqshiny` as follows:
 
@@ -70,15 +72,20 @@ mmaqshiny::mmaqshiny_run()
 ```
 A preloaded dataset appears which is a joined file of sample data collected during a mobile monitoring campaign in Bangalore, India.
 
-## Community guidelines
 
-1. Contribute to the software
+### Instrument Description
 
-- Please open an issue in the issue tracker of the project that describes the changes you would like to make to the software and open a pull request with the changes.
 
-2. Report issues or problems with the software / Seek Support
+| Instrument (model/ make) | Parameters | Units| Operating Principle | 
+| :-----:|:-----:|:-----:|:-----:|
+| GPSMAP 64s (Garmin) | Location (latitude, longitude, altitude) | °, °, m | Trilateration|
+| USB RH probe (Omega) | Relative Humidity (RH) | % | Electrical detection | 
+| Micro-Aethalometer (AE51, Aethlabs)  | Black Carbon mass concentration (BC) | ng/m³ | Light absorption technique |
+| DustTrak II (DT8530, TSI) | PM<sub>2.5</sub> | mg/m³ |  Light scattering technique | 
+| Li-850 (LICOR) | CO<sub>2</sub> | ppm | Non-Dispersive Infrared |
+| CPC (3007, TSI) | Particle concentration | /cm³ | Light scattering technique |
 
-- Please open an issue in the [issue tracker of the project.](https://github.com/meenakshi-kushwaha/mmaqshiny/issues)
+
 
 # Acknowledgements
 

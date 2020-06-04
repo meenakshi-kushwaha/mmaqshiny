@@ -3,23 +3,36 @@
 
 ## Summary
 
-The R-Shiny package `mmaqshiny` is for analysing, visualising and spatial-mapping of high-resolution air quality data collected by specific devices installed on a moving platform. 
+The R-Shiny package `mmaqshiny` is for analysing, visualising and spatial-mapping of high-resolution air quality data collected by specific devices installed on a moving platform.  With the click of a button, the app generates: summary statistics, time series plots and spatial map of pollutant concentrations. This app reduces the time consumed for analysing each pollutant individually. It helps check the quality of the data at near real time (same day) and instantly visualise pollution hotspots. The time series plots of each pollutant help in understanding the temporal patterns of concentrations and performance of the instruments. 
+
+High frequency (1-Hz) data of PM<sub>2.5</sub> (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide along with GPS coordinates and relative humidity (RH) data are collected by some popular portable instruments (TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-850, Garmin GPSMAP 64s, Omega USB RH probe respectively) can be handled by this package. The package incorporates device-specific cleaning and correction algorithms. RH correction is applied to DustTrak PM<sub>2.5</sub> following a method described in @Chakrabarti:2004. If required, user can also input linear regression coefficients for correcting the PM<sub>2.5</sub> data.
+The linear correction is important to understand the actual on road concentrations for <sub>2.5</sub> collected using DustTrak 8530 in Bangalore. The linear equation can be derived using a gold standard instrument. 
 
 
-High frequency (1-Hz) data of PM2.5 (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide along with GPS coordinates and relative humidity (RH) data are collected by some popular portable instruments (TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-850, Garmin GPSMAP 64s, Omega USB RH probe respectively) can be handled by this package. The package incorporates device-specific cleaning and correction algorithms. RH correction is applied to DustTrak PM2.5 following a method described in @Chakrabarti:2004. If required, user can also input linear regression coefficients for correcting the PM2.5 data. The package cleans BC data for the vibration generated noise, by adopting a statistical procedure as explained in @Apte:2011, followed by a loading correction as suggested by @Ban-Weiss:2009. For the ultra-fine particle number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; default value is 1). 
+Uncorrected PM<sub>2.5</sub> data represented by `DT8530_PM2.5`, is represented in the joined file -  
+
+![\label{fig:example}](Image9.JPG)
+
+Corrected PM<sub>2.5</sub> data using Slope=0.21, Intercept=11.1, is represented by `DT8530_PM2.5_Ref` in joined file -
+
+![\label{fig:example}](Image10.JPG)
+
+The package cleans BC data for the vibration generated noise, by adopting a statistical procedure as explained in @Apte:2011, followed by a loading correction as suggested by @Ban-Weiss:2009. For the ultra-fine particle number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; default value is 1). 
 
 
 The package joins the raw, cleaned and corrected data from the above mentioned instruments and generates a downloadable csv file. It accepts multiple files for each parameter. The input files should have a date prefix of the format `yyyy_mm_dd` in their file names. The package can process multiple files for a given date at a time and the file name prefix is used to perform the check. An error message will be generated if the prefix is not matched between various pollutant filenames.
 
 
-The package requires GPS file (.gpx) as a mandatory input along with timezone (a link to all accepted timezone formats in R is also included). All other pollutant files are optional. A testing data set is provided in the "data" folder inside inst/shiny; with each instrument folder containing 2 days of data. 
+The package requires GPS file (.gpx) as a mandatory input along with timezone (a link to all accepted timezone formats in R is also included). All other pollutant files are optional. A testing data set is provided in the "data" folder inside inst/shiny; with each instrument folder containing 2 days of data.
+
+
 The file extension of 
 - xxx_Garmin is input for GPSMAP 64s - location files
 - xxx_AE51 is input for AE51 - BC files
-- xxx_DT8530 is infput for DT8530 - PM2.5 files
+- xxx_DT8530 is infput for DT8530 - PM<sub>2.5</sub> files
 - xxx_RH is input for RH files
 - xxx_CPC3007 is input for CPC3007 -Particle Concentration files
-- xxx_LI_COR is input for LI-COR - CO2 files
+- xxx_LI_COR is input for LI-COR - CO<sub>2</sub> files
 
 
 The output is displayed in five different tabs.
@@ -34,7 +47,7 @@ The output is displayed in five different tabs.
 ## Limitations
 
 1) handles single day data at a time
-2) only provision for linear correction coefficients of PM2.5
+2) only provision for linear correction coefficients of PM<sub>2.5</sub>
 3) instrument specific 
 4) file renaming (with date prefix) is required
 
@@ -62,7 +75,7 @@ To use the app for your own data follow the steps below.
 
 3. Add raw pollutant .csv files.
 
-4. User can add slope and intercept if a linear correction equation is available for the measured PM2.5. 
+4. User can add slope and intercept if a linear correction equation is available for the measured PM<sub>2.5</sub>. 
 
 ![\label{fig:example}](Image1.JPG)
 
@@ -106,7 +119,7 @@ To use the app for your own data follow the steps below.
 - `DT8530_PM2.5_RHC_Ref`: Reference and RH corrected PM2.5
 - `DT8530_PM2.5_Ref`: Reference corrected PM2.5
 - `CPC3007_Particle Concentration`: Dilution corrected ultra-fine particle number concentration
-- `Li-COR_CO2`: CO2 data
+- `Li-COR_CO2`: CO<sub>2</sub> data
 
 
 ## Community guidelines
@@ -139,7 +152,7 @@ It is an alcohol based handheld instrument used to measure ultrafine particles. 
 
 4. LI-COR 850
 
-It is a CO2/H2O gas analyzer which has a measurement range of 0-20,000 ppm and accuracy of 1.5%. For logging the data it requires a laptop with the software called LI-COR. More details can be [found here.]( https://www.licor.com/env/products/gas_analysis/LI-830_LI-850/)
+It is a CO<sub>2</sub>/H<sub>2</sub>O gas analyzer which has a measurement range of 0-20,000 ppm and accuracy of 1.5%. For logging the data it requires a laptop with the software called LI-COR. More details can be [found here.]( https://www.licor.com/env/products/gas_analysis/LI-830_LI-850/)
 
 5. Omega RH-USB
 
