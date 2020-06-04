@@ -50,7 +50,7 @@ The output is displayed in five different tabs.
 ## Limitations
 
 1) handles single day data at a time
-2) only provision for linear correction coefficients of PM<sub>2.5</sub>
+2) provision for only linear correction coefficients of PM<sub>2.5</sub>
 3) instrument specific 
 4) file renaming (with date prefix) is required
 
@@ -164,14 +164,5 @@ It is an instrument used for measuring RH and temperature. It has an accuracy of
 6. GPSMAP-64s
 
 It works on the ‘trilateration’ mathematical principle of GPS and usually connects to 4 satellites to give the accurate location. More technical details of the instrument can be [found here.]( https://www.garmin.co.in/products/outdoor/gpsmap64s-sea/)
-
-
-
-## Acknowledgements
-
-We wish to thank Prof. Julian Marshall (University of Washington, Seattle), Prof. Joshua Apte (University of California, Berkeley), Dr. Jai Asundi (CSTEP), Dr. Maëlle Salmon, Dr. María Florencia D’Andrea and R Ladies community for their help and support.
-
-
-
 
 
