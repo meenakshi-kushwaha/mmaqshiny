@@ -6,7 +6,7 @@
 The R-Shiny package `mmaqshiny` is for analysing, visualising and spatial-mapping of high-resolution air quality data collected by specific devices installed on a moving platform.  With the click of a button, the app generates: summary statistics, time series plots and spatial map of pollutant concentrations. This app reduces the time consumed for analysing each pollutant individually. It helps check the quality of the data at near real time (same day) and instantly visualise pollution hotspots. The time series plots of each pollutant help in understanding the temporal patterns of concentrations and performance of the instruments. 
 
 High frequency (1-Hz) data of PM<sub>2.5</sub> (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide (CO<sub>2</sub>) along with GPS coordinates and relative humidity (RH) data are collected by some popular portable instruments (TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-850, Garmin GPSMAP 64s, Omega USB RH probe respectively) can be handled by this package. The package incorporates device-specific cleaning and correction algorithms. RH correction is applied to DustTrak PM<sub>2.5</sub> following a method described in @Chakrabarti:2004. If required, user can also input linear regression coefficients for correcting the PM<sub>2.5</sub> data.
-An example of PM<sub>2.5</sub> raw and reference corrected DustTrak data, Using Slope=0.21, Intercept=11.1 is shown below.
+An example of DustTrak PM<sub>2.5</sub> raw and corrected data, using slope=0.21, intercept=11.1 is shown below.
 
 | ![\Uncorrected{fig: `DT8530_PM2.5`}](Image9.JPG) | 
 |:--:| 
@@ -26,7 +26,7 @@ The package joins the raw, cleaned and corrected data from the above mentioned i
 The package requires GPS file (.gpx) as a mandatory input along with timezone (a link to all accepted timezone formats in R is also included). All other pollutant files are optional. A testing data set is provided in the "data" folder inside inst/shiny; with each instrument folder containing 2 days of data.
 
 
-The example data included [here](https://github.com/meenakshi-kushwaha/mmaqshiny/tree/master/inst/shiny/data) contain file extensions- 
+The example data included [here](https://github.com/meenakshi-kushwaha/mmaqshiny/tree/master/inst/shiny/data) contains with following file names - 
 
 - xxx_Garmin correspond to Garmin GPS location files
 - xxx_AE51 correspond to AE51 BC files
@@ -68,15 +68,15 @@ A preloaded dataset appears which is a joined file of sample data collected duri
 
 ## User Guide
 
-To use the app for your own data follow the steps below.
+To use the app, follow the steps below.
 
 1. User needs to add the timezone of data collection. 
 
-2. Add .gpx files for the GPSMAP64s - location file inputs. NOTE: A warning message will appear if input files are from different dates. 
+2. Add .gpx files from GPSMAP64s (location data). NOTE: A warning message will appear if input files are from different dates. 
 
-3. Add raw pollutant .csv files.
+3. Add pollutant .csv files as downloaded from the instruments.
 
-4. User can add slope and intercept if a linear correction equation is available for the measured PM<sub>2.5</sub>. 
+4. User can add slope and intercept if a linear correction is required for the DustTrak measured PM<sub>2.5</sub>. 
 
 ![\label{fig:example}](Image1.JPG)
 
@@ -94,7 +94,7 @@ To use the app for your own data follow the steps below.
 
 ![\label{fig:example}](Image4.JPG)
 
-9. The Plots tab displays time series plots for instant checks on instrument operation on field. 
+9. The Plots tab displays time series plots of all the raw (uncorrected) location and pollutant parameters. 
 
 ![\label{fig:example}](Image5.JPG)
 
@@ -104,7 +104,7 @@ To use the app for your own data follow the steps below.
 
 ![\label{fig:example}](Image7.JPG)
 
-11. Alarms and Settings tab display any staus errors and settings during data collection. 
+11. Alarms and Settings tab display any status errors during data collection and instrument setting. 
 
 ![\label{fig:example}](Image8.JPG)
 
