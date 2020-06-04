@@ -53,9 +53,9 @@ The output is displayed in five different tabs.
 
 ### Limitations
 
-1) it can handle only single day data at a time
-2) there is provision for linear correction coefficients of PM<sub>2.5</sub> only
-3) it is instrument specific
+1) can handle only single day data at a time
+2) there is provision for only linear correction coefficients of PM<sub>2.5</sub> 
+3) is instrument specific
 4) file renaming (with date prefix) is required
 
 
