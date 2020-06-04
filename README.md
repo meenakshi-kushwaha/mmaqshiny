@@ -26,7 +26,7 @@ The package joins the raw, cleaned and corrected data from the above mentioned i
 The package requires GPS file (.gpx) as a mandatory input along with timezone (a link to all accepted timezone formats in R is also included). All other pollutant files are optional. A testing data set is provided in the "data" folder inside inst/shiny; with each instrument folder containing 2 days of data.
 
 
-The example data included here contain file extensions- 
+The example data included [here](https://github.com/meenakshi-kushwaha/mmaqshiny/tree/master/inst/shiny/data) contain file extensions- 
 
 - xxx_Garmin is input for GPSMAP 64s - location files
 - xxx_AE51 is input for AE51 - BC files
