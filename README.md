@@ -7,14 +7,16 @@ The R-Shiny package `mmaqshiny` is for analysing, visualising and spatial-mappin
 
 High frequency (1-Hz) data of PM<sub>2.5</sub> (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide along with GPS coordinates and relative humidity (RH) data are collected by some popular portable instruments (TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-850, Garmin GPSMAP 64s, Omega USB RH probe respectively) can be handled by this package. The package incorporates device-specific cleaning and correction algorithms. RH correction is applied to DustTrak PM<sub>2.5</sub> following a method described in @Chakrabarti:2004. If required, user can also input linear regression coefficients for correcting the PM<sub>2.5</sub> data.
 The linear correction is important to understand the actual on road concentrations for <sub>2.5</sub> collected using DustTrak 8530 in Bangalore. The linear equation can be derived using a gold standard instrument. 
+Eg: PM<sub>2.5</sub> raw and reference corrected data, Using Slope=0.21, Intercept=11.1
+
+| ![\Uncorrected{fig: `DT8530_PM2.5`}](Image9.JPG) | 
+|:--:| 
+| *Uncorrected* `DT8530_PM2.5` |
 
 
-PM<sub>2.5</sub> data, Using Slope=0.21, Intercept=11.1
-
-![\Uncorrected{fig: `DT8530_PM2.5`}](Image9.JPG)
-
-
-![\Corrected {fig: `DT8530_PM2.5_Ref`}](Image10.JPG)
+| ![\Corrected{fig: `DT8530_PM2.5_Ref`}](Image10.JPG) | 
+|:--:| 
+| *Corrected* `DT8530_PM2.5_Ref` |
 
 The package cleans BC data for the vibration generated noise, by adopting a statistical procedure as explained in @Apte:2011, followed by a loading correction as suggested by @Ban-Weiss:2009. For the ultra-fine particle number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; default value is 1). 
 
