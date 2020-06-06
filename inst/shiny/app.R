@@ -3,7 +3,7 @@ library(Cairo)
 library(DT)
 library(plotly)
 library(zoo)
-library(xts)
+# library(xts)
 library(data.table)
 library(stringr)
 library(dplyr)
@@ -14,14 +14,14 @@ library(keyring)
 library(leaflet)
 library(htmltools)
 library(lubridate)
-library(rgdal)
-library(sp)
+# library(rgdal)
+# library(sp)
 library(sf)
-library(scales)
-library(rsconnect)
+# library(scales)
+# library(rsconnect)
 library(caTools)
 library(curl)
-library(devtools)
+# library(devtools)
 library(XML)
 library(purrr)
 library(shinyjs)
@@ -1238,7 +1238,7 @@ server <- function(input, output, session) {
     if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4) & is.null(input$file5) & is.null(input$file6)){
       data<-data_blank()
       data$PM2.5<-as.numeric(as.character(data$PM2.5))
-      point <- format_format(big.mark = "", decimal.mark = ",", scientific = FALSE)
+      # point <- format_format(big.mark = "", decimal.mark = ",", scientific = FALSE)
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(PM2.5)))+ geom_line(size=0.6, color="dodgerblue2")+
                  labs(title="DT8530_PM2.5 (ug/m3)",
                       y="",
@@ -1249,7 +1249,7 @@ server <- function(input, output, session) {
     else if(!is.null(DT_f() )){
       data <- data_joined()
       data$PM2.5<-as.numeric(as.character(data$PM2.5))
-      point <- format_format(big.mark = "", decimal.mark = ",", scientific = FALSE)
+      # point <- format_format(big.mark = "", decimal.mark = ",", scientific = FALSE)
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(PM2.5)))+ geom_line(size=0.6, color="dodgerblue2")+
                  labs(title="DT8530_PM2.5 (ug/m3)",
                       y="",
@@ -1261,7 +1261,7 @@ server <- function(input, output, session) {
     if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4) & is.null(input$file5) & is.null(input$file6)){
       data<-data_blank()
       data$RH<-data$RH*100
-      point <- format_format(big.mark = "", decimal.mark = ",", scientific = FALSE)
+      # point <- format_format(big.mark = "", decimal.mark = ",", scientific = FALSE)
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(RH)))+ geom_line(size=0.6, color="dodgerblue2")+
                  labs(title="Relative Humidity (%)",
                       y="",
@@ -1272,7 +1272,7 @@ server <- function(input, output, session) {
     else if(!is.null(RH_f() )){
       data <- data_joined()
       data$RH<-data$RH*100
-      point <- format_format(big.mark = "", decimal.mark = ",", scientific = FALSE)
+      # point <- format_format(big.mark = "", decimal.mark = ",", scientific = FALSE)
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(RH)))+ geom_line(size=0.6, color="dodgerblue2")+
                  labs(title="Relative Humidity (%)",
                       y="",
@@ -1284,7 +1284,7 @@ server <- function(input, output, session) {
     if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4) & is.null(input$file5) & is.null(input$file6)){
       data<-data_blank()
       data$BC<-as.numeric(as.character(data$BC))
-      point <- format_format(big.mark = "", decimal.mark = ",", scientific = FALSE)
+      # point <- format_format(big.mark = "", decimal.mark = ",", scientific = FALSE)
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(BC)))+ geom_line(size=0.6, color="dodgerblue2")+
                  labs(title="AE51_BC (ug/m3)",
                       y="",
@@ -1295,7 +1295,7 @@ server <- function(input, output, session) {
     else if(!is.null(BC_f() )){
       data <- data_joined()
       data$BC<-as.numeric(as.character(data$BC))
-      point <- format_format(big.mark = "", decimal.mark = ",", scientific = FALSE)
+      # point <- format_format(big.mark = "", decimal.mark = ",", scientific = FALSE)
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(BC)))+ geom_line(size=0.6, color="dodgerblue2")+
                  labs(title="AE51_BC (ug/m3)",
                       y="",
