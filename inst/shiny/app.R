@@ -1,7 +1,7 @@
 library(shiny)
 library(Cairo)
-library(DT)
 library(xts)
+library(DT)
 library(plotly)
 library(zoo)
 library(data.table)
@@ -1445,7 +1445,7 @@ server <- function(input, output, session) {
                                                                          "CPC3007_Particle Concentration (#/cm3):", round(as.numeric(data$Particle_conc,"<br>",
                                                                                                                             "CO2:",round(as.numeric(data$CO2), digits = 2)), digits = 2)), weight = 3, radius=8,
                  col = ~pal(data[[input$palleInp]]), stroke = TRUE, fillOpacity = 0.8) %>%
-      addLegend("bottomright", pal = pal, values = ~data[[input$palleInp]],  title=paste(input$palleInp))
+      leaflet::addLegend("bottomright", pal = pal, values = ~data[[input$palleInp]],  title=paste(input$palleInp))
   })
 }
 ## Run app
