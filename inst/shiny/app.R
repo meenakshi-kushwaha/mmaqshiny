@@ -1402,26 +1402,26 @@ server <- function(input, output, session) {
     }
     data$RH<-data$RH*100
     if ( input$palleInp == "BC_NR" | input$palleInp == "BC_NR_LC" ) {
-      risk.bins =c(0,0.5, 2, 5, 10, 20, 40,100, 500,2000,10000)
-      pal =colorBin( "Spectral", bins=risk.bins, na.color = "#808080", reverse=TRUE)
+      risk.bins <-c(0,0.5, 2, 5, 10, 20, 40,100, 500,2000,10000)
+      pal <-colorBin( "Spectral", bins=risk.bins, na.color = "#808080", reverse=TRUE)
     } else if (input$palleInp == "BC") {
-      risk.bins =c(-10000, -2000,-500, -100, -40, -20, -10, -5, -2, -0.5, 0, 0.5, 2, 5, 10, 20, 40,100, 500, 2000, 10000)
-      pal =colorBin( "Spectral", bins=risk.bins, na.color = "#808080", reverse=TRUE)
+      risk.bins <-c( -100, -40, -20, 0, 5, 10, 20, 40, 100, 500, 2000)
+      pal <-colorBin( "Spectral", bins=risk.bins, na.color = "#808080", reverse=TRUE)
     } else if (input$palleInp == "PM2.5") {
-      risk.bins =c(0,10, 25, 50,100, 500,2000,5000, 10000)
-      pal =colorBin( "Spectral", bins=risk.bins, na.color = "#808080", reverse=TRUE)
+      risk.bins <-c(0,10, 25, 50, 100, 500,2000,5000, 10000)
+      pal <-colorBin( "Spectral", bins=risk.bins, na.color = "#808080", reverse=TRUE)
     } else if (input$palleInp == "Particle_conc"){
-      risk.bins =c(0,5000, 10000, 20000, 40000, 70000, 100000,150000, 200000, 500000)
-      pal =colorBin( "Spectral", bins=risk.bins, na.color = "#808080", reverse=TRUE)
+      risk.bins <-c(0,5000, 10000, 20000, 40000, 70000, 100000,150000, 200000, 500000)
+      pal <-colorBin( "Spectral", bins=risk.bins, na.color = "#808080", reverse=TRUE)
     }else if (input$palleInp == "RH"){
-      pal = colorNumeric("RdYlGn", domain = data$RH, na.color = "#808080", reverse=TRUE)
+      pal <- colorNumeric("RdYlGn", domain = data$RH, na.color = "#808080", reverse=TRUE)
     }else if (input$palleInp == "CO2"){
-      pal = colorNumeric("RdYlGn", domain = data$CO2, na.color = "#808080", reverse=TRUE)
+      pal <- colorNumeric("RdYlGn", domain = data$CO2, na.color = "#808080", reverse=TRUE)
     }else if (input$palleInp == "Latitude"){
-      pal = colorNumeric("RdYlGn", domain = data$Latitude, na.color = "#808080", reverse=TRUE)
+      pal <- colorNumeric("RdYlGn", domain = data$Latitude, na.color = "#808080", reverse=TRUE)
     }  else  {
-      risk.bins =c(0,10, 25, 50,100, 500,2000,5000, 10000)
-      pal =colorBin( "Spectral", bins=risk.bins, na.color = "#808080", reverse=TRUE)
+      risk.bins <-c(0,10, 25, 50,100, 500,2000,5000, 10000)
+      pal <-colorBin( "Spectral", bins=risk.bins, na.color = "#808080", reverse=TRUE)
     }
 
     leaflet(data) %>% addProviderTiles(providers$MtbMap) %>%
