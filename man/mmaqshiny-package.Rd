@@ -4,7 +4,7 @@
 \name{mmaqshiny-package}
 \alias{mmaqshiny}
 \alias{mmaqshiny-package}
-\title{mmaqshiny: R-Shiny package to explore Air-Quality Mobile Monitoring data}
+\title{mmaqshiny: R-Shiny Package to Explore Air-Quality Mobile Monitoring Data}
 \description{
 The R-Shiny package here is for analysing, visualising and spatial-mapping of high-resolution air quality
     data collected by specific devices installed on a moving platform. 1-Hz data of PM2.5 (mass concentrations of particulate 

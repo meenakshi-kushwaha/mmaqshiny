@@ -2,7 +2,7 @@
 % Please edit documentation in R/mmaqshiny_run.R
 \name{mmaqshiny_run}
 \alias{mmaqshiny_run}
-\title{mmaqshiny: R-Shiny package to explore air quality mobile monitoring data}
+\title{mmaqshiny: R-Shiny Package to Explore Air-Quality Mobile Monitoring Data}
 \usage{
 mmaqshiny_run()
 }
@@ -15,9 +15,4 @@ library(mmaqshiny)
 mmaqshiny::mmaqshiny_run()
 }
 }
-\keyword{air}
-\keyword{mmaqshiny,}
-\keyword{mobile}
-\keyword{monitoring}
-\keyword{quality,}
-\keyword{shiny,}
+\keyword{mmaqshiny}

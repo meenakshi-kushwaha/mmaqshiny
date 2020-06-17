@@ -1,13 +1,11 @@
 Package: mmaqshiny
-Title: R-Shiny package to explore Air-Quality Mobile Monitoring data 
+Title: R-Shiny Package to Explore Air-Quality Mobile Monitoring Data
 Version: 1.0.0
-Authors@R: 
-    as.person(c(
-    "Adithi Upadhya <adithi@ilklabs.com> [aut, cre]", 
-    "Pratyush Agrawal <pratyush@ilklabs.com> [dtc]",
-    "Sreekanth Vakacherla <sree.hcu@gmail.com> [aui, ctb]",
-    "Meenakshi Kushwaha <meenakshi@ilklabs.com> [aut]"
-  ))
+Authors@R:  c(
+    person("Adithi", "Upadhya", email = "adithi@ilklabs.com", role = c("aut","cre")),
+    person("Pratyush", "Agrawal", email = "pratyush@ilklabs.com", role = "dtc"),
+    person("Sreekanth", "Vakacherla", email = "sree.hcu@gmail.com", role = c("aui", "ctb")),
+    person("Meenakshi", "Kushwaha", email = "meenakshi@ilklabs.com", role = "aut"))
 Description: The R-Shiny package here is for analysing, visualising and spatial-mapping of high-resolution air quality
     data collected by specific devices installed on a moving platform. 1-Hz data of PM2.5 (mass concentrations of particulate 
     matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, 
@@ -27,28 +25,19 @@ Encoding: UTF-8
 LazyData: true
 Imports: 
     htmltools,
-    sf,
     Cairo,
     xts,
-    purrr,
-    keyring,
     lubridate,
     zoo,
-    curl,
     caTools,
     ggplot2,
     data.table,
     DT,
     dplyr,
-    tidyr,
-    readr,
     leaflet,
     stringr,
-    tidyverse,
     shiny,
     XML,
-    usethis,
-    forcats,
     shinyjs,
     plotly
 Suggests: 
