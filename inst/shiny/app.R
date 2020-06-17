@@ -162,14 +162,14 @@ server <- function(input, output, session) {
 
   CPC_f_date <- reactive({
     inFile <- input$file4
-    if(is.null(input$file4)) {
+    if (is.null(input$file4)) {
       return(NULL)
     }else {
       df_list <- lapply(inFile$datapath, function(y) {
         JSON_csv <- read.delim(y, header = FALSE, sep = ",", row.names = NULL, skip = 4)
         JSON_csv_date <- as.character(JSON_csv[1, 2])
         JSON_csv_date <- as.Date(JSON_csv_date, format = "%m/%d/%y")
-        if(is.na(JSON_csv_date)) {
+        if (is.na(JSON_csv_date)) {
           JSON_csv <- read.delim(y, header = FALSE, sep = ",", row.names = NULL, skip = 4)
           JSON_csv_date <- as.character(JSON_csv[1, 2])
           JSON_csv_date <- as.Date(JSON_csv_date, format = "%m-%d-%Y")
@@ -215,11 +215,11 @@ server <- function(input, output, session) {
 
   BC_f_date <- reactive({
     inFile <- input$file2
-    if(is.null(input$file2)) {
+    if (is.null(input$file2)) {
       return(NULL)
     }else {
       completeFun <- function(data, desiredColumns) {
-        completeVec <- complete.cases(data[, desiredColumns])
+        completeVec <- complete.cases(data[ , desiredColumns])
         return(data[completeVec, ])
       }
       df_list <- lapply(inFile$datapath, function(y) {
@@ -231,7 +231,7 @@ server <- function(input, output, session) {
         JSON_csv <- completeFun(JSON_csv, c("BC"))
         JSON_csv$date1 <- with(JSON_csv, as.POSIXct(paste(as.Date(Date, format = "%Y/%m/%d"), Time),
                                                     tz = input$timezone))
-        if(is.null(JSON_csv$date1)) {
+        if (is.null(JSON_csv$date1)) {
           JSON_csv$date1 <- with(JSON_csv, as.POSIXct(paste(as.Date(Date, format = "%d-%m-%Y"), Time),
                                                       tz = input$timezone))
         }
@@ -241,7 +241,7 @@ server <- function(input, output, session) {
       BC_f <- data
       BC_f_date1 <- as.character(BC_f[1, 1])
       BC_f_date <- as.Date(BC_f_date1, format = "%d-%m-%Y")    #"%d-%m-%Y"; "%Y/%m/%d"
-      if(is.na(BC_f_date)) {
+      if (is.na(BC_f_date)) {
         BC_f_date <- as.Date(BC_f_date1, format = "%Y/%m/%d")     #"%d-%m-%Y"; "%Y/%m/%d"
       }
       return(BC_f_date)
@@ -252,14 +252,14 @@ server <- function(input, output, session) {
 
   DT_f_date <- reactive({
     inFile <- input$file3
-    if(is.null(input$file3)) {
+    if (is.null(input$file3)) {
       return(NULL)
     }else {
       df_list <- lapply(inFile$datapath, function(y) {
         JSON_csv <- read.delim(y, header = TRUE, sep = ",", row.names = NULL, skip = 29)
         JSON_csv_date <- as.character(JSON_csv[1, 1])
         JSON_csv_date <- as.Date(JSON_csv_date, format = "%d-%m-%Y")
-        if(is.na(JSON_csv_date)) {
+        if (is.na(JSON_csv_date)) {
           JSON_csv <- read.delim(y, header = TRUE, sep = ",", row.names = NULL, skip = 29)
           JSON_csv_date <- as.character(JSON_csv[1, 1])
           JSON_csv_date <- as.Date(JSON_csv_date, format = "%m/%d/%Y")
@@ -275,14 +275,14 @@ server <- function(input, output, session) {
 
   CO2_f_date <- reactive({
     inFile <- input$file6
-    if(is.null(input$file6)) {
+    if (is.null(input$file6)) {
       return(NULL)
     }else {
       df_list <- lapply(inFile$datapath, function(y) {
         JSON_csv <-read.delim(y, header = TRUE, sep = ";", row.names = NULL, skip = 2)
         JSON_csv_date <- as.character(JSON_csv[1, 1])
         JSON_csv_date <- as.Date(JSON_csv_date, format = "%d-%m-%Y")
-        if(is.na(JSON_csv_date)) {
+        if (is.na(JSON_csv_date)) {
           JSON_csv <- read.delim(y, header = TRUE, sep = ";", row.names = NULL, skip = 29)
           JSON_csv_date <- as.character(JSON_csv[1, 1])
           JSON_csv_date <- as.Date(JSON_csv_date, format = "%Y-%m-%d")
@@ -298,7 +298,7 @@ server <- function(input, output, session) {
 
   CO2_f <- reactive({
     inFile <- input$file6
-    if(is.null(input$file6)) {
+    if (is.null(input$file6)) {
       return(NULL)
     }else {
       df_list <- lapply(inFile$datapath, function(y) {
@@ -353,11 +353,11 @@ server <- function(input, output, session) {
 
   BC_f <- reactive({
     inFile <- input$file2
-    if(is.null(input$file2)) {
+    if (is.null(input$file2)) {
       return(NULL)
     }else {
       completeFun <- function(data, desiredColumns) {
-        completeVec <- complete.cases(data[, desiredColumns])
+        completeVec <- complete.cases(data[ , desiredColumns])
         return(data[completeVec, ])
       }
       df_list <- lapply(inFile$datapath, function(y){
@@ -369,7 +369,7 @@ server <- function(input, output, session) {
         JSON_csv <- completeFun(JSON_csv, c("BC"))
         JSON_csv$date1 <- with(JSON_csv, as.POSIXct(paste(as.Date(Date, format = "%Y/%m/%d"),
                                                           Time), tz = input$timezone))
-        if(is.null(JSON_csv$date1)) {
+        if (is.null(JSON_csv$date1)) {
           JSON_csv$date1 <- with(JSON_csv, as.POSIXct(paste(as.Date(Date, format = "%d-%m-%Y"),
                                                             Time), tz = input$timezone))
         }
@@ -404,7 +404,7 @@ server <- function(input, output, session) {
       CEV <- data.frame(CEV)
       date_file <- data.frame(ef_file$Date,  ef_file$BC2, ef_file$BC3)
       completeFun <- function(data, desiredColumns) {
-        completeVec <- complete.cases(data[, desiredColumns])
+        completeVec <- complete.cases(data[ , desiredColumns])
         return(data[completeVec, ])
       }
       CEV <- completeFun(CEV, c("ef_file.cev1"))
@@ -427,7 +427,7 @@ server <- function(input, output, session) {
       remove_cev <- data.frame(Date = unlist(Date_cev, use.names = FALSE))
       Date_Table <- unique(remove_cev[c("Date")])
       e <- nrow(Date_Table)
-      if(e == 0) {
+      if (e == 0) {
         BC <- ef_file
         BC$BC_Factor <- 1
       }else {
@@ -461,7 +461,7 @@ server <- function(input, output, session) {
 
   DT_f<- reactive({
     inFile<-input$file3
-    if(is.null(input$file3)) {
+    if (is.null(input$file3)) {
       return(NULL)
     }else {
       df_list <- lapply(inFile$datapath, function(y) {
@@ -473,7 +473,7 @@ server <- function(input, output, session) {
       DT_f <- data
       Date1 <- DT_f[1, 1]
       Date1 <- as.Date(Date1, format = "%d-%m-%Y" )
-      if(is.na(Date1)) {
+      if (is.na(Date1)) {
         Date1 <- DT_f[1, 1]
         Date1 <- as.Date(Date1, format = "%m/%d/%Y" )
       }
@@ -508,7 +508,7 @@ server <- function(input, output, session) {
     DF <- input$DF
     inFile <- input$file4
     name_CPC <- file_name_CPC()
-    if(is.null(input$file4)) {
+    if (is.null(input$file4)) {
       return(NULL)
     }else {
       df_list <- lapply(inFile$datapath, function(y) {
@@ -533,7 +533,7 @@ server <- function(input, output, session) {
   })
 
   RH_f<- reactive({
-    if(is.null(input$file5)) {
+    if (is.null(input$file5)) {
       return(NULL)
     }else {
       RH_f <- data.frame(read.delim(input$file5$datapath, header = TRUE, sep = ",",
@@ -614,7 +614,7 @@ server <- function(input, output, session) {
  ## preloaded table
 
   data_blank <- reactive({
-    if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) &
+    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) &
        is.null(input$file4) & is.null(input$file5) & is.null(input$file6)) {
       pfile2 <- htmlTreeParse("data/GPSMAP64s/2019_09_25_h091000_KAN_Garmin_3.gpx",
                               error = function (...) {}, useInternalNodes = T)
@@ -647,7 +647,7 @@ server <- function(input, output, session) {
       CO2_f <- data.table(CO2_f)
       setkey(CO2_f, date)
       completeFun <- function(data, desiredColumns) {
-        completeVec <- complete.cases(data[, desiredColumns])
+        completeVec <- complete.cases(data[ , desiredColumns])
         return(data[completeVec, ])
       }
       BC_f_header <- read.delim("data/AE51/2019_09_25_h091000_KAN_AE51.csv", header = FALSE,
@@ -685,7 +685,7 @@ server <- function(input, output, session) {
       CEV <- data.frame(CEV)
       date_file <- data.frame(ef_file$Date,  ef_file$BC2, ef_file$BC3)
       completeFun <- function(data, desiredColumns) {
-        completeVec <- complete.cases(data[, desiredColumns])
+        completeVec <- complete.cases(data[ , desiredColumns])
         return(data[completeVec, ])
       }
       CEV <- completeFun(CEV, c("ef_file.cev1"))
@@ -707,7 +707,7 @@ server <- function(input, output, session) {
       remove_cev <- data.frame(Date = unlist(Date_cev, use.names = FALSE))
       Date_Table <- unique(remove_cev[c("Date")])
       e <- nrow(Date_Table)
-      if(e == 0) {
+      if (e == 0) {
         BC <- ef_file
         BC$BC_Factor <- 1
       }else {
@@ -741,7 +741,7 @@ server <- function(input, output, session) {
       names(DT_f) <- c("Date", "Time", "PM2.5")
       Date1 <- DT_f[1, 1]
       Date1 <- as.Date(Date1, format = "%d-%m-%Y" )
-      if(is.na(Date1)) {
+      if (is.na(Date1)) {
         Date1 <- DT_f[1, 1]
         Date1 <- as.Date(Date1, format = "%m/%d/%Y" )
       }
@@ -1044,7 +1044,7 @@ server <- function(input, output, session) {
 ## Final corrected, joined table
 
   output$table1 <- DT::renderDataTable({
-    if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) &
+    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) &
        is.null(input$file4) & is.null(input$file5) & is.null(input$file6)) {
       data_joined <- data_blank()
     }else{
@@ -1081,7 +1081,7 @@ server <- function(input, output, session) {
   output$download <- downloadHandler(
     filename <- function() {"joined_file.csv"},
     content <- function(fname) {
-      if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) &
+      if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) &
          is.null(input$file4) & is.null(input$file5) & is.null(input$file6)) {
         data_joined <- data_blank()
       }else {
@@ -1102,7 +1102,7 @@ server <- function(input, output, session) {
   ## Summary Statistics
 
   output$table <- DT::renderDataTable({
-    if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) &
+    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) &
        is.null(input$file4) & is.null(input$file5) & is.null(input$file6)) {
       data <- data_blank()
     }else {
@@ -1157,7 +1157,7 @@ server <- function(input, output, session) {
 
   output$table4 <- DT::renderDataTable({
     inFile <- input$file3
-    if(is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) &
+    if (is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) &
        is.null(RH_f()) & is.null(CO2_f())) {
       DT_f <- read.delim("data/DT8530/2019_09_25_h091000_KAN_DT8530.csv", header = FALSE,
                          sep = ",", row.names = NULL, skip = 2)
@@ -1165,8 +1165,8 @@ server <- function(input, output, session) {
       DT_f <- DT_f[ ,1:2]
       datatable(DT_f, options = list("pageLength" = 11))
     }
-    else if(is.null(DT_f() )) {}
-    else if(!is.null(DT_f() )) {
+    else if (is.null(DT_f())) {}
+    else if (!is.null(DT_f())) {
       files3 <- lapply(inFile$datapath, function(y){
         JSON_csv <- read.delim(y, header = FALSE, sep = ",", row.names = NULL, skip = 2)
         names(JSON_csv) <- c("Setting", "Value")
@@ -1181,7 +1181,7 @@ server <- function(input, output, session) {
   })
   output$table3 <- DT::renderDataTable({
     inFile <- input$file4
-    if(is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) &
+    if (is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) &
        is.null(RH_f()) & is.null(CO2_f())) {
       CPC_f <- read.delim("data/CPC3007/2019_09_25_h091000_KAN_CPC3007.csv",
                           header = FALSE, sep = ",", row.names = NULL, skip = 1)
@@ -1190,8 +1190,8 @@ server <- function(input, output, session) {
       CPC_f <- CPC_f[ ,1:2]
       datatable(CPC_f, options = list("pageLength" = 13))
     }
-    else if(is.null(CPC_f() )) {}
-    else if(!is.null(CPC_f() )){
+    else if (is.null(CPC_f())) {}
+    else if (!is.null(CPC_f())){
       files3 <- lapply(inFile$datapath, function(y){
         JSON_csv <- read.delim(y, header = FALSE, sep = ",", row.names = NULL, skip = 1)
         names(JSON_csv)<-c("Setting", "Value")
@@ -1206,8 +1206,8 @@ server <- function(input, output, session) {
   })
   output$table2 <- DT::renderDataTable({
     inFile <- input$file2
-    if(is.null(BC_f() )) {}
-    else if(!is.null(BC_f() )){
+    if (is.null(BC_f())) {}
+    else if (!is.null(BC_f())){
       files3 <- lapply(inFile$datapath, function(y){
         JSON_csv_header <- read.delim(y, header = FALSE, sep=",", skip = 15,
                                       row.names = NULL, stringsAsFactors = FALSE)
@@ -1219,7 +1219,7 @@ server <- function(input, output, session) {
       data <- do.call(rbind, files3)
       BC_f <- data
       completeFun <- function(data, desiredColumns) {
-        completeVec <- complete.cases(data[, desiredColumns])
+        completeVec <- complete.cases(data[ , desiredColumns])
         return(data[completeVec, ])
       }
       BC_f <- completeFun(BC_f, c("BC"))
@@ -1229,7 +1229,7 @@ server <- function(input, output, session) {
   })
   output$table5 <- DT::renderDataTable({
     inFile <- input$file2
-    if(is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) &
+    if (is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) &
        is.null(RH_f()) & is.null(CO2_f())) {
       BC_f <- read.delim("data/AE51/2019_09_25_h091000_KAN_AE51.csv", header = FALSE,
                          sep = " ", skip = 1, row.names = NULL)
@@ -1237,8 +1237,8 @@ server <- function(input, output, session) {
       names(BC_f) <- c("Setting")
       datatable(BC_f, options = list("pageLength" = 14))
     }
-    else if(is.null(BC_f() )) {"No AE51 files available"}
-    else if(!is.null(BC_f() )){
+    else if (is.null(BC_f())) {"No AE51 files available"}
+    else if (!is.null(BC_f())){
       files3 <- lapply(inFile$datapath, function(y){
         JSON_csv <- read.delim(y, header = FALSE, sep = " ", skip = 1, row.names = NULL)
         JSON_csv <- JSON_csv[1:14, ]
@@ -1255,7 +1255,7 @@ server <- function(input, output, session) {
     ## Raw pollutants/GPS plot
 
   output$plot5 <- renderPlotly({
-    if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
+    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)) {
       data <- data_blank()
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(Latitude))) +
@@ -1268,8 +1268,8 @@ server <- function(input, output, session) {
                        axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
                        panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
                )}
-    else if(is.null(GPS_f())) {}
-    else if(!is.null(GPS_f())) {
+    else if (is.null(GPS_f())) {}
+    else if (!is.null(GPS_f())) {
       data <- data_joined()
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(Latitude))) +
                  geom_line(size = 0.6, color = "dodgerblue2") +
@@ -1283,7 +1283,7 @@ server <- function(input, output, session) {
                )}
     })
   output$plot6 <- renderPlotly({
-    if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
+    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)){
       data <- data_blank()
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(Longitude))) +
@@ -1296,8 +1296,8 @@ server <- function(input, output, session) {
                        axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
                        panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
                )}
-    else if(is.null(GPS_f())) {}
-    else if(!is.null(GPS_f())) {
+    else if (is.null(GPS_f())) {}
+    else if (!is.null(GPS_f())) {
       data <- data_joined()
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(Longitude))) +
                  geom_line(size = 0.6, color = "dodgerblue2") +
@@ -1311,7 +1311,7 @@ server <- function(input, output, session) {
       )}
   })
   output$plot <- renderPlotly({
-    if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
+    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)) {
       data <- data_blank()
       data$PM2.5 <- as.numeric(as.character(data$PM2.5))
@@ -1325,8 +1325,8 @@ server <- function(input, output, session) {
                        axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
                        panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
             )}
-    else if(is.null(DT_f() )) {}
-    else if(!is.null(DT_f() )) {
+    else if (is.null(DT_f())) {}
+    else if (!is.null(DT_f())) {
       data <- data_joined()
       data$PM2.5 <- as.numeric(as.character(data$PM2.5))
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(PM2.5))) +
@@ -1341,7 +1341,7 @@ server <- function(input, output, session) {
                )}
   })
   output$plot4<- renderPlotly({
-    if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
+    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)){
       data <- data_blank()
       data$RH <- data$RH * 100
@@ -1355,8 +1355,8 @@ server <- function(input, output, session) {
                        axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
                        panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
                )}
-    else if(is.null(RH_f() )) {}
-    else if(!is.null(RH_f() )) {
+    else if (is.null(RH_f())) {}
+    else if (!is.null(RH_f())) {
       data <- data_joined()
       data$RH <- data$RH * 100
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(RH))) +
@@ -1371,7 +1371,7 @@ server <- function(input, output, session) {
                )}
     })
   output$plot2 <- renderPlotly({
-    if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
+    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)) {
       data <- data_blank()
       data$BC <- as.numeric(as.character(data$BC))
@@ -1385,8 +1385,8 @@ server <- function(input, output, session) {
                        axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
                        panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
                )}
-    else if(is.null(BC_f() )) {}
-    else if(!is.null(BC_f() )) {
+    else if (is.null(BC_f())) {}
+    else if (!is.null(BC_f())) {
       data <- data_joined()
       data$BC <- as.numeric(as.character(data$BC))
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(BC))) +
@@ -1401,7 +1401,7 @@ server <- function(input, output, session) {
                )}
   })
   output$plot3 <- renderPlotly({
-    if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
+    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)) {
       data <- data_blank()
       data$Particle_conc <- as.numeric(as.character(data$Particle_conc))
@@ -1415,8 +1415,8 @@ server <- function(input, output, session) {
                        axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
                        panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
                )}
-    else if(is.null(CPC_f())) {}
-    else if(!is.null(CPC_f())) {
+    else if (is.null(CPC_f())) {}
+    else if (!is.null(CPC_f())) {
       data <- data_joined()
       data$Particle_conc <- as.numeric(as.character(data$Particle_conc))
       ggplotly(ggplot(data, aes(as.POSIXct(date), Particle_conc)) +
@@ -1431,7 +1431,7 @@ server <- function(input, output, session) {
                )}
   })
   output$plot7 <- renderPlotly({
-    if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
+    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)) {
       data <- data_blank()
       ggplotly(ggplot(data, aes(as.POSIXct(date), CO2)) +
@@ -1444,8 +1444,8 @@ server <- function(input, output, session) {
                        axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
                        panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
                )}
-    else if(is.null(CO2_f())) {}
-    else if(!is.null(CO2_f())) {
+    else if (is.null(CO2_f())) {}
+    else if (!is.null(CO2_f())) {
       data <- data_joined()
       ggplotly(ggplot(data, aes(as.POSIXct(date), CO2)) +
                  geom_line(size = 0.6, color = "dodgerblue2") +
@@ -1460,7 +1460,7 @@ server <- function(input, output, session) {
   })
 
   observe({
-    if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
+    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)) {
       data_joined <- data_blank()
       data_joined$date          <- NULL
@@ -1474,44 +1474,44 @@ server <- function(input, output, session) {
       data_joined$Latitude  <- NULL
       data_joined$Longitude <- NULL
 
-      if(is.null(CPC_f())) {
+      if (is.null(CPC_f())) {
         data_joined$Particle_conc <- NULL
       }
-      if(!is.null(CPC_f())) {
+      if (!is.null(CPC_f())) {
         data_joined$Particle_conc <- data_joined$Particle_conc
       }
-      if(is.null(RH_f())) {
+      if (is.null(RH_f())) {
         data_joined$RH <- NULL
       }
-      if(!is.null(RH_f())) {
+      if (!is.null(RH_f())) {
         data_joined$RH <- data_joined$RH
       }
-      if(is.null(DT_f() )) {
+      if (is.null(DT_f())) {
         data_joined$PM2.5         <- NULL
         data_joined$PM2.5_RHC     <- NULL
         data_joined$PM2.5_RHC_Ref <- NULL
         data_joined$PM2.5_Ref     <- NULL
         }
-      if(!is.null(DT_f())) {
+      if (!is.null(DT_f())) {
         data_joined$PM2.5 <- data_joined$PM2.5
         data_joined$PM2.5_RHC <- data_joined$PM2.5_RHC
         data_joined$PM2.5_RHC_Ref <- data_joined$PM2.5_RHC_Ref
         data_joined$PM2.5_Ref <- data_joined$PM2.5_Ref
       }
-      if(is.null(BC_f())) {
+      if (is.null(BC_f())) {
         data_joined$BC       <- NULL
         data_joined$BC_NR    <- NULL
         data_joined$BC_NR_LC <- NULL
       }
-      if(!is.null(BC_f())) {
+      if (!is.null(BC_f())) {
         data_joined$BC <- data_joined$BC
         data_joined$BC_NR <- data_joined$BC_NR
         data_joined$BC_NR_LC <- data_joined$BC_NR_LC
       }
-      if(is.null(CO2_f())) {
+      if (is.null(CO2_f())) {
         data_joined$CO2 <- NULL
       }
-      if(!is.null(CO2_f())) {
+      if (!is.null(CO2_f())) {
         data_joined$CO2 <- data_joined$CO2
       }
     }
@@ -1521,7 +1521,7 @@ server <- function(input, output, session) {
     ## Mapping pollutant
 
   output$map <- renderLeaflet({
-    if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
+    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)) {
       data <- data_blank()
     }else {
