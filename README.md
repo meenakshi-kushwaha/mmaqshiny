@@ -8,12 +8,12 @@ The R-Shiny package `mmaqshiny` is for analysing, visualising and spatial-mappin
 High frequency (1-Hz) data of PM<sub>2.5</sub> (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide (CO<sub>2</sub>) along with GPS coordinates and relative humidity (RH) data are collected by some popular portable instruments (TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-850, Garmin GPSMAP 64s, Omega USB RH probe respectively) can be handled by this package. The package incorporates device-specific cleaning and correction algorithms. RH correction is applied to DustTrak PM<sub>2.5</sub> following a method described in @Chakrabarti:2004. If required, user can also input linear regression coefficients for correcting the PM<sub>2.5</sub> data.
 An example of DustTrak PM<sub>2.5</sub> raw and corrected data, using slope=0.21, intercept=11.1 is shown below.
 
-| ![\Uncorrected{fig: `DT8530_PM2.5`}](Image9.JPG) | 
+| ![\Uncorrected{fig: `DT8530_PM2.5`}](inst/images/Image9.JPG) | 
 |:--:| 
 | *Uncorrected* `DT8530_PM2.5` |
 
 
-| ![\Corrected{fig: `DT8530_PM2.5_Ref`}](Image10.JPG) | 
+| ![\Corrected{fig: `DT8530_PM2.5_Ref`}](inst/images/Image10.JPG) | 
 |:--:| 
 | *Corrected* `DT8530_PM2.5_Ref` |
 
@@ -78,7 +78,7 @@ To use the app, follow the steps below.
 
 4. User can add slope and intercept if a linear correction is required for the DustTrak measured PM<sub>2.5</sub>. 
 
-![\label{fig:example}](Image1.JPG)
+![\label{fig:example}](inst/images/Image1.JPG)
 
 5. User can also input a Dilution factor if diluter is used for CPC-3007. Default value is 1 (no dilutor).
 
@@ -86,27 +86,27 @@ To use the app, follow the steps below.
 
 7. Click the download button to download the joined csv file.
 
-![\label{fig:example}](Image2.JPG)
+![\label{fig:example}](inst/images/Image2.JPG)
 
-![\label{fig:example}](Image3.JPG)
+![\label{fig:example}](inst/images/Image3.JPG)
 
 8. Summary tab allows user to check the summary statistics for each of the pollutant. 
 
-![\label{fig:example}](Image4.JPG)
+![\label{fig:example}](inst/images/Image4.JPG)
 
 9. The Plots tab displays time series plots of all the raw (uncorrected) location and pollutant parameters. 
 
-![\label{fig:example}](Image5.JPG)
+![\label{fig:example}](inst/images/Image5.JPG)
 
 10. The Map tab visualises interactive maps for spatial visualization of selected pollutant.
 
-![\label{fig:example}](Image6.JPG)
+![\label{fig:example}](inst/images/Image6.JPG)
 
-![\label{fig:example}](Image7.JPG)
+![\label{fig:example}](inst/images/Image7.JPG)
 
 11. Alarms and Settings tab display any status errors during data collection and instrument setting. 
 
-![\label{fig:example}](Image8.JPG)
+![\label{fig:example}](inst/images/Image8.JPG)
 
 
 ## Glossary
