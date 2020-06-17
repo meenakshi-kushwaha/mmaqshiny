@@ -1061,7 +1061,7 @@ server <- function(input, output, session) {
     data_joined$Latitude      <- round(as.numeric(data_joined$Latitude), digits = 4)
     data_joined$Particle_conc <- round(as.numeric(data_joined$Particle_conc), digits = 2)
     data_joined$CO2           <- round(as.numeric(data_joined$CO2), digits = 2)
-    data_joined$RH            <- data_joined$RH*100
+    data_joined$RH            <- data_joined$RH * 100
     data_joined$RH            <- round(as.numeric(data_joined$RH), digits = 2)
     data_joined <- data_joined %>%
       dplyr::select(date,Latitude,Longitude, BC, BC_NR, BC_NR_LC, PM2.5,
