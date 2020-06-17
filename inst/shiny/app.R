@@ -20,8 +20,8 @@ library(xts)
 # library(rsconnect)
 # library(rgdal)
 # library(sp)
-# Sys.setenv(TMPDIR = 'C:/R/tmp_R') #Sys.getenv('TMPDIR')
-# Sys.setenv(JAVA_HOME = "C:/Program Files/Java/jre1.8.0_211/")
+# Sys.setenv(TMPDIR <- 'C:/R/tmp_R') #Sys.getenv('TMPDIR')
+# Sys.setenv(JAVA_HOME <- "C:/Program Files/Java/jre1.8.0_211/")
 # library(shinytest)
 # recordTest("D:/Dropbox/APMfull/Codes/GitHub Codes/ILKConsultancy")
 # deployApp()
@@ -179,7 +179,7 @@ server <- function(input, output, session) {
       return(NULL)
     }else{
       df_list <- lapply(inFile$datapath, function(y){
-        JSON_csv =read.delim(y, header=FALSE, sep=",", row.names=NULL, skip=4)
+        JSON_csv <-read.delim(y, header=FALSE, sep=",", row.names=NULL, skip=4)
         JSON_csv_date<-as.character(JSON_csv[1,2])
         JSON_csv_date<-as.Date(JSON_csv_date, format="%m/%d/%y")
         if(is.na(JSON_csv_date))
@@ -201,7 +201,7 @@ server <- function(input, output, session) {
       return(NULL)
     }
     req(input$file1)
-    files3 = lapply(inFile$datapath, function(y){
+    files3 <- lapply(inFile$datapath, function(y){
       pfile2 <-htmlTreeParse(y, error = function (...) {}, useInternalNodes = T)
       elevations <- as.numeric(xpathSApply(pfile2, path = "//trkpt/ele", xmlValue))
       times <- xpathSApply(pfile2, path = "//trkpt/time", xmlValue)
@@ -233,7 +233,7 @@ server <- function(input, output, session) {
       df_list <- lapply(inFile$datapath, function(y){
         JSON_csv_header =read.delim(y, header = FALSE, sep=",", skip = 15, row.names=NULL, stringsAsFactors = FALSE)
         JSON_csv_header<-JSON_csv_header[1,]
-        JSON_csv= read.delim(y, skip = 17, header = FALSE, sep =",")
+        JSON_csv<- read.delim(y, skip = 17, header = FALSE, sep =",")
         colnames( JSON_csv ) <- unlist(JSON_csv_header)
         JSON_csv<-completeFun(JSON_csv, c("BC"))
         JSON_csv$date1<- with(JSON_csv, as.POSIXct(paste(as.Date(Date, format="%Y/%m/%d"), Time), tz=input$timezone))
@@ -259,7 +259,7 @@ server <- function(input, output, session) {
       return(NULL)
     }else{
       df_list <- lapply(inFile$datapath, function(y){
-        JSON_csv =read.delim(y, header=TRUE, sep=",", row.names=NULL, skip=29)
+        JSON_csv <-read.delim(y, header=TRUE, sep=",", row.names=NULL, skip=29)
         JSON_csv_date<-as.character(JSON_csv[1,1])
         JSON_csv_date<-as.Date(JSON_csv_date, format="%d-%m-%Y")
         if(is.na(JSON_csv_date))
@@ -279,7 +279,7 @@ server <- function(input, output, session) {
       return(NULL)
     }else{
       df_list <- lapply(inFile$datapath, function(y){
-        JSON_csv =read.delim(y, header=TRUE, sep=";", row.names=NULL, skip=2)
+        JSON_csv <-read.delim(y, header=TRUE, sep=";", row.names=NULL, skip=2)
         JSON_csv_date<-as.character(JSON_csv[1,1])
         JSON_csv_date<-as.Date(JSON_csv_date, format="%d-%m-%Y")
         if(is.na(JSON_csv_date))
@@ -326,7 +326,7 @@ server <- function(input, output, session) {
       return(NULL)
     }
     req(input$file1)
-    files3 = lapply(inFile$datapath, function(y){
+    files3 <- lapply(inFile$datapath, function(y){
       pfile2 <-htmlTreeParse(y,
                              error = function (...) {}, useInternalNodes = T)
       elevations <- as.numeric(xpathSApply(pfile2, path = "//trkpt/ele", xmlValue))
@@ -357,9 +357,9 @@ server <- function(input, output, session) {
         return(data[completeVec, ])
       }
       df_list <- lapply(inFile$datapath, function(y){
-        JSON_csv_header =read.delim(y, header = FALSE, sep=",", skip = 15, row.names=NULL, stringsAsFactors = FALSE)
+        JSON_csv_header <-read.delim(y, header = FALSE, sep=",", skip = 15, row.names=NULL, stringsAsFactors = FALSE)
         JSON_csv_header<-JSON_csv_header[1,]
-        JSON_csv= read.delim(y, skip = 17, header = FALSE, sep =",")
+        JSON_csv<- read.delim(y, skip = 17, header = FALSE, sep =",")
         colnames( JSON_csv ) <- unlist(JSON_csv_header)
         JSON_csv<-completeFun(JSON_csv, c("BC"))
         JSON_csv$date1<- with(JSON_csv, as.POSIXct(paste(as.Date(Date, format="%Y/%m/%d"), Time), tz=input$timezone))
@@ -406,17 +406,17 @@ server <- function(input, output, session) {
       cev_file<-xts(cev_file, order.by = cev_file$ef_file.Date)
       ef_file<-data.frame(ef_file)
       CE<-data.frame(index(CEV))
-      i=index(cev_file)
-      i_old=index(cev_file)
-      i=index(cev_file)+1
-      j=index(cev_file)+2
-      k=index(cev_file)-2
-      l=index(cev_file)-1
+      i<-index(cev_file)
+      i_old<-index(cev_file)
+      i<-index(cev_file)+1
+      j<-index(cev_file)+2
+      k<-index(cev_file)-2
+      l<-index(cev_file)-1
       i<-cbind(as.character(i),as.character(i_old), as.character(j), as.character(k), as.character(l))
       Date_cev<-data.frame(i)
       remove_cev<- data.frame(Date=unlist(Date_cev, use.names = FALSE))
       Date_Table<-unique(remove_cev[c("Date")])
-      e=nrow(Date_Table)
+      e<-nrow(Date_Table)
       if(e == 0){
         BC<-ef_file
         BC$BC_Factor<- 1
@@ -430,9 +430,9 @@ server <- function(input, output, session) {
       }
       BC$BC_Fi<-BC$BC_Factor*BC$BC1
       BC$BC_Fi[BC$BC_Fi == 0] <-NA
-      BC$Tr=exp(-BC$ATN/100)
-      BC$CF=1/(0.88*BC$Tr+0.12)
-      BC$BC_Final=BC$BC_Fi*BC$CF
+      BC$Tr<-exp(-BC$ATN/100)
+      BC$CF<-1/(0.88*BC$Tr+0.12)
+      BC$BC_Final<-BC$BC_Fi*BC$CF
       BC$BC_Fi[BC$BC_Fi<0]<-NA
       BC$BC_Fi[is.na(BC$BC_Fi)] <- " "
       BC$BC_Final[BC$BC_Final<0]<-NA
@@ -499,7 +499,7 @@ server <- function(input, output, session) {
       return(NULL)
     }else{
       df_list <- lapply(inFile$datapath, function(y){
-        JSON_csv =read.delim(y, header=TRUE, sep=",", row.names=NULL, skip=17,stringsAsFactors=FALSE, fileEncoding="latin1")
+        JSON_csv <-read.delim(y, header=TRUE, sep=",", row.names=NULL, skip=17,stringsAsFactors=FALSE, fileEncoding="latin1")
         JSON_csv
       })
       data<-do.call(rbind, df_list)
@@ -633,7 +633,7 @@ server <- function(input, output, session) {
       }
       BC_f_header =read.delim("2019_09_25_h091000_KAN_AE12.csv", header = FALSE, sep=",", skip = 15, row.names=NULL, stringsAsFactors = FALSE)
       BC_f_header<-BC_f_header[1,]
-      BC_f= read.delim("2019_09_25_h091000_KAN_AE12.csv", skip = 17, header = FALSE, sep =",")
+      BC_f<- read.delim("2019_09_25_h091000_KAN_AE12.csv", skip = 17, header = FALSE, sep =",")
       colnames( BC_f ) <- unlist(BC_f_header)
       BC_f<-completeFun(BC_f, c("BC"))
       BC_f$date1<- with(BC_f, as.POSIXct(paste(as.Date(Date, format="%Y/%m/%d"), Time), tz="Asia/Kolkata"))
@@ -669,17 +669,17 @@ server <- function(input, output, session) {
       cev_file<-xts(cev_file, order.by = cev_file$ef_file.Date)
       ef_file<-data.frame(ef_file)
       CE<-data.frame(index(CEV))
-      i=index(cev_file)
-      i_old=index(cev_file)
-      i=index(cev_file)+1
-      j=index(cev_file)+2
-      k=index(cev_file)-2
-      l=index(cev_file)-1
+      i<-index(cev_file)
+      i_old<-index(cev_file)
+      i<-index(cev_file)+1
+      j<-index(cev_file)+2
+      k<-index(cev_file)-2
+      l<-index(cev_file)-1
       i<-cbind(as.character(i),as.character(i_old), as.character(j), as.character(k), as.character(l))
       Date_cev<-data.frame(i)
       remove_cev<- data.frame(Date=unlist(Date_cev, use.names = FALSE))
       Date_Table<-unique(remove_cev[c("Date")])
-      e=nrow(Date_Table)
+      e<-nrow(Date_Table)
       if(e == 0){
         BC<-ef_file
         BC$BC_Factor<- 1
@@ -693,9 +693,9 @@ server <- function(input, output, session) {
       }
       BC$BC_Fi<-BC$BC_Factor*BC$BC1
       BC$BC_Fi[BC$BC_Fi == 0] <-NA
-      BC$Tr=exp(-BC$ATN/100)
-      BC$CF=1/(0.88*BC$Tr+0.12)
-      BC$BC_Final=BC$BC_Fi*BC$CF
+      BC$Tr<-exp(-BC$ATN/100)
+      BC$CF<-1/(0.88*BC$Tr+0.12)
+      BC$BC_Final<-BC$BC_Fi*BC$CF
       BC$BC_Fi[BC$BC_Fi<0]<-NA
       BC$BC_Final[BC$BC_Final<0]<-NA
       BC$BC_Final[is.na(BC$BC_Final)] <- " "
@@ -726,7 +726,7 @@ server <- function(input, output, session) {
       setkey(DT_f, date)
 
 
-      CPC_f =read.delim("2019_09_25_h091000_KAN_CPC.csv", header=TRUE, sep=",", row.names=NULL, skip=17,stringsAsFactors=FALSE, fileEncoding="latin1")
+      CPC_f <-read.delim("2019_09_25_h091000_KAN_CPC.csv", header=TRUE, sep=",", row.names=NULL, skip=17,stringsAsFactors=FALSE, fileEncoding="latin1")
       CPC_f<-CPC_f[,1:2]
       names(CPC_f)<-c("Time", "Particle_conc")
       CPC_f$Particle_conc<-CPC_f$Particle_conc*5.5
@@ -1110,8 +1110,8 @@ server <- function(input, output, session) {
     }
     else if(is.null(DT_f() )) {}
     else if(!is.null(DT_f() )){
-      files3 = lapply(inFile$datapath, function(y){
-        JSON_csv =read.delim(y, header=FALSE, sep=",", row.names=NULL, skip=2)
+      files3 <- lapply(inFile$datapath, function(y){
+        JSON_csv <-read.delim(y, header=FALSE, sep=",", row.names=NULL, skip=2)
         names(JSON_csv)<-c("Setting", "Value")
         JSON_csv<-JSON_csv[1:11,]
         JSON_csv<-JSON_csv[,1:2]
@@ -1133,8 +1133,8 @@ server <- function(input, output, session) {
     }
     else if(is.null(CPC_f() )) {}
     else if(!is.null(CPC_f() )){
-      files3 = lapply(inFile$datapath, function(y){
-        JSON_csv =read.delim(y, header=FALSE, sep=",", row.names=NULL, skip=1)
+      files3 <- lapply(inFile$datapath, function(y){
+        JSON_csv <-read.delim(y, header=FALSE, sep=",", row.names=NULL, skip=1)
         names(JSON_csv)<-c("Setting", "Value")
         JSON_csv<-JSON_csv[1:13,]
         JSON_csv<-JSON_csv[,1:2]
@@ -1149,10 +1149,10 @@ server <- function(input, output, session) {
     inFile<-input$file2
     if(is.null(BC_f() )) {}
     else if(!is.null(BC_f() )){
-      files3 = lapply(inFile$datapath, function(y){
-        JSON_csv_header =read.delim(y, header = FALSE, sep=",", skip = 15, row.names=NULL, stringsAsFactors = FALSE)
+      files3 <- lapply(inFile$datapath, function(y){
+        JSON_csv_header <-read.delim(y, header = FALSE, sep=",", skip = 15, row.names=NULL, stringsAsFactors = FALSE)
         JSON_csv_header<-JSON_csv_header[1,]
-        JSON_csv= read.delim(y, skip = 17, header = FALSE, sep =",")
+        JSON_csv<- read.delim(y, skip = 17, header = FALSE, sep =",")
         colnames( JSON_csv ) <- unlist(JSON_csv_header)
         JSON_csv
       })
@@ -1177,8 +1177,8 @@ server <- function(input, output, session) {
     }
     else if(is.null(BC_f() )) {"No AE51 files available"}
     else if(!is.null(BC_f() )){
-      files3 = lapply(inFile$datapath, function(y){
-        JSON_csv =read.delim(y, header=FALSE, sep=" ", skip = 1, row.names=NULL)
+      files3 <- lapply(inFile$datapath, function(y){
+        JSON_csv <-read.delim(y, header=FALSE, sep=" ", skip = 1, row.names=NULL)
         JSON_csv<-JSON_csv[1:14, ]
         JSON_csv
       })
