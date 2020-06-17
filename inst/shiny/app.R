@@ -1018,7 +1018,7 @@ server <- function(input, output, session) {
     data_joined$RH<-round(as.numeric(data_joined$RH), digits = 2)
     data_joined<-data_joined %>%
       dplyr::select(date,Latitude,Longitude, BC,BC_NR,BC_NR_LC, PM2.5,PM2.5_RHC,PM2.5_RHC_Ref,PM2.5_Ref, RH, Particle_conc,  CO2)
-    names(data_joined)<-c("date", "Latitude", "Longitude",  "AE51_BC (ug/m3)","AE51_BC_NR (ug/m3)","AE51_BC_NR_LC (ug/m3)",  "DT8530_PM2.5 (ug/m3)","DT8530_PM2.5_RHC (ug/m3)","DT8530_PM2.5_RHC_Ref (ug/m3)","DT8530_PM2.5_Ref (ug/m3)","RH(%)", "CPC3007_Particle Concentration (#/cm3)",  "LI-COR_CO2 (ppmv)")
+    names(data_joined)<-c("date", "Latitude", "Longitude",  "AE51_BC (ug/m3)","AE51_BC_NR (ug/m3)","AE51_BC_NR_LC (ug/m3)",  "DT8530_PM2.5 (ug/m3)","DT8530_PM2.5_RHC (ug/m3)","DT8530_PM2.5_RHC_Ref (ug/m3)","DT8530_PM2.5_Ref (ug/m3)","RH(%)", "CPC3007_Particle Concentration (#/cm3)",  "LI-COR_CO2 (ppm)")
 
     datatable(data_joined, options = list("pageLength" = 25))
   })
@@ -1036,7 +1036,7 @@ server <- function(input, output, session) {
       }
       data_joined<-data_joined %>%
         dplyr::select(date,Latitude,Longitude, BC, BC_NR, BC_NR_LC,PM2.5,PM2.5_RHC,PM2.5_RHC_Ref,PM2.5_Ref, RH, Particle_conc,  CO2)
-      names(data_joined)<-c("date(LT)", "Latitude", "Longitude", "AE51_BC (ug/m3)","AE51_BC_NR (ug/m3)","AE51_BC_NR_LC (ug/m3)",  "DT8530_PM2.5 (ug/m3)","DT8530_PM2.5_RHC (ug/m3)","DT8530_PM2.5_RHC_Ref (ug/m3)","DT8530_PM2.5_Ref (ug/m3)","RH(%)", "CPC3007_Particle Concentration (#/cm3)",  "LI-COR_CO2 (ppmv)")
+      names(data_joined)<-c("date(LT)", "Latitude", "Longitude", "AE51_BC (ug/m3)","AE51_BC_NR (ug/m3)","AE51_BC_NR_LC (ug/m3)",  "DT8530_PM2.5 (ug/m3)","DT8530_PM2.5_RHC (ug/m3)","DT8530_PM2.5_RHC_Ref (ug/m3)","DT8530_PM2.5_Ref (ug/m3)","RH(%)", "CPC3007_Particle Concentration (#/cm3)",  "LI-COR_CO2 (ppm)")
       write.csv(data_joined, fname)
     }
   )
@@ -1055,8 +1055,8 @@ server <- function(input, output, session) {
     data[["BC_NR"]]<-as.numeric(as.character(data[["BC_NR"]]))
     data[["BC_NR_LC"]]<-as.numeric(as.character(data[["BC_NR_LC"]]))
     data$RH<-data$RH*100
-    names(data)<-c("AE51_BC (ug/m3)","AE51_BC_NR (ug/m3)","AE51_BC_NR_LC (ug/m3)",  "DT8530_PM2.5 (ug/m3)","DT8530_PM2.5_RHC (ug/m3)","DT8530_PM2.5_RHC_Ref (ug/m3)","DT8530_PM2.5_Ref (ug/m3)","RH(%)", "CPC3007_Particle Concentration (#/cm3)",  "LI-COR_CO2 (ppmv)")
-    columns <-c("AE51_BC (ug/m3)","AE51_BC_NR (ug/m3)","AE51_BC_NR_LC (ug/m3)",  "DT8530_PM2.5 (ug/m3)","DT8530_PM2.5_RHC (ug/m3)","DT8530_PM2.5_RHC_Ref (ug/m3)","DT8530_PM2.5_Ref (ug/m3)","RH(%)",  "CPC3007_Particle Concentration (#/cm3)", "LI-COR_CO2 (ppmv)")
+    names(data)<-c("AE51_BC (ug/m3)","AE51_BC_NR (ug/m3)","AE51_BC_NR_LC (ug/m3)",  "DT8530_PM2.5 (ug/m3)","DT8530_PM2.5_RHC (ug/m3)","DT8530_PM2.5_RHC_Ref (ug/m3)","DT8530_PM2.5_Ref (ug/m3)","RH(%)", "CPC3007_Particle Concentration (#/cm3)",  "LI-COR_CO2 (ppm)")
+    columns <-c("AE51_BC (ug/m3)","AE51_BC_NR (ug/m3)","AE51_BC_NR_LC (ug/m3)",  "DT8530_PM2.5 (ug/m3)","DT8530_PM2.5_RHC (ug/m3)","DT8530_PM2.5_RHC_Ref (ug/m3)","DT8530_PM2.5_Ref (ug/m3)","RH(%)",  "CPC3007_Particle Concentration (#/cm3)", "LI-COR_CO2 (ppm)")
     data[, columns] <- lapply(columns, function(x) as.numeric(as.character(data[[x]])))
     tmp1 <- do.call(data.frame,
                     list(Mean = apply(data, 2, mean,na.rm=TRUE),
@@ -1401,8 +1401,11 @@ server <- function(input, output, session) {
       data<-data_joined()
     }
     data$RH<-data$RH*100
-    if (input$palleInp == "BC" | input$palleInp == "BC_NR" | input$palleInp == "BC_NR_LC" ) {
+    if ( input$palleInp == "BC_NR" | input$palleInp == "BC_NR_LC" ) {
       risk.bins =c(0,0.5, 2, 5, 10, 20, 40,100, 500,2000,10000)
+      pal =colorBin( "Spectral", bins=risk.bins, na.color = "#808080", reverse=TRUE)
+    } else if (input$palleInp == "BC") {
+      risk.bins =c(-10000, -2000,-500, -100, -40, -20, -10, -5, -2, -0.5, 0, 0.5, 2, 5, 10, 20, 40,100, 500, 2000, 10000)
       pal =colorBin( "Spectral", bins=risk.bins, na.color = "#808080", reverse=TRUE)
     } else if (input$palleInp == "PM2.5") {
       risk.bins =c(0,10, 25, 50,100, 500,2000,5000, 10000)
