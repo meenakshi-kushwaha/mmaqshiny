@@ -158,7 +158,7 @@ server <- function(input, output, session) {
 
   options(shiny.maxRequestSize = 30*1024^2, shiny.launch.browser = TRUE)
 
-  ## CPC date
+  ## date matching
 
   CPC_f_date <- reactive({
     inFile <- input$file4
@@ -180,8 +180,6 @@ server <- function(input, output, session) {
     CPC_f2_date <- df_list[[1]]
     return(CPC_f2_date)
   })
-
-  ## GPS date
 
   GPS_f_date <- reactive({
     trial  <- data.frame()
@@ -210,8 +208,6 @@ server <- function(input, output, session) {
     GPS_f_date <- as.Date(GPS_f_date, format="%Y-%m-%d") #"%m/%d/%Y"
     return(GPS_f_date)
   })
-
-  ## AE51 date
 
   BC_f_date <- reactive({
     inFile <- input$file2
@@ -248,8 +244,6 @@ server <- function(input, output, session) {
     }
   })
 
-  ## DT8530 date
-
   DT_f_date <- reactive({
     inFile <- input$file3
     if (is.null(input$file3)) {
@@ -271,8 +265,6 @@ server <- function(input, output, session) {
     }
   })
 
-  ## LI-COR date
-
   CO2_f_date <- reactive({
     inFile <- input$file6
     if (is.null(input$file6)) {
@@ -293,6 +285,7 @@ server <- function(input, output, session) {
       return(CO2_f_date)
     }
     })
+
 
   ## GPS and pollutant file joining
 
@@ -491,6 +484,7 @@ server <- function(input, output, session) {
 
   })
 
+
   ## file name matching
 
   file_name_CPC <- reactive({
@@ -570,6 +564,7 @@ server <- function(input, output, session) {
       return(name_CO2)
     }
   })
+
   file_name_RH <- reactive({
     inFile <- input$file5
     if (is.null(inFile)) {
@@ -580,6 +575,7 @@ server <- function(input, output, session) {
       return(name_RH)
     }
   })
+
   file_name_GPS <- reactive({
     inFile <- input$file1
     if (is.null(inFile)) {
@@ -590,6 +586,7 @@ server <- function(input, output, session) {
       return(name_GPS)
     }
   })
+
   file_name_BC <- reactive({
     inFile <- input$file2
     if (is.null(inFile)) {
@@ -600,6 +597,7 @@ server <- function(input, output, session) {
       return(name_BC)
     }
   })
+
   file_name_DT <- reactive({
     inFile <- input$file3
     if (is.null(inFile)) {
@@ -611,7 +609,8 @@ server <- function(input, output, session) {
     }
   })
 
- ## preloaded table
+
+  ## preloaded table
 
   data_blank <- reactive({
     if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) &
@@ -866,6 +865,7 @@ server <- function(input, output, session) {
     setkey(joined_GPS_CO2, date)
     return(joined_GPS_CO2)
   })
+
   joined_GPS_DT <- reactive({
     name_GPS <- file_name_GPS()
     name_DT  <- file_name_DT()
@@ -896,6 +896,7 @@ server <- function(input, output, session) {
     setkey(joined_GPS_DT, date)
     return(joined_GPS_DT)
   })
+
   DT_RH <- reactive({
     name_RH <- file_name_RH()
     name_DT <- file_name_DT()
@@ -941,6 +942,7 @@ server <- function(input, output, session) {
     setkey(DT_f, date)
     return(DT_f)
   })
+
   joined_GPS_BC <- reactive({
     name_GPS <- file_name_GPS()
     name_BC <- file_name_BC()
@@ -971,6 +973,7 @@ server <- function(input, output, session) {
     setkey(joined_GPS_BC, date)
     return(joined_GPS_BC)
   })
+
   joined_GPS_CPC <- reactive({
     name_GPS <- file_name_GPS()
     name_CPC <- file_name_CPC()
@@ -998,6 +1001,7 @@ server <- function(input, output, session) {
     setkey(joined_GPS_CPC, date)
     return(joined_GPS_CPC)
   })
+
   observeEvent(input$timezone,{
     toggleState(id = "join_button", condition = (input$timezone != "" |
                                                  is.null(input$timezone) | is.na(input$timezone)) )
@@ -1041,7 +1045,8 @@ server <- function(input, output, session) {
     return(joined)
   })
 
-## Final corrected, joined table
+
+  ## Final corrected, joined table
 
   output$table1 <- DT::renderDataTable({
     if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) &
@@ -1076,7 +1081,7 @@ server <- function(input, output, session) {
   })
 
 
-   ## Download the csv generated
+  ## Download the csv generated
 
   output$download <- downloadHandler(
     filename <- function() {"joined_file.csv"},
@@ -1098,6 +1103,7 @@ server <- function(input, output, session) {
       write.csv(data_joined, fname)
     }
   )
+
 
   ## Summary Statistics
 
@@ -1153,7 +1159,8 @@ server <- function(input, output, session) {
     datatable(tmp, options = list("pageLength" = 13))
   })
 
-    ## Alarms and settings
+
+  ## Alarms and settings
 
   output$table4 <- DT::renderDataTable({
     inFile <- input$file3
@@ -1179,6 +1186,7 @@ server <- function(input, output, session) {
       datatable(DT_f, options = list("pageLength" = 11))
     }
   })
+
   output$table3 <- DT::renderDataTable({
     inFile <- input$file4
     if (is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) &
@@ -1204,6 +1212,7 @@ server <- function(input, output, session) {
       datatable(CPC_f, options = list("pageLength" = 13))
     }
   })
+
   output$table2 <- DT::renderDataTable({
     inFile <- input$file2
     if (is.null(BC_f())) {}
@@ -1227,6 +1236,7 @@ server <- function(input, output, session) {
       BC_f
     }
   })
+
   output$table5 <- DT::renderDataTable({
     inFile <- input$file2
     if (is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) &
@@ -1252,7 +1262,8 @@ server <- function(input, output, session) {
     }
   })
 
-    ## Raw pollutants/GPS plot
+
+  ## Raw pollutants/GPS plot
 
   output$plot5 <- renderPlotly({
     if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
@@ -1282,6 +1293,7 @@ server <- function(input, output, session) {
                        panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
                )}
     })
+
   output$plot6 <- renderPlotly({
     if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)){
@@ -1310,6 +1322,7 @@ server <- function(input, output, session) {
                        panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
       )}
   })
+
   output$plot <- renderPlotly({
     if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)) {
@@ -1340,6 +1353,7 @@ server <- function(input, output, session) {
                        panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
                )}
   })
+
   output$plot4<- renderPlotly({
     if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)){
@@ -1370,6 +1384,7 @@ server <- function(input, output, session) {
                        panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
                )}
     })
+
   output$plot2 <- renderPlotly({
     if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)) {
@@ -1400,6 +1415,7 @@ server <- function(input, output, session) {
                        panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
                )}
   })
+
   output$plot3 <- renderPlotly({
     if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)) {
@@ -1430,6 +1446,7 @@ server <- function(input, output, session) {
                        panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
                )}
   })
+
   output$plot7 <- renderPlotly({
     if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)) {
@@ -1518,7 +1535,8 @@ server <- function(input, output, session) {
     updateSelectInput(session, "palleInp", choices = names(data_joined))
   })
 
-    ## Mapping pollutant
+
+  ## Mapping pollutant
 
   output$map <- renderLeaflet({
     if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
