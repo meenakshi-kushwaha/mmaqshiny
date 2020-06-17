@@ -15,16 +15,6 @@ library(zoo)
 library(caTools)
 library(xts)
 
-# library(devtools)
-# library(scales)
-# library(rsconnect)
-# library(rgdal)
-# library(sp)
-# Sys.setenv(TMPDIR <- 'C:/R/tmp_R') #Sys.getenv('TMPDIR')
-# Sys.setenv(JAVA_HOME <- "C:/Program Files/Java/jre1.8.0_211/")
-# library(shinytest)
-# recordTest("D:/Dropbox/APMfull/Codes/GitHub Codes/ILKConsultancy")
-# deployApp()
 
 ui <- fluidPage(
   h1("Explore Mobile Monitoring Air Pollution Data"),
@@ -170,7 +160,9 @@ ui <- fluidPage(
 
 
 server <- function(input, output, session) {
+
   options(shiny.maxRequestSize = 30*1024^2, shiny.launch.browser = TRUE)
+
   ## date verification
 
   CPC_f_date<- reactive({
@@ -600,7 +592,7 @@ server <- function(input, output, session) {
 
   data_blank<-reactive({
     if(is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4) & is.null(input$file5) & is.null(input$file6)){
-      pfile2 <-htmlTreeParse("2019_09_25_h091000_KAN_Garmin_3.gpx",error = function (...) {}, useInternalNodes = T)
+      pfile2 <-htmlTreeParse("data/GPSMAP64s/2019_09_25_h091000_KAN_Garmin_3.gpx",error = function (...) {}, useInternalNodes = T)
       elevations <- as.numeric(xpathSApply(pfile2, path = "//trkpt/ele", xmlValue))
       times <- xpathSApply(pfile2, path = "//trkpt/time", xmlValue)
       coords <- xpathSApply(pfile2, path = "//trkpt", xmlAttrs)
@@ -616,7 +608,7 @@ server <- function(input, output, session) {
       setkey(GPS_f, date)
 
 
-      CO2_f<-read.delim("2019_09_25_h091000_KAN_CO2.csv", skip=1, sep=",", header=TRUE, row.names=NULL,stringsAsFactors=FALSE)
+      CO2_f<-read.delim("data/LI-COR/2019_09_25_h091000_KAN_LI_COR.csv", skip=1, sep=",", header=TRUE, row.names=NULL,stringsAsFactors=FALSE)
       CO2_f<-CO2_f[,1:3]
       names(CO2_f)<-c("Date", "Time", "CO2")
       CO2_f$date<- with(CO2_f, as.POSIXct(paste(as.Date(Date, format="%d-%m-%Y"), Time), tz="Asia/Kolkata"))#"%Y-%m-%d"; "%d-%m-%Y"
@@ -631,9 +623,9 @@ server <- function(input, output, session) {
         completeVec <- complete.cases(data[, desiredColumns])
         return(data[completeVec, ])
       }
-      BC_f_header =read.delim("2019_09_25_h091000_KAN_AE12.csv", header = FALSE, sep=",", skip = 15, row.names=NULL, stringsAsFactors = FALSE)
+      BC_f_header<-read.delim("data/AE51/2019_09_25_h091000_KAN_AE51.csv", header = FALSE, sep=",", skip = 15, row.names=NULL, stringsAsFactors = FALSE)
       BC_f_header<-BC_f_header[1,]
-      BC_f<- read.delim("2019_09_25_h091000_KAN_AE12.csv", skip = 17, header = FALSE, sep =",")
+      BC_f<- read.delim("data/AE51/2019_09_25_h091000_KAN_AE51.csv", skip = 17, header = FALSE, sep =",")
       colnames( BC_f ) <- unlist(BC_f_header)
       BC_f<-completeFun(BC_f, c("BC"))
       BC_f$date1<- with(BC_f, as.POSIXct(paste(as.Date(Date, format="%Y/%m/%d"), Time), tz="Asia/Kolkata"))
@@ -708,7 +700,7 @@ server <- function(input, output, session) {
       attributes(BC_Final$date)$tzone <- "Asia/Kolkata"
       setkey(BC_Final, date)
 
-      DT_f<-read.delim("2019_09_25_h091000_KAN_DT809.csv", header=TRUE, sep=",", row.names=NULL, skip=28)
+      DT_f<-read.delim("data/DT8530/2019_09_25_h091000_KAN_DT8530.csv", header=TRUE, sep=",", row.names=NULL, skip=28)
       names(DT_f)<-c("Date","Time", "PM2.5")
       Date1<-DT_f[1,1]
       Date1<-as.Date(Date1,format = "%d-%m-%Y" )
@@ -726,7 +718,7 @@ server <- function(input, output, session) {
       setkey(DT_f, date)
 
 
-      CPC_f <-read.delim("2019_09_25_h091000_KAN_CPC.csv", header=TRUE, sep=",", row.names=NULL, skip=17,stringsAsFactors=FALSE, fileEncoding="latin1")
+      CPC_f <-read.delim("data/CPC3007/2019_09_25_h091000_KAN_CPC3007.csv", header=TRUE, sep=",", row.names=NULL, skip=17,stringsAsFactors=FALSE, fileEncoding="latin1")
       CPC_f<-CPC_f[,1:2]
       names(CPC_f)<-c("Time", "Particle_conc")
       CPC_f$Particle_conc<-CPC_f$Particle_conc*5.5
@@ -737,7 +729,7 @@ server <- function(input, output, session) {
       setkey(CPC_f, date)
 
 
-      RH_f<-data.frame(read.delim("2019_09_25_h091000_KAN_RHUSB.csv", header=TRUE, sep=",",skip=6, row.names=NULL))
+      RH_f<-data.frame(read.delim("data/RH/2019_09_25_h091000_KAN_RH.csv", header=TRUE, sep=",",skip=6, row.names=NULL))
       RH_f_Date<-RH_f[,2]
       RH_f_Time<-RH_f[,3]
       RH<-RH_f[ , grepl( "RH" , names( RH_f ) ) ]
@@ -1103,7 +1095,7 @@ server <- function(input, output, session) {
   output$table4 <- DT::renderDataTable({
     inFile<-input$file3
     if(is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) & is.null(RH_f()) & is.null(CO2_f())){
-      DT_f<-read.delim("2019_09_25_h091000_KAN_DT809.csv", header=FALSE, sep=",", row.names=NULL, skip=2)
+      DT_f<-read.delim("data/DT8530/2019_09_25_h091000_KAN_DT8530.csv", header=FALSE, sep=",", row.names=NULL, skip=2)
       DT_f<-DT_f[1:11,]
       DT_f<-DT_f[,1:2]
       datatable(DT_f, options = list("pageLength" = 11))
@@ -1125,7 +1117,7 @@ server <- function(input, output, session) {
   output$table3<- DT::renderDataTable({
     inFile<-input$file4
     if(is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) & is.null(RH_f()) & is.null(CO2_f())){
-      CPC_f<-read.delim("2019_09_25_h091000_KAN_CPC.csv", header=FALSE, sep=",", row.names=NULL, skip=1)
+      CPC_f<-read.delim("data/CPC3007/2019_09_25_h091000_KAN_CPC3007.csv", header=FALSE, sep=",", row.names=NULL, skip=1)
       names(CPC_f)<-c("Setting", "Value")
       CPC_f<-CPC_f[1:13,]
       CPC_f<-CPC_f[,1:2]
@@ -1170,7 +1162,7 @@ server <- function(input, output, session) {
   output$table5 <-DT::renderDataTable({
     inFile<-input$file2
     if(is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) & is.null(RH_f()) & is.null(CO2_f())){
-      BC_f<-read.delim("2019_09_25_h091000_KAN_AE12.csv", header=FALSE, sep=" ", skip = 1, row.names=NULL)
+      BC_f<-read.delim("data/AE51/2019_09_25_h091000_KAN_AE51.csv", header=FALSE, sep=" ", skip = 1, row.names=NULL)
       BC_f<-BC_f[1:14, ]
       names(BC_f)<-c("Setting")
       datatable(BC_f, options = list("pageLength" = 14))
