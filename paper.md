@@ -53,10 +53,10 @@ The output is displayed in five different tabs.
 
 ### Limitations
 
-1) can handle only single day data at a time
-2) there is provision for only linear correction coefficients of PM<sub>2.5</sub> 
-3) is instrument specific
-4) file renaming (with date prefix) is required
+1) It can handle only single day data at a time
+2) There is provision for only linear correction coefficients of PM<sub>2.5</sub> 
+3) It is instrument specific
+4) It is mandatory to rename files (with date prefix)
 
 
 ### Installation
