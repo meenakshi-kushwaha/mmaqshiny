@@ -7,7 +7,7 @@
 mmaqshiny_run()
 }
 \description{
-The package is for analysing, visualising and spatial mapping of
+The package is for analysing, visualising and spatial plotting of
 high-resolution air quality data collected by specific devices installed on
 a moving platform.
 }
