@@ -573,7 +573,7 @@ server <- function(input, output, session) {
                                     sep = ",", skip = 6, row.names = NULL))
       RH_f_Date <- RH_f[ ,2]
       RH_f_Time <- RH_f[ ,3]
-      RH <- RH_f[ , grepl( "RH" , names(RH_f ) ) ]
+      RH <- RH_f[ , grepl( "RH", names(RH_f ) ) ]
       RH_f <- data.frame(RH_f_Date, RH_f_Time, RH)
       names(RH_f) <- c("LogDate", "LogTime", "RH")
       RH_f$LogTime <- gsub(".", ":", RH_f$LogTime, fixed = TRUE)
@@ -1782,6 +1782,7 @@ server <- function(input, output, session) {
 }
 ## Run app
 shinyApp(ui, server)
+
 
 
 

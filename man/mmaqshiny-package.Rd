@@ -6,15 +6,15 @@
 \alias{mmaqshiny-package}
 \title{mmaqshiny: Explore Air Quality Mobile Monitoring Data}
 \description{
-mmaqshiny is for analysing, visualising and spatial mapping of 
+mmaqshiny is for analysing, visualising and spatial plotting of 
     high-resolution air quality data collected by specific devices installed on 
     a moving platform. 1 Hz data of PM2.5 (mass concentrations of particulate  
     matter with size less than 2.5 microns), Black carbon mass concentrations 
     (BC), ultra-fine particle number concentrations, carbon dioxide along with 
-    GPS coordinates and relative humidity (RH) data collected by some popular 
+    GPS coordinates and relative humidity (RH) data collected by popular 
     portable instruments (TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, 
     LICOR Li-830, Garmin GPSMAP 64s, Omega USB RH probe respectively). It 
-    incorporates device-specific cleaning and correction algorithms. RH correction 
+    incorporates device specific cleaning and correction algorithms. RH correction 
     is applied to DustTrak PM2.5 following the Chakrabarti et al., (2004). 
     Provision is given to add linear regression coefficients for correcting the 
     PM2.5 data (if required). BC data will be cleaned for the vibration generated
