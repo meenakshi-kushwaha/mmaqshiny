@@ -342,8 +342,7 @@ server <- function(input, output, session) {
       setkey(CO2_f, date)
       return(CO2_f)
     }
-
-  })
+    })
 
   GPS_f <- reactive({
     trial  <- data.frame()
@@ -523,8 +522,7 @@ server <- function(input, output, session) {
       setkey(DT_f, date)
       return(DT_f)
     }
-
-  })
+    })
 
 
   ## file name matching
@@ -567,8 +565,7 @@ server <- function(input, output, session) {
       setkey(CPC_f, date)
       return(CPC_f)
     }
-
-  })
+    })
 
   RH_f<- reactive({
     if (is.null(input$file5)) {
@@ -677,7 +674,6 @@ server <- function(input, output, session) {
       GPS_f <- data.table(GPS_f)
       setkey(GPS_f, date)
 
-
       CO2_f <- read.delim("data/LI-COR/2019_09_25_h091000_KAN_LI_COR.csv",
                           skip = 1, sep = ",", header = TRUE, row.names = NULL,
                           stringsAsFactors = FALSE)
@@ -696,6 +692,7 @@ server <- function(input, output, session) {
         completeVec <- complete.cases(data[ , desiredColumns])
         return(data[completeVec, ])
       }
+
       BC_f_header <- read.delim("data/AE51/2019_09_25_h091000_KAN_AE51.csv",
                                 header = FALSE,
                                 sep = ",", skip = 15, row.names = NULL,
@@ -854,6 +851,7 @@ server <- function(input, output, session) {
           return (1)
         }
       }
+
       joined_GPS_CO2 <- left_join(GPS_f, CO2_f, by = "date")
       joined_GPS_CO2 <- dplyr::select(joined_GPS_CO2, date, CO2, latitude,
                                       longitude )
@@ -1198,8 +1196,7 @@ server <- function(input, output, session) {
                             "RH(%)", "CPC3007_Particle Concentration (#/cm3)",
                             "LI-COR_CO2 (ppm)")
       write.csv(data_joined, fname)
-    }
-  )
+    })
 
 
   ## Summary Statistics
