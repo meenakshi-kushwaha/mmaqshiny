@@ -6,7 +6,7 @@ Authors@R:  c(
     person("Pratyush", "Agrawal", email = "pratyush@ilklabs.com", role = "dtc"),
     person("Sreekanth", "Vakacherla", email = "sree.hcu@gmail.com", role = c("aui", "ctb")),
     person("Meenakshi", "Kushwaha", email = "meenakshi@ilklabs.com", role = "aut"))
-Description: mmaqshiny is for analysing, visualising and spatial mapping of 
+Description: mmaqshiny is for analysing, visualising and spatial plotting of 
     high-resolution air quality data collected by specific devices installed on 
     a moving platform. 1 Hz data of PM2.5 (mass concentrations of particulate  
     matter with size less than 2.5 microns), Black carbon mass concentrations 
