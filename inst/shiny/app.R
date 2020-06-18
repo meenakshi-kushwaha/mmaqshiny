@@ -701,7 +701,8 @@ server <- function(input, output, session) {
       j <- index(cev_file) + 2
       k <- index(cev_file) - 2
       l <- index(cev_file) - 1
-      i <- cbind(as.character(i), as.character(i_old), as.character(j), as.character(k), as.character(l))
+      i <- cbind(as.character(i), as.character(i_old), as.character(j),
+                 as.character(k), as.character(l))
       Date_cev <- data.frame(i)
       remove_cev <- data.frame(Date = unlist(Date_cev, use.names = FALSE))
       Date_Table <- unique(remove_cev[c("Date")])
@@ -754,7 +755,8 @@ server <- function(input, output, session) {
       setkey(DT_f, date)
 
       CPC_f <- read.delim("data/CPC3007/2019_09_25_h091000_KAN_CPC3007.csv", header = TRUE,
-                          sep = ",", row.names = NULL, skip = 17,stringsAsFactors = FALSE, fileEncoding = "latin1")
+                          sep = ",", row.names = NULL, skip = 17,stringsAsFactors = FALSE,
+                          fileEncoding = "latin1")
       CPC_f <- CPC_f[ ,1:2]
       names(CPC_f) <- c("Time", "Particle_conc")
       CPC_f$Particle_conc <- CPC_f$Particle_conc * 5.5
@@ -775,7 +777,7 @@ server <- function(input, output, session) {
       RH_f$LogTime <- gsub("AM", "", RH_f$LogTime, fixed = TRUE)
       RH_f$LogTime <- gsub("PM", "", RH_f$LogTime, fixed = TRUE)
       RH_f$date <- as.POSIXct(paste(RH_f$LogDate, RH_f$LogTime),
-                              format = '%d-%m-%Y %H:%M:%S', tz = "Asia/Kolkata")#"%d-%m-%Y %I:%M:%OS %p"
+                              format = '%d-%m-%Y %H:%M:%S', tz = "Asia/Kolkata")
       RH_f <- RH_f%>%
         dplyr::select(date, RH)#X2.P..RH, X1.P..RH
       names(RH_f) <- c("date", "RH")
@@ -1125,7 +1127,8 @@ server <- function(input, output, session) {
                      "DT8530_PM2.5_Ref (ug/m3)", "RH(%)", "CPC3007_Particle Concentration (#/cm3)", "LI-COR_CO2 (ppm)")
     columns <- c("AE51_BC (ug/m3)","AE51_BC_NR (ug/m3)","AE51_BC_NR_LC (ug/m3)",
                  "DT8530_PM2.5 (ug/m3)", "DT8530_PM2.5_RHC (ug/m3)",
-                 "DT8530_PM2.5_RHC_Ref (ug/m3)", "DT8530_PM2.5_Ref (ug/m3)", "RH(%)", "CPC3007_Particle Concentration (#/cm3)", "LI-COR_CO2 (ppm)")
+                 "DT8530_PM2.5_RHC_Ref (ug/m3)", "DT8530_PM2.5_Ref (ug/m3)",
+                 "RH(%)", "CPC3007_Particle Concentration (#/cm3)", "LI-COR_CO2 (ppm)")
     data[ , columns] <- lapply(columns, function(x) as.numeric(as.character(data[[x]])))
     tmp1 <- do.call(data.frame,
                     list(Mean = apply(data, 2, mean, na.rm = TRUE),
@@ -1571,13 +1574,14 @@ server <- function(input, output, session) {
 
     leaflet(data) %>%
       addProviderTiles(providers$Stamen.TonerLite) %>%
-      addCircles(data=data, lng=~Longitude, lat=~Latitude, popup=  paste("Date:", data$date, "<br>",
-                                                                         "AE51_BC (ug/m3):", round(as.numeric(data$BC), digits = 2), "<br>",
-                                                                         "DT8530_PM2.5 (ug/m3):",round(as.numeric(data$PM2.5), digits = 2), "<br>",
-                                                                         "RH(%):",round(as.numeric(data$RH), digits = 2), "<br>",
-                                                                         "CPC3007_Particle Concentration (#/cm3):",
-                                                                         round(as.numeric(data$Particle_conc,"<br>",
-                                                                                          "CO2:",round(as.numeric(data$CO2), digits = 2)), digits = 2)),
+      addCircles(data=data, lng=~Longitude, lat=~Latitude,
+                 popup=  paste("Date:", data$date, "<br>",
+                               "AE51_BC (ug/m3):", round(as.numeric(data$BC), digits = 2), "<br>",
+                               "DT8530_PM2.5 (ug/m3):",round(as.numeric(data$PM2.5), digits = 2), "<br>",
+                               "RH(%):",round(as.numeric(data$RH), digits = 2), "<br>",
+                               "CPC3007_Particle Concentration (#/cm3):",round(as.numeric(data$Particle_conc,"<br>",
+                                                                                          "CO2:",round(as.numeric(data$CO2),
+                                                                                                       digits = 2)), digits = 2)),
                  weight = 3, radius=8,
                  col = ~pal(data[[input$palleInp]]), stroke = TRUE, fillOpacity = 0.8) %>%
       leaflet::addLegend("bottomright", pal = pal, values = ~data[[input$palleInp]],
