@@ -34,7 +34,8 @@ ui <- fluidPage(
                                    tags$hr()),
                   conditionalPanel(condition = "input.tabs1 == 4",
                                    tags$hr(),
-                                   selectInput("palleInp", "Map this pollutant", "Select"),
+                                   selectInput("palleInp", "Map this pollutant",
+                                               "Select"),
                                    tags$hr()),
                   conditionalPanel(condition = "input.tabs1 == 3",
                                    tags$hr(),
@@ -50,10 +51,13 @@ ui <- fluidPage(
                                    helpText("Choose mobile monitoring files."),
                                    tags$hr(),
                                    useShinyjs(),
-                                   test <- a("Input Timezone* (link to supported timezones)",
+                                   test <- a("Input Timezone* (link to supported
+                                             timezones)",
                                              href = "https://en.wikipedia.org/wiki/List_of_tz_database_time_zones",
-                                             style = "font-size:14px; ", target = "_blank"),
-                                   textInput("timezone", "", value = "Asia/Kolkata", width = NULL),
+                                             style = "font-size:14px; ",
+                                             target = "_blank"),
+                                   textInput("timezone", "", value = "Asia/Kolkata",
+                                             width = NULL),
                                    tags$hr(),
                                    fileInput("file1",
                                              "GPSMAP 64s - location files",
@@ -63,13 +67,15 @@ ui <- fluidPage(
                                    fileInput("file2", "AE51 - BC files",
                                              multiple = TRUE,
                                              accept = c("text/csv",
-                                                        "text/comma-separated-values,text/plain",
+                                                        "text/comma-separated-values,
+                                                        text/plain",
                                                         ".csv")),
                                    tags$hr(),
                                    fileInput("file3", "DT8530 - PM2.5 files",
                                              multiple = TRUE,
                                              accept = c("text/csv",
-                                                        "text/comma-separated-values,text/plain",
+                                                        "text/comma-separated-values,
+                                                        text/plain",
                                                         ".csv")),
                                    h5("Reference Correction for DT8530 - PM2.5"),
                                    numericInput("Slope",
@@ -82,24 +88,29 @@ ui <- fluidPage(
                                    fileInput("file5", "RH files",
                                              multiple = TRUE,
                                              accept = c("text/csv",
-                                                        "text/comma-separated-values,text/plain",
+                                                        "text/comma-separated-values,
+                                                        text/plain",
                                                         ".csv")),
 
                                    tags$hr(),
-                                   fileInput("file4", "CPC3007 -Particle Concentration files",
+                                   fileInput("file4", "CPC3007 -
+                                             Particle Concentration files",
                                              multiple = TRUE,
                                              accept = c("text/csv",
-                                                        "text/comma-separated-values,text/plain",
+                                                        "text/comma-separated-values,
+                                                        text/plain",
                                                         ".csv")),
                                    numericInput("DF",
-                                                "Dilution factor for CPC (1 for no diluter)",
+                                                "Dilution factor for
+                                                CPC (1 for no diluter)",
                                                 value = 1),
                                    tags$hr(),
                                    fileInput("file6", "LI-COR - CO2 files",
                                              multiple = TRUE,
                                              accept = c("text/csv",
                                                         ".txt",
-                                                        "text/comma-separated-values,text/plain",
+                                                        "text/comma-separated-values,
+                                                        text/plain",
                                                         ".csv")),
                                    helpText("*mandatory"),
                                    tags$hr(),
@@ -109,7 +120,8 @@ ui <- fluidPage(
                                    tags$hr())
                 ),
                 mainPanel(
-                  tags$a(img(src = 'logo.png', align = "right", height = 70, width = 120),
+                  tags$a(img(src = 'logo.png', align = "right", height = 70,
+                             width = 120),
                          href="https://www.ilklabs.com/", target = "_blank"),
                   tags$head(
                     tags$style(type ='text/css',
@@ -139,7 +151,8 @@ ui <- fluidPage(
                               tabPanel(
                                 value = 4,
                                 title = "Map",
-                                leafletOutput("map", width = "100%", height = 800)
+                                leafletOutput("map", width = "100%",
+                                              height = 800)
                               ),
                               tabPanel(value = 6,
                                        title = "Alarms and Settings",
@@ -166,11 +179,13 @@ server <- function(input, output, session) {
       return(NULL)
     }else {
       df_list <- lapply(inFile$datapath, function(y) {
-        JSON_csv <- read.delim(y, header = FALSE, sep = ",", row.names = NULL, skip = 4)
+        JSON_csv <- read.delim(y, header = FALSE, sep = ",",
+                               row.names = NULL, skip = 4)
         JSON_csv_date <- as.character(JSON_csv[1, 2])
         JSON_csv_date <- as.Date(JSON_csv_date, format = "%m/%d/%y")
         if (is.na(JSON_csv_date)) {
-          JSON_csv <- read.delim(y, header = FALSE, sep = ",", row.names = NULL, skip = 4)
+          JSON_csv <- read.delim(y, header = FALSE, sep = ",",
+                                 row.names = NULL, skip = 4)
           JSON_csv_date <- as.character(JSON_csv[1, 2])
           JSON_csv_date <- as.Date(JSON_csv_date, format = "%m-%d-%Y")
         }
@@ -190,12 +205,14 @@ server <- function(input, output, session) {
     req(input$file1)
     files3 <- lapply(inFile$datapath, function(y) {
       pfile2 <- htmlTreeParse(y, error = function (...) {}, useInternalNodes = T)
-      elevations <- as.numeric(xpathSApply(pfile2, path = "//trkpt/ele", xmlValue))
+      elevations <- as.numeric(xpathSApply(pfile2, path = "//trkpt/ele",
+                                           xmlValue))
       times  <- xpathSApply(pfile2, path = "//trkpt/time", xmlValue)
       coords <- xpathSApply(pfile2, path = "//trkpt", xmlAttrs)
       lats <- as.numeric(coords["lat", ])
       lons <- as.numeric(coords["lon", ])
-      geodf2 <- data.frame(latitude = lats, longitude = lons, ele = elevations, time = times)
+      geodf2 <- data.frame(latitude = lats, longitude = lons,
+                           ele = elevations, time = times)
     })
     trial <- do.call(rbind, files3)
     GPS_f <- trial
@@ -219,24 +236,29 @@ server <- function(input, output, session) {
         return(data[completeVec, ])
       }
       df_list <- lapply(inFile$datapath, function(y) {
-        JSON_csv_header <- read.delim(y, header = FALSE, sep = ",", skip = 15, row.names = NULL,
+        JSON_csv_header <- read.delim(y, header = FALSE, sep = ",",
+                                      skip = 15, row.names = NULL,
                                       stringsAsFactors = FALSE)
         JSON_csv_header <-JSON_csv_header[1, ]
         JSON_csv <- read.delim(y, skip = 17, header = FALSE, sep = ",")
         colnames(JSON_csv) <- unlist(JSON_csv_header)
         JSON_csv <- completeFun(JSON_csv, c("BC"))
-        JSON_csv$date1 <- with(JSON_csv, as.POSIXct(paste(as.Date(Date, format = "%Y/%m/%d"), Time),
-                                                    tz = input$timezone))
+        JSON_csv$date1 <- with(JSON_csv,
+                               as.POSIXct(paste(
+                                 as.Date(Date, format = "%Y/%m/%d"), Time),
+                                 tz = input$timezone))
         if (is.null(JSON_csv$date1)) {
-          JSON_csv$date1 <- with(JSON_csv, as.POSIXct(paste(as.Date(Date, format = "%d-%m-%Y"), Time),
-                                                      tz = input$timezone))
+          JSON_csv$date1 <- with(JSON_csv,
+                                 as.POSIXct(paste(
+                                   as.Date(Date, format = "%d-%m-%Y"), Time),
+                                   tz = input$timezone))
         }
         JSON_csv
       })
       data <- do.call(rbind, df_list)
       BC_f <- data
       BC_f_date1 <- as.character(BC_f[1, 1])
-      BC_f_date <- as.Date(BC_f_date1, format = "%d-%m-%Y")    #"%d-%m-%Y"; "%Y/%m/%d"
+      BC_f_date <- as.Date(BC_f_date1, format = "%d-%m-%Y")
       if (is.na(BC_f_date)) {
         BC_f_date <- as.Date(BC_f_date1, format = "%Y/%m/%d")     #"%d-%m-%Y"; "%Y/%m/%d"
       }
@@ -250,11 +272,13 @@ server <- function(input, output, session) {
       return(NULL)
     }else {
       df_list <- lapply(inFile$datapath, function(y) {
-        JSON_csv <- read.delim(y, header = TRUE, sep = ",", row.names = NULL, skip = 29)
+        JSON_csv <- read.delim(y, header = TRUE, sep = ",",
+                               row.names = NULL, skip = 29)
         JSON_csv_date <- as.character(JSON_csv[1, 1])
         JSON_csv_date <- as.Date(JSON_csv_date, format = "%d-%m-%Y")
         if (is.na(JSON_csv_date)) {
-          JSON_csv <- read.delim(y, header = TRUE, sep = ",", row.names = NULL, skip = 29)
+          JSON_csv <- read.delim(y, header = TRUE, sep = ",",
+                                 row.names = NULL, skip = 29)
           JSON_csv_date <- as.character(JSON_csv[1, 1])
           JSON_csv_date <- as.Date(JSON_csv_date, format = "%m/%d/%Y")
         }
@@ -271,11 +295,13 @@ server <- function(input, output, session) {
       return(NULL)
     }else {
       df_list <- lapply(inFile$datapath, function(y) {
-        JSON_csv <-read.delim(y, header = TRUE, sep = ";", row.names = NULL, skip = 2)
+        JSON_csv <-read.delim(y, header = TRUE, sep = ";",
+                              row.names = NULL, skip = 2)
         JSON_csv_date <- as.character(JSON_csv[1, 1])
         JSON_csv_date <- as.Date(JSON_csv_date, format = "%d-%m-%Y")
         if (is.na(JSON_csv_date)) {
-          JSON_csv <- read.delim(y, header = TRUE, sep = ";", row.names = NULL, skip = 29)
+          JSON_csv <- read.delim(y, header = TRUE, sep = ";",
+                                 row.names = NULL, skip = 29)
           JSON_csv_date <- as.character(JSON_csv[1, 1])
           JSON_csv_date <- as.Date(JSON_csv_date, format = "%Y-%m-%d")
         }
@@ -295,16 +321,19 @@ server <- function(input, output, session) {
       return(NULL)
     }else {
       df_list <- lapply(inFile$datapath, function(y) {
-        JSON_csv <- read.delim(y, skip = 1, sep = ",", header = TRUE, row.names = NULL,
-                             stringsAsFactors = FALSE)
+        JSON_csv <- read.delim(y, skip = 1, sep = ",",
+                               header = TRUE, row.names = NULL,
+                               stringsAsFactors = FALSE)
         JSON_csv <- JSON_csv[ ,1:3]
         names(JSON_csv) <- c("Date", "Time", "CO2")
         JSON_csv
       })
       data  <- do.call(rbind, df_list)
       CO2_f <- data
-      CO2_f$date <- with(CO2_f, as.POSIXct(paste(as.Date(Date, format = "%d-%m-%Y"), Time),
-                                           tz = input$timezone))   #"%Y-%m-%d"; "%d-%m-%Y"
+      CO2_f$date <- with(CO2_f,
+                         as.POSIXct(paste(
+                           as.Date(Date, format = "%d-%m-%Y"), Time),
+                                           tz = input$timezone))#"%Y-%m-%d""%d-%m-%Y"
       CO2_f <- CO2_f %>%
         dplyr::select(date, CO2)
       names(CO2_f) <- c("date", "CO2")
@@ -325,12 +354,14 @@ server <- function(input, output, session) {
     req(input$file1)
     files3 <- lapply(inFile$datapath, function(y) {
       pfile2 <- htmlTreeParse(y, error = function (...) {}, useInternalNodes = T)
-      elevations <- as.numeric(xpathSApply(pfile2, path = "//trkpt/ele", xmlValue))
+      elevations <- as.numeric(xpathSApply(pfile2, path = "//trkpt/ele",
+                                           xmlValue))
       times  <- xpathSApply(pfile2, path = "//trkpt/time", xmlValue)
       coords <- xpathSApply(pfile2, path = "//trkpt", xmlAttrs)
       lats   <- as.numeric(coords["lat", ])
       lons   <- as.numeric(coords["lon", ])
-      geodf2 <- data.frame(latitude = lats, longitude = lons, ele = elevations, time = times)
+      geodf2 <- data.frame(latitude = lats, longitude = lons,
+                           ele = elevations, time = times)
     })
     trial <- do.call(rbind, files3)
     GPS_f <- trial
@@ -355,16 +386,22 @@ server <- function(input, output, session) {
       }
       df_list <- lapply(inFile$datapath, function(y){
         JSON_csv_header <- read.delim(y, header = FALSE, sep = ",", skip = 15,
-                                      row.names = NULL, stringsAsFactors = FALSE)
+                                      row.names = NULL,
+                                      stringsAsFactors = FALSE)
         JSON_csv_header <- JSON_csv_header[1, ]
         JSON_csv <- read.delim(y, skip = 17, header = FALSE, sep = ",")
         colnames( JSON_csv ) <- unlist(JSON_csv_header)
         JSON_csv <- completeFun(JSON_csv, c("BC"))
-        JSON_csv$date1 <- with(JSON_csv, as.POSIXct(paste(as.Date(Date, format = "%Y/%m/%d"),
-                                                          Time), tz = input$timezone))
+        JSON_csv$date1 <- with(JSON_csv,
+                               as.POSIXct(paste(
+                                 as.Date(
+                                   Date, format = "%Y/%m/%d"), Time),
+                                 tz = input$timezone))
         if (is.null(JSON_csv$date1)) {
-          JSON_csv$date1 <- with(JSON_csv, as.POSIXct(paste(as.Date(Date, format = "%d-%m-%Y"),
-                                                            Time), tz = input$timezone))
+          JSON_csv$date1 <- with(JSON_csv,
+                                 as.POSIXct(paste(
+                                   as.Date(Date, format = "%d-%m-%Y"), Time),
+                                   tz = input$timezone))
         }
         JSON_csv
       })
@@ -380,15 +417,18 @@ server <- function(input, output, session) {
       ef_file$BC1 <- (ef_file$BC / 1000)
       BC_Final <- ef_file
       ef_file$LD   <- ef_file$BC1 - rollapply(ef_file$BC1 , FUN = mean,
-                                              width = 30, align = "center", partial = TRUE)
-      ef_file$LD25 <- runquantile(ef_file$LD, 300, 0.25, type = 2, endrule = c("NA"))
-      ef_file$LD75 <- runquantile(ef_file$LD, 300, 0.75, type = 2, endrule = c("NA"))
+                                              width = 30, align = "center",
+                                              partial = TRUE)
+      ef_file$LD25 <- runquantile(ef_file$LD, 300, 0.25, type = 2,
+                                  endrule = c("NA"))
+      ef_file$LD75 <- runquantile(ef_file$LD, 300, 0.75, type = 2,
+                                  endrule = c("NA"))
       ef_file$BC2  <- ef_file$BC1
       ef_file$BC3  <- ef_file$BC1
       ef_file$BC2[ef_file$BC2 >= 0] <- 0
       ef_file$BC2[ef_file$BC2 < 0] <- 1
-      ef_file$BC2 <- rollapply(ef_file$BC2 , FUN = mean, width = 5, align = "center",
-                               partial = TRUE)
+      ef_file$BC2 <- rollapply(ef_file$BC2 , FUN = mean, width = 5,
+                               align = "center",  partial = TRUE)
       Lower_LD25  <- ((ef_file$LD) > 5 * (ef_file$LD75))
       Higher_LD75 <- ((ef_file$LD) < 5 * (ef_file$LD25))
       ef_file$cev1 <- ifelse(Lower_LD25|Higher_LD75, ef_file$BC1, NA)
@@ -414,8 +454,8 @@ server <- function(input, output, session) {
       j <- index(cev_file) + 2
       k <- index(cev_file) - 2
       l <- index(cev_file) - 1
-      i <- cbind(as.character(i), as.character(i_old), as.character(j), as.character(k),
-                 as.character(l))
+      i <- cbind(as.character(i), as.character(i_old), as.character(j),
+                 as.character(k), as.character(l))
       Date_cev <- data.frame(i)
       remove_cev <- data.frame(Date = unlist(Date_cev, use.names = FALSE))
       Date_Table <- unique(remove_cev[c("Date")])
@@ -458,7 +498,8 @@ server <- function(input, output, session) {
       return(NULL)
     }else {
       df_list <- lapply(inFile$datapath, function(y) {
-        JSON_csv <- read.delim(y, header = TRUE, sep = ",", row.names = NULL, skip = 28)
+        JSON_csv <- read.delim(y, header = TRUE, sep = ",", row.names = NULL,
+                               skip = 28)
         names(JSON_csv) <- c("Date", "Time", "PM2.5")
         JSON_csv
       })
@@ -472,7 +513,8 @@ server <- function(input, output, session) {
       }
       DT_f$date <- strptime(paste(Date1, DT_f$Time),
                             format = "%Y-%m-%d %H:%M:%S")
-      DT_f$date <- as.POSIXct(DT_f$date, format = '%Y-%m-%d %H:%M:%S', tz = input$timezone)
+      DT_f$date <- as.POSIXct(DT_f$date, format = '%Y-%m-%d %H:%M:%S',
+                              tz = input$timezone)
       attributes(DT_f$date)$tzone <- input$timezone
       DT_f$PM2.5 <- as.numeric(as.character(DT_f$PM2.5))
       DT_f$PM2.5 <- DT_f$PM2.5 * 1000
@@ -506,7 +548,8 @@ server <- function(input, output, session) {
       return(NULL)
     }else {
       df_list <- lapply(inFile$datapath, function(y) {
-        JSON_csv <- read.delim(y, header = TRUE, sep = ",", row.names = NULL, skip = 17,
+        JSON_csv <- read.delim(y, header = TRUE, sep = ",", row.names = NULL,
+                               skip = 17,
                               stringsAsFactors = FALSE, fileEncoding = "latin1")
         JSON_csv
       })
@@ -517,7 +560,8 @@ server <- function(input, output, session) {
       CPC_f <- CPC_f[, 1:2]
       names(CPC_f) <- c("Time", "Particle_conc")
       CPC_f$Particle_conc <- CPC_f$Particle_conc * DF
-      CPC_f <- mutate(CPC_f, date = ymd_hms(paste(w, Time), tz = input$timezone))#CPC
+      CPC_f <- mutate(CPC_f, date = ymd_hms(paste(w, Time),
+                                            tz = input$timezone))
       CPC_f <- dplyr::select(CPC_f, date, Particle_conc )
       CPC_f <- data.table(CPC_f)
       setkey(CPC_f, date)
@@ -530,8 +574,8 @@ server <- function(input, output, session) {
     if (is.null(input$file5)) {
       return(NULL)
     }else {
-      RH_f <- data.frame(read.delim(input$file5$datapath, header = TRUE, sep = ",",
-                                    skip = 6, row.names = NULL))
+      RH_f <- data.frame(read.delim(input$file5$datapath, header = TRUE,
+                                    sep = ",", skip = 6, row.names = NULL))
       RH_f_Date <- RH_f[ ,2]
       RH_f_Time <- RH_f[ ,3]
       RH <- RH_f[ , grepl( "RH" , names(RH_f ) ) ]
@@ -617,7 +661,8 @@ server <- function(input, output, session) {
        is.null(input$file4) & is.null(input$file5) & is.null(input$file6)) {
       pfile2 <- htmlTreeParse("data/GPSMAP64s/2019_09_25_h091000_KAN_Garmin_3.gpx",
                               error = function (...) {}, useInternalNodes = T)
-      elevations <- as.numeric(xpathSApply(pfile2, path = "//trkpt/ele", xmlValue))
+      elevations <- as.numeric(xpathSApply(pfile2, path = "//trkpt/ele",
+                                           xmlValue))
       times <- xpathSApply(pfile2, path = "//trkpt/time", xmlValue)
       coords <- xpathSApply(pfile2, path = "//trkpt", xmlAttrs)
       lats <- as.numeric(coords["lat", ])
@@ -633,12 +678,14 @@ server <- function(input, output, session) {
       setkey(GPS_f, date)
 
 
-      CO2_f <- read.delim("data/LI-COR/2019_09_25_h091000_KAN_LI_COR.csv", skip = 1,
-                          sep = ",", header = TRUE, row.names = NULL, stringsAsFactors = FALSE)
+      CO2_f <- read.delim("data/LI-COR/2019_09_25_h091000_KAN_LI_COR.csv",
+                          skip = 1, sep = ",", header = TRUE, row.names = NULL,
+                          stringsAsFactors = FALSE)
       CO2_f <- CO2_f[ ,1:3]
       names(CO2_f) <- c("Date", "Time", "CO2")
-      CO2_f$date <- with(CO2_f, as.POSIXct(paste(as.Date(Date, format = "%d-%m-%Y"), Time),
-                                           tz = "Asia/Kolkata"))
+      CO2_f$date <- with(CO2_f,
+                         as.POSIXct(paste(as.Date(Date, format = "%d-%m-%Y"),
+                                                 Time), tz = "Asia/Kolkata"))
       CO2_f <- CO2_f %>%
         dplyr::select(date, CO2)
       names(CO2_f) <- c("date", "CO2")
@@ -649,15 +696,18 @@ server <- function(input, output, session) {
         completeVec <- complete.cases(data[ , desiredColumns])
         return(data[completeVec, ])
       }
-      BC_f_header <- read.delim("data/AE51/2019_09_25_h091000_KAN_AE51.csv", header = FALSE,
-                                sep = ",", skip = 15, row.names = NULL, stringsAsFactors = FALSE)
+      BC_f_header <- read.delim("data/AE51/2019_09_25_h091000_KAN_AE51.csv",
+                                header = FALSE,
+                                sep = ",", skip = 15, row.names = NULL,
+                                stringsAsFactors = FALSE)
       BC_f_header <- BC_f_header[1, ]
       BC_f<- read.delim("data/AE51/2019_09_25_h091000_KAN_AE51.csv", skip = 17,
                         header = FALSE, sep = ",")
       colnames(BC_f) <- unlist(BC_f_header)
       BC_f<-completeFun(BC_f, c("BC"))
-      BC_f$date1<- with(BC_f, as.POSIXct(paste(as.Date(Date, format="%Y/%m/%d"), Time),
-                                         tz="Asia/Kolkata"))
+      BC_f$date1<- with(BC_f,
+                        as.POSIXct(paste(as.Date(Date, format="%Y/%m/%d"),
+                                               Time), tz="Asia/Kolkata"))
       BC_f$Date<- BC_f$date1
       ef_file <- data.frame(BC_f)
       ef_file <- ef_file[ef_file$Status == 0,]
@@ -667,14 +717,18 @@ server <- function(input, output, session) {
       ef_file$BC1 <- (ef_file$BC / 1000)
       BC_Final <- ef_file
       ef_file$LD   <- ef_file$BC1 - rollapply(ef_file$BC1 , FUN = mean,
-                                              width = 30, align = "center", partial = TRUE)
-      ef_file$LD25 <- runquantile(ef_file$LD, 300, 0.25, type = 2, endrule = c("NA"))
-      ef_file$LD75 <- runquantile(ef_file$LD, 300, 0.75, type = 2, endrule = c("NA"))
+                                              width = 30, align = "center",
+                                              partial = TRUE)
+      ef_file$LD25 <- runquantile(ef_file$LD, 300, 0.25, type = 2,
+                                  endrule = c("NA"))
+      ef_file$LD75 <- runquantile(ef_file$LD, 300, 0.75, type = 2,
+                                  endrule = c("NA"))
       ef_file$BC2  <- ef_file$BC1
       ef_file$BC3  <- ef_file$BC1
       ef_file$BC2[ef_file$BC2 >= 0] <- 0
       ef_file$BC2[ef_file$BC2 < 0] <- 1
-      ef_file$BC2 <- rollapply(ef_file$BC2 , FUN = mean, width = 5, align = "center",
+      ef_file$BC2 <- rollapply(ef_file$BC2 , FUN = mean, width = 5,
+                               align = "center",
                                partial = TRUE)
       Lower_LD25  <- ((ef_file$LD) > 5 * (ef_file$LD75))
       Higher_LD75 <- ((ef_file$LD) < 5 * (ef_file$LD25))
@@ -736,7 +790,8 @@ server <- function(input, output, session) {
       attributes(BC_Final$date)$tzone <- "Asia/Kolkata"
       setkey(BC_Final, date)
 
-      DT_f <- read.delim("data/DT8530/2019_09_25_h091000_KAN_DT8530.csv", header = TRUE,
+      DT_f <- read.delim("data/DT8530/2019_09_25_h091000_KAN_DT8530.csv",
+                         header = TRUE,
                          sep = ",", row.names = NULL, skip = 28)
       names(DT_f) <- c("Date", "Time", "PM2.5")
       Date1 <- DT_f[1, 1]
@@ -745,8 +800,10 @@ server <- function(input, output, session) {
         Date1 <- DT_f[1, 1]
         Date1 <- as.Date(Date1, format = "%m/%d/%Y" )
       }
-      DT_f$date <- strptime(paste(Date1, DT_f$Time), format = "%Y-%m-%d %H:%M:%S")
-      DT_f$date <- as.POSIXct(DT_f$date, format = '%Y-%m-%d %H:%M:%S', tz = "Asia/Kolkata")
+      DT_f$date <- strptime(paste(Date1, DT_f$Time),
+                            format = "%Y-%m-%d %H:%M:%S")
+      DT_f$date <- as.POSIXct(DT_f$date, format = '%Y-%m-%d %H:%M:%S',
+                              tz = "Asia/Kolkata")
       attributes(DT_f$date )$tzone <- "Asia/Kolkata"
       DT_f$PM2.5 <- as.numeric(as.character(DT_f$PM2.5))
       DT_f$PM2.5 <-DT_f$PM2.5 * 1000
@@ -754,8 +811,10 @@ server <- function(input, output, session) {
       DT_f <- data.table(DT_f)
       setkey(DT_f, date)
 
-      CPC_f <- read.delim("data/CPC3007/2019_09_25_h091000_KAN_CPC3007.csv", header = TRUE,
-                          sep = ",", row.names = NULL, skip = 17,stringsAsFactors = FALSE,
+      CPC_f <- read.delim("data/CPC3007/2019_09_25_h091000_KAN_CPC3007.csv",
+                          header = TRUE,
+                          sep = ",", row.names = NULL, skip = 17,
+                          stringsAsFactors = FALSE,
                           fileEncoding = "latin1")
       CPC_f <- CPC_f[ ,1:2]
       names(CPC_f) <- c("Time", "Particle_conc")
@@ -766,8 +825,9 @@ server <- function(input, output, session) {
       CPC_f <- data.table(CPC_f)
       setkey(CPC_f, date)
 
-      RH_f <- data.frame(read.delim("data/RH/2019_09_25_h091000_KAN_RH.csv", header = TRUE,
-                                    sep = ",", skip = 6, row.names = NULL))
+      RH_f <- data.frame(read.delim("data/RH/2019_09_25_h091000_KAN_RH.csv",
+                                    header = TRUE, sep = ",", skip = 6,
+                                    row.names = NULL))
       RH_f_Date <- RH_f[ ,2]
       RH_f_Time <- RH_f[ ,3]
       RH <- RH_f[ , grepl("RH" , names(RH_f) ) ]
@@ -782,7 +842,8 @@ server <- function(input, output, session) {
         dplyr::select(date, RH)#X2.P..RH, X1.P..RH
       names(RH_f) <- c("date", "RH")
       RH_f$RH <- as.numeric(as.character(RH_f$RH))
-      RH_f$date <- as.POSIXct(RH_f$date, format = '%Y-%m-%d %H:%M:%S', tz = "Asia/Kolkata")
+      RH_f$date <- as.POSIXct(RH_f$date, format = '%Y-%m-%d %H:%M:%S',
+                              tz = "Asia/Kolkata")
       RH_f <- data.table(RH_f)
       setkey(RH_f, date)
       VecFunc <- function(x) {
@@ -794,12 +855,14 @@ server <- function(input, output, session) {
         }
       }
       joined_GPS_CO2 <- left_join(GPS_f, CO2_f, by = "date")
-      joined_GPS_CO2 <- dplyr::select(joined_GPS_CO2, date, CO2, latitude, longitude )
+      joined_GPS_CO2 <- dplyr::select(joined_GPS_CO2, date, CO2, latitude,
+                                      longitude )
       joined_GPS_CO2 <- data.table(joined_GPS_CO2)
       setkey(joined_GPS_CO2, date)
       joined_GPS_DT <- left_join(GPS_f, DT_f, by = "date")
       joined_GPS_DT$PM2.5_RHC <- NA
-      joined_GPS_DT <- dplyr::select(joined_GPS_DT, date, PM2.5, PM2.5_RHC, latitude, longitude )
+      joined_GPS_DT <- dplyr::select(joined_GPS_DT, date, PM2.5, PM2.5_RHC,
+                                     latitude, longitude )
       joined_GPS_DT <- data.table(joined_GPS_DT)
       setkey(joined_GPS_DT, date)
       DT_f <- RH_f[joined_GPS_DT, roll = "nearest"]
@@ -815,11 +878,13 @@ server <- function(input, output, session) {
       DT_f <- data.table(DT_f)
       setkey(DT_f, date)
       joined_GPS_BC <- left_join(GPS_f, BC_Final, by = "date")
-      joined_GPS_BC <- dplyr::select(joined_GPS_BC, date, BC, BC_NR, BC_NR_LC, latitude, longitude )
+      joined_GPS_BC <- dplyr::select(joined_GPS_BC, date, BC, BC_NR, BC_NR_LC,
+                                     latitude, longitude )
       joined_GPS_BC <- data.table(joined_GPS_BC)
       setkey(joined_GPS_BC, date)
       joined_GPS_CPC <- left_join(GPS_f, CPC_f, by = "date")
-      joined_GPS_CPC <- dplyr::select(joined_GPS_CPC, date, Particle_conc, latitude, longitude )
+      joined_GPS_CPC <- dplyr::select(joined_GPS_CPC, date, Particle_conc,
+                                      latitude, longitude )
       joined_GPS_CPC <- data.table(joined_GPS_CPC)
       setkey(joined_GPS_CPC, date)
       joined2 <- left_join(joined_GPS_CPC, joined_GPS_CO2, by = "date")
@@ -830,10 +895,12 @@ server <- function(input, output, session) {
       setkey(joined_1, date)
       joined <- joined_1[joined_GPS_BC, roll = "nearest"]
       joined <- joined %>%
-        dplyr::select(date, latitude, longitude, BC, BC_NR, BC_NR_LC, PM2.5, PM2.5_RHC,
-                      PM2.5_RHC_Ref, PM2.5_Ref, RH, Particle_conc,  CO2)
-      names(joined)<-c("date", "Latitude", "Longitude",  "BC", "BC_NR", "BC_NR_LC",
-                       "PM2.5","PM2.5_RHC", "PM2.5_RHC_Ref", "PM2.5_Ref", "RH", "Particle_conc", "CO2")
+        dplyr::select(date, latitude, longitude, BC, BC_NR, BC_NR_LC, PM2.5,
+                      PM2.5_RHC, PM2.5_RHC_Ref, PM2.5_Ref, RH, Particle_conc,
+                      CO2)
+      names(joined)<-c("date", "Latitude", "Longitude",  "BC", "BC_NR",
+                       "BC_NR_LC", "PM2.5","PM2.5_RHC", "PM2.5_RHC_Ref",
+                       "PM2.5_Ref", "RH", "Particle_conc", "CO2")
       attributes(joined$date )$tzone <- "Asia/Kolkata"
       joined <- joined[!duplicated(joined$date), ]
       joined
@@ -853,15 +920,16 @@ server <- function(input, output, session) {
     }
     if (!is.null(CO2_f)) {
       validate(
-        need(try(file_name_GPS() == file_name_CO2()), "GPS File mandatory! File names of
-             GPS and LI-COR do not match, Please select the correct files")
+        need(try(file_name_GPS() == file_name_CO2()), "GPS File mandatory! File
+        names of GPS and LI-COR do not match, Please select the correct files")
       )
       validate(
-        need(try(GPS_f_date() == CO2_f_date()), "The files have different date entries in
-             GPS and LI-COR! Please check once again.")
+        need(try(GPS_f_date() == CO2_f_date()), "The files have different
+             date entries in GPS and LI-COR! Please check once again.")
       )
       joined_GPS_CO2 <- left_join(GPS_f, CO2_f, by = "date")
-      joined_GPS_CO2 <- dplyr::select(joined_GPS_CO2, date, CO2, latitude, longitude )
+      joined_GPS_CO2 <- dplyr::select(joined_GPS_CO2, date, CO2,
+                                      latitude, longitude )
     }
     joined_GPS_CO2 <- data.table(joined_GPS_CO2)
     setkey(joined_GPS_CO2, date)
@@ -883,7 +951,8 @@ server <- function(input, output, session) {
     if (!is.null(DT_f)) {
       validate(
         need(try(file_name_GPS() == file_name_DT()), "GPS File mandatory!
-             File names of GPS and DustTrak-8530 do not match, Please select the correct files")
+             File names of GPS and DustTrak-8530 do not match,
+             Please select the correct files")
       )
       validate(
         need(try(GPS_f_date() == DT_f_date()), "The files have different date
@@ -962,14 +1031,16 @@ server <- function(input, output, session) {
     if (!is.null(BC_f())) {
       validate(
         need(try(file_name_GPS() == file_name_BC()), "GPS File mandatory!
-             File names of GPS and AE51 do not match, Please select the correct files")
+             File names of GPS and AE51 do not match, Please select the correct
+             files")
       )
       validate(
-        need(try(GPS_f_date() == BC_f_date()), "The files have different date entries in
-             GPS and AE51! Please check once again.")
+        need(try(GPS_f_date() == BC_f_date()), "The files have different
+        date entries in GPS and AE51! Please check once again.")
       )
       joined_GPS_BC <- left_join(GPS_f, BC_Final, by = "date")
-      joined_GPS_BC <- dplyr::select(joined_GPS_BC, date,  BC, BC_NR, BC_NR_LC, latitude, longitude )
+      joined_GPS_BC <- dplyr::select(joined_GPS_BC, date,  BC, BC_NR, BC_NR_LC,
+                                     latitude, longitude )
     }
     joined_GPS_BC <- data.table(joined_GPS_BC)
     setkey(joined_GPS_BC, date)
@@ -989,15 +1060,17 @@ server <- function(input, output, session) {
     }
     if (!is.null(CPC_f)) {
       validate(
-        need(try(file_name_GPS() == file_name_CPC()), "GPS File mandatory! File names of
-             GPS and CPC-3007 do not match, Please select the correct files")
+        need(try(file_name_GPS() == file_name_CPC()), "GPS File mandatory!
+        File names of GPS and CPC-3007 do not match,
+             Please select the correct files")
       )
       validate(
-        need(try(GPS_f_date() == CPC_f_date()), "The files have different date entries in
-             GPS and CPC-3007! Please check once again.")
+        need(try(GPS_f_date() == CPC_f_date()), "The files have different
+        date entries in GPS and CPC-3007! Please check once again.")
       )
       joined_GPS_CPC <- left_join(GPS_f, CPC_f, by = "date")
-      joined_GPS_CPC <- dplyr::select(joined_GPS_CPC, date, Particle_conc, latitude, longitude )
+      joined_GPS_CPC <- dplyr::select(joined_GPS_CPC, date, Particle_conc,
+                                      latitude, longitude )
     }
     joined_GPS_CPC <- data.table(joined_GPS_CPC)
     setkey(joined_GPS_CPC, date)
@@ -1005,8 +1078,9 @@ server <- function(input, output, session) {
   })
 
   observeEvent(input$timezone,{
-    toggleState(id = "join_button", condition = (input$timezone != "" |
-                                                 is.null(input$timezone) | is.na(input$timezone)) )
+    toggleState(id = "join_button",
+                condition = (input$timezone != "" |
+                               is.null(input$timezone) | is.na(input$timezone)))
   })
 
   data_joined <- eventReactive(input$join_button,{
@@ -1038,10 +1112,11 @@ server <- function(input, output, session) {
     setkey(joined_1, date)
     joined <- joined_1[joined_GPS_BC, roll = "nearest"]
     joined <- joined %>%
-      dplyr::select(date,latitude,longitude, BC, BC_NR, BC_NR_LC, PM2.5, PM2.5_RHC,
-                    PM2.5_RHC_Ref, PM2.5_Ref, RH, Particle_conc,  CO2)
-    names(joined) <- c("date", "Latitude", "Longitude",  "BC", "BC_NR", "BC_NR_LC",
-                     "PM2.5", "PM2.5_RHC", "PM2.5_RHC_Ref", "PM2.5_Ref", "RH", "Particle_conc", "CO2")
+      dplyr::select(date,latitude,longitude, BC, BC_NR, BC_NR_LC, PM2.5,
+                    PM2.5_RHC, PM2.5_RHC_Ref, PM2.5_Ref, RH, Particle_conc, CO2)
+    names(joined) <- c("date", "Latitude", "Longitude",  "BC", "BC_NR",
+                       "BC_NR_LC", "PM2.5", "PM2.5_RHC", "PM2.5_RHC_Ref",
+                       "PM2.5_Ref", "RH", "Particle_conc", "CO2")
     attributes(joined$date )$tzone <- input$timezone
     joined <- joined[!duplicated(joined$date), ]
     return(joined)
@@ -1057,26 +1132,42 @@ server <- function(input, output, session) {
     }else{
       data_joined <- data_joined()
     }
-    data_joined$BC            <- round(as.numeric(data_joined$BC), digits = 2)
-    data_joined$BC_NR         <- round(as.numeric(data_joined$BC_NR), digits = 2)
-    data_joined$BC_NR_LC      <- round(as.numeric(data_joined$BC_NR_LC), digits = 2)
-    data_joined$PM2.5         <- round(as.numeric(data_joined$PM2.5), digits = 2)
-    data_joined$PM2.5_RHC     <- round(as.numeric(data_joined$PM2.5_RHC), digits = 2)
-    data_joined$PM2.5_Ref     <- round(as.numeric(data_joined$PM2.5_Ref), digits = 2)
-    data_joined$PM2.5_RHC_Ref <- round(as.numeric(data_joined$PM2.5_RHC_Ref), digits = 2)
-    data_joined$Longitude     <- round(as.numeric(data_joined$Longitude), digits = 4)
-    data_joined$Latitude      <- round(as.numeric(data_joined$Latitude), digits = 4)
-    data_joined$Particle_conc <- round(as.numeric(data_joined$Particle_conc), digits = 2)
-    data_joined$CO2           <- round(as.numeric(data_joined$CO2), digits = 2)
+    data_joined$BC            <- round(as.numeric(data_joined$BC),
+                                       digits = 2)
+    data_joined$BC_NR         <- round(as.numeric(data_joined$BC_NR),
+                                       digits = 2)
+    data_joined$BC_NR_LC      <- round(as.numeric(data_joined$BC_NR_LC),
+                                       digits = 2)
+    data_joined$PM2.5         <- round(as.numeric(data_joined$PM2.5),
+                                       digits = 2)
+    data_joined$PM2.5_RHC     <- round(as.numeric(data_joined$PM2.5_RHC),
+                                       digits = 2)
+    data_joined$PM2.5_Ref     <- round(as.numeric(data_joined$PM2.5_Ref),
+                                       digits = 2)
+    data_joined$PM2.5_RHC_Ref <- round(as.numeric(data_joined$PM2.5_RHC_Ref),
+                                       digits = 2)
+    data_joined$Longitude     <- round(as.numeric(data_joined$Longitude),
+                                       digits = 4)
+    data_joined$Latitude      <- round(as.numeric(data_joined$Latitude),
+                                       digits = 4)
+    data_joined$Particle_conc <- round(as.numeric(data_joined$Particle_conc),
+                                       digits = 2)
+    data_joined$CO2           <- round(as.numeric(data_joined$CO2),
+                                       digits = 2)
     data_joined$RH            <- data_joined$RH * 100
-    data_joined$RH            <- round(as.numeric(data_joined$RH), digits = 2)
+    data_joined$RH            <- round(as.numeric(data_joined$RH),
+                                       digits = 2)
     data_joined <- data_joined %>%
       dplyr::select(date,Latitude,Longitude, BC, BC_NR, BC_NR_LC, PM2.5,
-                    PM2.5_RHC, PM2.5_RHC_Ref, PM2.5_Ref, RH, Particle_conc,  CO2)
+                    PM2.5_RHC, PM2.5_RHC_Ref, PM2.5_Ref, RH,
+                    Particle_conc, CO2)
     names(data_joined) <- c("date", "Latitude", "Longitude",  "AE51_BC (ug/m3)",
-                            "AE51_BC_NR (ug/m3)", "AE51_BC_NR_LC (ug/m3)", "DT8530_PM2.5 (ug/m3)",
-                            "DT8530_PM2.5_RHC (ug/m3)", "DT8530_PM2.5_RHC_Ref (ug/m3)",
-                            "DT8530_PM2.5_Ref (ug/m3)", "RH(%)", "CPC3007_Particle Concentration (#/cm3)",
+                            "AE51_BC_NR (ug/m3)", "AE51_BC_NR_LC (ug/m3)",
+                            "DT8530_PM2.5 (ug/m3)",
+                            "DT8530_PM2.5_RHC (ug/m3)",
+                            "DT8530_PM2.5_RHC_Ref (ug/m3)",
+                            "DT8530_PM2.5_Ref (ug/m3)", "RH(%)",
+                            "CPC3007_Particle Concentration (#/cm3)",
                             "LI-COR_CO2 (ppm)")
 
     datatable(data_joined, options = list("pageLength" = 25))
@@ -1095,13 +1186,17 @@ server <- function(input, output, session) {
         data_joined <- data_joined()
       }
       data_joined <- data_joined %>%
-        dplyr::select(date, Latitude, Longitude, BC, BC_NR, BC_NR_LC, PM2.5, PM2.5_RHC,
-                      PM2.5_RHC_Ref, PM2.5_Ref, RH, Particle_conc,  CO2)
-      names(data_joined) <- c("date(LT)", "Latitude", "Longitude", "AE51_BC (ug/m3)",
+        dplyr::select(date, Latitude, Longitude, BC, BC_NR, BC_NR_LC, PM2.5,
+                      PM2.5_RHC, PM2.5_RHC_Ref, PM2.5_Ref, RH,
+                      Particle_conc, CO2)
+      names(data_joined) <- c("date(LT)", "Latitude", "Longitude",
+                              "AE51_BC (ug/m3)",
                             "AE51_BC_NR (ug/m3)", "AE51_BC_NR_LC (ug/m3)",
                             "DT8530_PM2.5 (ug/m3)", "DT8530_PM2.5_RHC (ug/m3)",
-                            "DT8530_PM2.5_RHC_Ref (ug/m3)", "DT8530_PM2.5_Ref (ug/m3)",
-                            "RH(%)", "CPC3007_Particle Concentration (#/cm3)", "LI-COR_CO2 (ppm)")
+                            "DT8530_PM2.5_RHC_Ref (ug/m3)",
+                            "DT8530_PM2.5_Ref (ug/m3)",
+                            "RH(%)", "CPC3007_Particle Concentration (#/cm3)",
+                            "LI-COR_CO2 (ppm)")
       write.csv(data_joined, fname)
     }
   )
@@ -1116,21 +1211,26 @@ server <- function(input, output, session) {
     }else {
       data <- data_joined()
     }
-    data <- dplyr::select(data, BC, BC_NR, BC_NR_LC, PM2.5, PM2.5_RHC, PM2.5_RHC_Ref,
-                          PM2.5_Ref, RH, Particle_conc,  CO2)
+    data <- dplyr::select(data, BC, BC_NR, BC_NR_LC, PM2.5, PM2.5_RHC,
+                          PM2.5_RHC_Ref, PM2.5_Ref, RH, Particle_conc,  CO2)
     data[["BC"]] <- as.numeric(as.character(data[["BC"]]))
     data[["BC_NR"]] <- as.numeric(as.character(data[["BC_NR"]]))
     data[["BC_NR_LC"]] <- as.numeric(as.character(data[["BC_NR_LC"]]))
     data$RH <- data$RH * 100
-    names(data) <- c("AE51_BC (ug/m3)", "AE51_BC_NR (ug/m3)", "AE51_BC_NR_LC (ug/m3)",
-                     "DT8530_PM2.5 (ug/m3)", "DT8530_PM2.5_RHC (ug/m3)", "DT8530_PM2.5_RHC_Ref (ug/m3)",
-                     "DT8530_PM2.5_Ref (ug/m3)", "RH(%)", "CPC3007_Particle Concentration (#/cm3)",
+    names(data) <- c("AE51_BC (ug/m3)", "AE51_BC_NR (ug/m3)",
+                     "AE51_BC_NR_LC (ug/m3)",
+                     "DT8530_PM2.5 (ug/m3)", "DT8530_PM2.5_RHC (ug/m3)",
+                     "DT8530_PM2.5_RHC_Ref (ug/m3)",
+                     "DT8530_PM2.5_Ref (ug/m3)", "RH(%)",
+                     "CPC3007_Particle Concentration (#/cm3)",
                      "LI-COR_CO2 (ppm)")
     columns <- c("AE51_BC (ug/m3)","AE51_BC_NR (ug/m3)","AE51_BC_NR_LC (ug/m3)",
                  "DT8530_PM2.5 (ug/m3)", "DT8530_PM2.5_RHC (ug/m3)",
                  "DT8530_PM2.5_RHC_Ref (ug/m3)", "DT8530_PM2.5_Ref (ug/m3)",
-                 "RH(%)", "CPC3007_Particle Concentration (#/cm3)", "LI-COR_CO2 (ppm)")
-    data[ , columns] <- lapply(columns, function(x) as.numeric(as.character(data[[x]])))
+                 "RH(%)", "CPC3007_Particle Concentration (#/cm3)",
+                 "LI-COR_CO2 (ppm)")
+    data[ , columns] <- lapply(columns,
+                               function(x) as.numeric(as.character(data[[x]])))
     tmp1 <- do.call(data.frame,
                     list(Mean = apply(data, 2, mean, na.rm = TRUE),
                          SD = apply(data, 2, sd, na.rm = TRUE),
@@ -1138,13 +1238,21 @@ server <- function(input, output, session) {
                          IQR = apply(data, 2, IQR, na.rm = TRUE),
                          Min = apply(data, 2, min, na.rm = TRUE),
                          Max = apply(data, 2, max, na.rm = TRUE),
-                         p1  = apply(data, 2, quantile, probs = c(0.01),  na.rm = TRUE),
-                         p10 = apply(data, 2, quantile, probs = c(0.1),  na.rm = TRUE),
-                         p25 = apply(data, 2, quantile, probs = c(0.25),  na.rm = TRUE),
-                         p75 = apply(data, 2, quantile, probs = c(0.75),  na.rm = TRUE),
-                         p90 = apply(data, 2, quantile, probs = c(0.9),  na.rm = TRUE),
-                         p99 = apply(data, 2, quantile, probs = c(0.99),  na.rm = TRUE),
-                         Total_non_NA = apply(data, 2, function(x) {length(which(!is.na(x)))})))
+                         p1  = apply(data, 2, quantile, probs = c(0.01),
+                                     na.rm = TRUE),
+                         p10 = apply(data, 2, quantile, probs = c(0.1),
+                                     na.rm = TRUE),
+                         p25 = apply(data, 2, quantile, probs = c(0.25),
+                                     na.rm = TRUE),
+                         p75 = apply(data, 2, quantile, probs = c(0.75),
+                                     na.rm = TRUE),
+                         p90 = apply(data, 2, quantile, probs = c(0.9),
+                                     na.rm = TRUE),
+                         p99 = apply(data, 2, quantile, probs = c(0.99),
+                                     na.rm = TRUE),
+                         Total_non_NA = apply(data, 2,
+                                              function(x)
+                                                {length(which(!is.na(x)))})))
     tmp <- data.frame(tmp1)
     tmp$Mean   <- round(as.numeric(as.character(tmp$Mean)), digits = 2)
     tmp$IQR    <- round(as.numeric(as.character(tmp$IQR)), digits = 2)
@@ -1170,8 +1278,8 @@ server <- function(input, output, session) {
     inFile <- input$file3
     if (is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) &
        is.null(RH_f()) & is.null(CO2_f())) {
-      DT_f <- read.delim("data/DT8530/2019_09_25_h091000_KAN_DT8530.csv", header = FALSE,
-                         sep = ",", row.names = NULL, skip = 2)
+      DT_f <- read.delim("data/DT8530/2019_09_25_h091000_KAN_DT8530.csv",
+                         header = FALSE, sep = ",", row.names = NULL, skip = 2)
       DT_f <- DT_f[1:11, ]
       DT_f <- DT_f[ ,1:2]
       datatable(DT_f, options = list("pageLength" = 11))
@@ -1179,7 +1287,8 @@ server <- function(input, output, session) {
     else if (is.null(DT_f())) {}
     else if (!is.null(DT_f())) {
       files3 <- lapply(inFile$datapath, function(y){
-        JSON_csv <- read.delim(y, header = FALSE, sep = ",", row.names = NULL, skip = 2)
+        JSON_csv <- read.delim(y, header = FALSE, sep = ",", row.names = NULL,
+                               skip = 2)
         names(JSON_csv) <- c("Setting", "Value")
         JSON_csv <- JSON_csv[1:11, ]
         JSON_csv <- JSON_csv[ ,1:2]
@@ -1204,8 +1313,9 @@ server <- function(input, output, session) {
     }
     else if (is.null(CPC_f())) {}
     else if (!is.null(CPC_f())){
-      files3 <- lapply(inFile$datapath, function(y){
-        JSON_csv <- read.delim(y, header = FALSE, sep = ",", row.names = NULL, skip = 1)
+      files3 <- lapply(inFile$datapath, function(y) {
+        JSON_csv <- read.delim(y, header = FALSE, sep = ",", row.names = NULL,
+                               skip = 1)
         names(JSON_csv)<-c("Setting", "Value")
         JSON_csv <- JSON_csv[1:13, ]
         JSON_csv <- JSON_csv[ ,1:2]
@@ -1221,7 +1331,7 @@ server <- function(input, output, session) {
     inFile <- input$file2
     if (is.null(BC_f())) {}
     else if (!is.null(BC_f())){
-      files3 <- lapply(inFile$datapath, function(y){
+      files3 <- lapply(inFile$datapath, function(y) {
         JSON_csv_header <- read.delim(y, header = FALSE, sep=",", skip = 15,
                                       row.names = NULL, stringsAsFactors = FALSE)
         JSON_csv_header <- JSON_csv_header[1, ]
@@ -1245,7 +1355,8 @@ server <- function(input, output, session) {
     inFile <- input$file2
     if (is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) &
        is.null(RH_f()) & is.null(CO2_f())) {
-      BC_f <- read.delim("data/AE51/2019_09_25_h091000_KAN_AE51.csv", header = FALSE,
+      BC_f <- read.delim("data/AE51/2019_09_25_h091000_KAN_AE51.csv",
+                         header = FALSE,
                          sep = " ", skip = 1, row.names = NULL)
       BC_f <- BC_f[1:14, ]
       names(BC_f) <- c("Setting")
@@ -1254,7 +1365,8 @@ server <- function(input, output, session) {
     else if (is.null(BC_f())) {"No AE51 files available"}
     else if (!is.null(BC_f())){
       files3 <- lapply(inFile$datapath, function(y){
-        JSON_csv <- read.delim(y, header = FALSE, sep = " ", skip = 1, row.names = NULL)
+        JSON_csv <- read.delim(y, header = FALSE, sep = " ",
+                               skip = 1, row.names = NULL)
         JSON_csv <- JSON_csv[1:14, ]
         JSON_csv
       })
@@ -1270,7 +1382,8 @@ server <- function(input, output, session) {
   ## Raw pollutants/GPS plot
 
   output$plot5 <- renderPlotly({
-    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
+    if (is.null(input$file1) & is.null(input$file2) &
+        is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)) {
       data <- data_blank()
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(Latitude))) +
@@ -1278,10 +1391,14 @@ server <- function(input, output, session) {
                  labs(title = "Latitude (degree)",
                       y = "",
                       x = "") +
-                 scale_x_datetime( date_labels  = "%H:%M") + theme_minimal() +
-                 theme(legend.text = element_text(size = 18), plot.title = element_text(size = 14, face = "bold"),
-                       axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
-                       panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
+                 scale_x_datetime( date_labels  = "%H:%M") +
+                 theme_minimal() +
+                 theme(legend.text = element_text(size = 18),
+                       plot.title = element_text(size = 14, face = "bold"),
+                       axis.title = element_text(size = 14),
+                       axis.text = element_text(size = 14, face = "bold"),
+                       panel.border = element_rect(colour = "black",
+                                                   fill = NA, size = 1.2))
                )}
     else if (is.null(GPS_f())) {}
     else if (!is.null(GPS_f())) {
@@ -1291,15 +1408,20 @@ server <- function(input, output, session) {
                  labs(title = "Latitude (degree)",
                       y = "",
                       x = "") +
-                 scale_x_datetime( date_labels  = "%H:%M") + theme_minimal() +
-                 theme(legend.text = element_text(size = 18), plot.title = element_text(size = 14, face = "bold"),
-                       axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
-                       panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
+                 scale_x_datetime( date_labels  = "%H:%M") +
+                 theme_minimal() +
+                 theme(legend.text = element_text(size = 18),
+                       plot.title = element_text(size = 14, face = "bold"),
+                       axis.title = element_text(size = 14),
+                       axis.text = element_text(size = 14, face = "bold"),
+                       panel.border = element_rect(colour = "black",
+                                                   fill = NA, size = 1.2))
                )}
     })
 
   output$plot6 <- renderPlotly({
-    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
+    if (is.null(input$file1) & is.null(input$file2) &
+        is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)){
       data <- data_blank()
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(Longitude))) +
@@ -1307,10 +1429,14 @@ server <- function(input, output, session) {
                  labs(title = "Longitude (degree)",
                       y = "",
                       x = "") +
-                 scale_x_datetime(date_labels  = "%H:%M") + theme_minimal() +
-                 theme(legend.text = element_text(size = 18), plot.title = element_text(size = 14, face = "bold"),
-                       axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
-                       panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
+                 scale_x_datetime(date_labels  = "%H:%M") +
+                 theme_minimal() +
+                 theme(legend.text = element_text(size = 18),
+                       plot.title = element_text(size = 14, face = "bold"),
+                       axis.title = element_text(size = 14),
+                       axis.text = element_text(size = 14, face = "bold"),
+                       panel.border = element_rect(colour = "black",
+                                                   fill = NA, size = 1.2))
                )}
     else if (is.null(GPS_f())) {}
     else if (!is.null(GPS_f())) {
@@ -1320,15 +1446,20 @@ server <- function(input, output, session) {
                  labs(title = "Longitude (degree)",
                       y = "",
                       x = "") +
-                 scale_x_datetime(date_labels = "%H:%M") + theme_minimal() +
-                 theme(legend.text = element_text(size = 18), plot.title = element_text(size = 14, face = "bold"),
-                       axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
-                       panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
+                 scale_x_datetime(date_labels = "%H:%M") +
+                 theme_minimal() +
+                 theme(legend.text = element_text(size = 18),
+                       plot.title = element_text(size = 14, face = "bold"),
+                       axis.title = element_text(size = 14),
+                       axis.text = element_text(size = 14, face = "bold"),
+                       panel.border = element_rect(colour = "black",
+                                                   fill = NA, size = 1.2))
       )}
   })
 
   output$plot <- renderPlotly({
-    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
+    if (is.null(input$file1) & is.null(input$file2) &
+        is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)) {
       data <- data_blank()
       data$PM2.5 <- as.numeric(as.character(data$PM2.5))
@@ -1337,10 +1468,15 @@ server <- function(input, output, session) {
                  labs(title = "DT8530_PM2.5 (ug/m3)",
                       y = "",
                       x = "") +
-                 scale_x_datetime(date_labels  = "%H:%M") + scale_y_continuous() + theme_minimal() +
-                 theme(legend.text = element_text(size = 18), plot.title = element_text(size = 14, face = "bold"),
-                       axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
-                       panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
+                 scale_x_datetime(date_labels  = "%H:%M") +
+                 scale_y_continuous() +
+                 theme_minimal() +
+                 theme(legend.text = element_text(size = 18),
+                       plot.title = element_text(size = 14, face = "bold"),
+                       axis.title = element_text(size = 14),
+                       axis.text = element_text(size = 14, face = "bold"),
+                       panel.border = element_rect(colour = "black",
+                                                   fill = NA, size = 1.2))
             )}
     else if (is.null(DT_f())) {}
     else if (!is.null(DT_f())) {
@@ -1351,16 +1487,22 @@ server <- function(input, output, session) {
                  labs(title = "DT8530_PM2.5 (ug/m3)",
                       y = "",
                       x = "") +
-                 scale_x_datetime(date_labels  = "%H:%M") + scale_y_continuous() + theme_minimal() +
-                 theme(legend.text = element_text(size = 18), plot.title = element_text(size = 14, face = "bold"),
-                       axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
-                       panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
+                 scale_x_datetime(date_labels  = "%H:%M") +
+                 scale_y_continuous() +
+                 theme_minimal() +
+                 theme(legend.text = element_text(size = 18),
+                       plot.title = element_text(size = 14, face = "bold"),
+                       axis.title = element_text(size = 14),
+                       axis.text = element_text(size = 14, face = "bold"),
+                       panel.border = element_rect(colour = "black",
+                                                   fill = NA, size = 1.2))
                )}
   })
 
   output$plot4<- renderPlotly({
-    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
-       & is.null(input$file5) & is.null(input$file6)){
+    if (is.null(input$file1) & is.null(input$file2) &
+        is.null(input$file3) & is.null(input$file4)
+       & is.null(input$file5) & is.null(input$file6)) {
       data <- data_blank()
       data$RH <- data$RH * 100
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(RH))) +
@@ -1368,10 +1510,15 @@ server <- function(input, output, session) {
                  labs(title = "Relative Humidity (%)",
                       y = "",
                       x = "") +
-                 scale_x_datetime(date_labels  = "%H:%M") + scale_y_continuous(limits = c(20,100)) + theme_minimal() +
-                 theme(legend.text = element_text(size = 18), plot.title = element_text(size = 14, face = "bold"),
-                       axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
-                       panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
+                 scale_x_datetime(date_labels  = "%H:%M") +
+                 scale_y_continuous(limits = c(20,100)) +
+                 theme_minimal() +
+                 theme(legend.text = element_text(size = 18),
+                       plot.title = element_text(size = 14, face = "bold"),
+                       axis.title = element_text(size = 14),
+                       axis.text = element_text(size = 14, face = "bold"),
+                       panel.border = element_rect(colour = "black",
+                                                   fill = NA, size = 1.2))
                )}
     else if (is.null(RH_f())) {}
     else if (!is.null(RH_f())) {
@@ -1382,15 +1529,21 @@ server <- function(input, output, session) {
                  labs(title = "Relative Humidity (%)",
                       y = "",
                       x = "") +
-                 scale_x_datetime(date_labels = "%H:%M") + scale_y_continuous(limits = c(20,100)) + theme_minimal() +
-                 theme(legend.text = element_text(size = 18), plot.title = element_text(size = 14, face = "bold"),
-                       axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
-                       panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
+                 scale_x_datetime(date_labels = "%H:%M") +
+                 scale_y_continuous(limits = c(20,100)) +
+                 theme_minimal() +
+                 theme(legend.text = element_text(size = 18),
+                       plot.title = element_text(size = 14, face = "bold"),
+                       axis.title = element_text(size = 14),
+                       axis.text = element_text(size = 14, face = "bold"),
+                       panel.border = element_rect(colour = "black",
+                                                   fill = NA, size = 1.2))
                )}
     })
 
   output$plot2 <- renderPlotly({
-    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
+    if (is.null(input$file1) & is.null(input$file2) &
+        is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)) {
       data <- data_blank()
       data$BC <- as.numeric(as.character(data$BC))
@@ -1399,10 +1552,15 @@ server <- function(input, output, session) {
                  labs(title = "AE51_BC (ug/m3)",
                       y = "",
                       x = "") +
-                 scale_x_datetime(date_labels  = "%H:%M") + scale_y_continuous() + theme_minimal() +
-                 theme(legend.text = element_text(size = 18), plot.title = element_text(size = 14, face = "bold"),
-                       axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
-                       panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
+                 scale_x_datetime(date_labels  = "%H:%M") +
+                 scale_y_continuous() +
+                 theme_minimal() +
+                 theme(legend.text = element_text(size = 18),
+                       plot.title = element_text(size = 14, face = "bold"),
+                       axis.title = element_text(size = 14),
+                       axis.text = element_text(size = 14, face = "bold"),
+                       panel.border = element_rect(colour = "black",
+                                                   fill = NA, size = 1.2))
                )}
     else if (is.null(BC_f())) {}
     else if (!is.null(BC_f())) {
@@ -1413,15 +1571,21 @@ server <- function(input, output, session) {
                  labs(title = "AE51_BC (ug/m3)",
                       y = "",
                       x = "") +
-                 scale_x_datetime(date_labels  = "%H:%M") + scale_y_continuous() + theme_minimal() +
-                 theme(legend.text = element_text(size = 18), plot.title = element_text(size = 14, face = "bold"),
-                       axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
-                       panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
+                 scale_x_datetime(date_labels  = "%H:%M") +
+                 scale_y_continuous() +
+                 theme_minimal() +
+                 theme(legend.text = element_text(size = 18),
+                       plot.title = element_text(size = 14, face = "bold"),
+                       axis.title = element_text(size = 14),
+                       axis.text = element_text(size = 14, face = "bold"),
+                       panel.border = element_rect(colour = "black",
+                                                   fill = NA, size = 1.2))
                )}
   })
 
   output$plot3 <- renderPlotly({
-    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
+    if (is.null(input$file1) & is.null(input$file2) &
+        is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)) {
       data <- data_blank()
       data$Particle_conc <- as.numeric(as.character(data$Particle_conc))
@@ -1430,10 +1594,15 @@ server <- function(input, output, session) {
                  labs(title = "CPC3007_Particle Concentration (#/cm3)",
                       y = "",
                       x = "") +
-                 scale_x_datetime(date_labels = "%H:%M") + scale_y_continuous() + theme_minimal() +
-                 theme(legend.text = element_text(size = 18), plot.title = element_text(size = 14, face = "bold"),
-                       axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
-                       panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
+                 scale_x_datetime(date_labels = "%H:%M") +
+                 scale_y_continuous() +
+                 theme_minimal() +
+                 theme(legend.text = element_text(size = 18),
+                       plot.title = element_text(size = 14, face = "bold"),
+                       axis.title = element_text(size = 14),
+                       axis.text = element_text(size = 14, face = "bold"),
+                       panel.border = element_rect(colour = "black",
+                                                   fill = NA, size = 1.2))
                )}
     else if (is.null(CPC_f())) {}
     else if (!is.null(CPC_f())) {
@@ -1444,15 +1613,21 @@ server <- function(input, output, session) {
                  labs(title = "CPC3007_Particle Concentration (#/cm3)",
                       y = "",
                       x = "") +
-                 scale_x_datetime( date_labels  = "%H:%M") + scale_y_continuous() + theme_minimal() +
-                 theme(legend.text = element_text(size = 18), plot.title = element_text(size = 14, face = "bold"),
-                       axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
-                       panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
+                 scale_x_datetime( date_labels  = "%H:%M") +
+                 scale_y_continuous() +
+                 theme_minimal() +
+                 theme(legend.text = element_text(size = 18),
+                       plot.title = element_text(size = 14, face = "bold"),
+                       axis.title = element_text(size = 14),
+                       axis.text = element_text(size = 14, face = "bold"),
+                       panel.border = element_rect(colour = "black",
+                                                   fill = NA, size = 1.2))
                )}
   })
 
   output$plot7 <- renderPlotly({
-    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
+    if (is.null(input$file1) & is.null(input$file2) &
+        is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)) {
       data <- data_blank()
       ggplotly(ggplot(data, aes(as.POSIXct(date), CO2)) +
@@ -1460,10 +1635,15 @@ server <- function(input, output, session) {
                  labs(title = "LI-COR_CO2 (ppm)",
                       y = "",
                       x = "") +
-                 scale_x_datetime( date_labels  = "%H:%M") + scale_y_continuous() + theme_minimal() +
-                 theme(legend.text = element_text(size = 18), plot.title = element_text(size = 14, face = "bold"),
-                       axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
-                       panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
+                 scale_x_datetime( date_labels  = "%H:%M") +
+                 scale_y_continuous() +
+                 theme_minimal() +
+                 theme(legend.text = element_text(size = 18),
+                       plot.title = element_text(size = 14, face = "bold"),
+                       axis.title = element_text(size = 14),
+                       axis.text = element_text(size = 14, face = "bold"),
+                       panel.border = element_rect(colour = "black",
+                                                   fill = NA, size = 1.2))
                )}
     else if (is.null(CO2_f())) {}
     else if (!is.null(CO2_f())) {
@@ -1473,15 +1653,21 @@ server <- function(input, output, session) {
                  labs(title = "LI-COR_CO2 (ppm)",
                       y = "",
                       x = "") +
-                 scale_x_datetime( date_labels  = "%H:%M") + scale_y_continuous() + theme_minimal() +
-                 theme(legend.text = element_text(size = 18), plot.title = element_text(size = 14, face = "bold"),
-                       axis.title = element_text(size = 14), axis.text = element_text(size = 14, face = "bold"),
-                       panel.border = element_rect(colour = "black", fill = NA, size = 1.2))
+                 scale_x_datetime( date_labels  = "%H:%M") +
+                 scale_y_continuous() +
+                 theme_minimal() +
+                 theme(legend.text = element_text(size = 18),
+                       plot.title = element_text(size = 14, face = "bold"),
+                       axis.title = element_text(size = 14),
+                       axis.text = element_text(size = 14, face = "bold"),
+                       panel.border = element_rect(colour = "black",
+                                                   fill = NA, size = 1.2))
                )}
   })
 
   observe({
-    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
+    if (is.null(input$file1) & is.null(input$file2) &
+        is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)) {
       data_joined <- data_blank()
       data_joined$date          <- NULL
@@ -1543,7 +1729,8 @@ server <- function(input, output, session) {
   ## Mapping pollutant
 
   output$map <- renderLeaflet({
-    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) & is.null(input$file4)
+    if (is.null(input$file1) & is.null(input$file2) &
+        is.null(input$file3) & is.null(input$file4)
        & is.null(input$file5) & is.null(input$file6)) {
       data <- data_blank()
     }else {
@@ -1552,41 +1739,56 @@ server <- function(input, output, session) {
     data$RH <- data$RH * 100
     if (input$palleInp == "BC_NR" | input$palleInp == "BC_NR_LC") {
       risk.bins <- c(0, 0.5, 2, 5, 10, 20, 40, 100, 500, 2000, 10000)
-      pal <- colorBin( "Spectral", bins = risk.bins, na.color = "#808080", reverse = TRUE)
+      pal <- colorBin( "Spectral", bins = risk.bins, na.color = "#808080",
+                       reverse = TRUE)
     } else if (input$palleInp == "BC") {
       risk.bins <- c( -100, -40, -20, 0, 5, 10, 20, 40, 100, 500, 2000)
-      pal <- colorBin( "Spectral", bins = risk.bins, na.color = "#808080", reverse = TRUE)
+      pal <- colorBin( "Spectral", bins = risk.bins, na.color = "#808080",
+                       reverse = TRUE)
     } else if (input$palleInp == "PM2.5") {
       risk.bins <- c(0, 10, 25, 50, 100, 500, 2000, 5000, 10000)
-      pal <- colorBin( "Spectral", bins = risk.bins, na.color = "#808080", reverse = TRUE)
+      pal <- colorBin( "Spectral", bins = risk.bins, na.color = "#808080",
+                       reverse = TRUE)
     } else if (input$palleInp == "Particle_conc") {
-      risk.bins <- c(0, 5000, 10000, 20000, 40000, 70000, 100000,150000, 200000, 500000)
-      pal <- colorBin( "Spectral", bins = risk.bins, na.color = "#808080", reverse = TRUE)
+      risk.bins <- c(0, 5000, 10000, 20000, 40000, 70000, 100000, 150000,
+                     200000, 500000)
+      pal <- colorBin( "Spectral", bins = risk.bins, na.color = "#808080",
+                       reverse = TRUE)
     }else if (input$palleInp == "RH") {
-      pal <- colorNumeric("RdYlGn", domain = data$RH, na.color = "#808080", reverse = TRUE)
+      pal <- colorNumeric("RdYlGn", domain = data$RH, na.color = "#808080",
+                          reverse = TRUE)
     }else if (input$palleInp == "CO2") {
-      pal <- colorNumeric("RdYlGn", domain = data$CO2, na.color = "#808080", reverse = TRUE)
+      pal <- colorNumeric("RdYlGn", domain = data$CO2, na.color = "#808080",
+                          reverse = TRUE)
     }else if (input$palleInp == "Latitude") {
-      pal <- colorNumeric("RdYlGn", domain = data$Latitude, na.color = "#808080", reverse = TRUE)
+      pal <- colorNumeric("RdYlGn", domain = data$Latitude, na.color = "#808080",
+                          reverse = TRUE)
     }else {
       risk.bins <- c(0, 10, 25, 50, 100, 500, 2000, 5000, 10000)
-      pal <- colorBin( "Spectral", bins = risk.bins, na.color = "#808080", reverse = TRUE)
+      pal <- colorBin( "Spectral", bins = risk.bins, na.color = "#808080",
+                       reverse = TRUE)
     }
 
     leaflet(data) %>%
       addProviderTiles(providers$Stamen.TonerLite) %>%
-      addCircles(data=data, lng=~Longitude, lat=~Latitude,
+      addCircles(data=data,
+                 lng=~Longitude,
+                 lat=~Latitude,
                  popup=  paste("Date:", data$date, "<br>",
-                               "AE51_BC (ug/m3):", round(as.numeric(data$BC), digits = 2), "<br>",
-                               "DT8530_PM2.5 (ug/m3):",round(as.numeric(data$PM2.5), digits = 2), "<br>",
-                               "RH(%):",round(as.numeric(data$RH), digits = 2), "<br>",
-                               "CPC3007_Particle Concentration (#/cm3):",round(as.numeric(data$Particle_conc,"<br>",
-                                                                                          "CO2:",round(as.numeric(data$CO2),
-                                                                                                       digits = 2)), digits = 2)),
-                 weight = 3, radius=8,
-                 col = ~pal(data[[input$palleInp]]), stroke = TRUE, fillOpacity = 0.8) %>%
+                               "AE51_BC (ug/m3):",
+                               round(as.numeric(data$BC), digits = 2), "<br>",
+                               "DT8530_PM2.5 (ug/m3):",
+                               round(as.numeric(data$PM2.5), digits = 2), "<br>",
+                               "RH(%):",
+                               round(as.numeric(data$RH), digits = 2), "<br>",
+                               "CPC3007_Particle Concentration (#/cm3):",
+                               round(as.numeric(data$Particle_conc), digits = 2),"<br>",
+                               "CO2:", round(as.numeric(data$CO2),digits = 2)),
+                 weight = 3, radius = 8,
+                 col = ~pal(data[[input$palleInp]]), stroke = TRUE,
+                 fillOpacity = 0.8) %>%
       leaflet::addLegend("bottomright", pal = pal, values = ~data[[input$palleInp]],
-                         title=paste(input$palleInp))
+                         title = paste(input$palleInp))
   })
 }
 ## Run app
