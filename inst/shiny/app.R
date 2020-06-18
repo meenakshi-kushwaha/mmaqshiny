@@ -1283,7 +1283,7 @@ server <- function(input, output, session) {
     }
     else if (is.null(DT_f())) {}
     else if (!is.null(DT_f())) {
-      files3 <- lapply(inFile$datapath, function(y){
+      files3 <- lapply(inFile$datapath, function(y) {
         JSON_csv <- read.delim(y, header = FALSE, sep = ",", row.names = NULL,
                                skip = 2)
         names(JSON_csv) <- c("Setting", "Value")
