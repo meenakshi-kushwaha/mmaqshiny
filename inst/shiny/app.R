@@ -1768,10 +1768,10 @@ server <- function(input, output, session) {
 
     leaflet(data) %>%
       addProviderTiles(providers$Stamen.TonerLite) %>%
-      addCircles(data=data,
-                 lng=~Longitude,
-                 lat=~Latitude,
-                 popup=  paste("Date:", data$date, "<br>",
+      addCircles(data = data,
+                 lng = ~Longitude,
+                 lat = ~Latitude,
+                 popup =  paste("Date:", data$date, "<br>",
                                "AE51_BC (ug/m3):",
                                round(as.numeric(data$BC), digits = 2), "<br>",
                                "DT8530_PM2.5 (ug/m3):",
