@@ -413,18 +413,18 @@ server <- function(input, output, session) {
       names(ef_file) <- c("Date", "ATN", "BC")
       ef_file$BC1 <- (ef_file$BC / 1000)
       BC_Final <- ef_file
-      ef_file$LD   <- ef_file$BC1 - rollapply(ef_file$BC1 , FUN = mean,
+      ef_file$LD <- ef_file$BC1 - rollapply(ef_file$BC1, FUN = mean,
                                               width = 30, align = "center",
                                               partial = TRUE)
       ef_file$LD25 <- runquantile(ef_file$LD, 300, 0.25, type = 2,
                                   endrule = c("NA"))
       ef_file$LD75 <- runquantile(ef_file$LD, 300, 0.75, type = 2,
                                   endrule = c("NA"))
-      ef_file$BC2  <- ef_file$BC1
-      ef_file$BC3  <- ef_file$BC1
+      ef_file$BC2 <- ef_file$BC1
+      ef_file$BC3 <- ef_file$BC1
       ef_file$BC2[ef_file$BC2 >= 0] <- 0
       ef_file$BC2[ef_file$BC2 < 0] <- 1
-      ef_file$BC2 <- rollapply(ef_file$BC2 , FUN = mean, width = 5,
+      ef_file$BC2 <- rollapply(ef_file$BC2, FUN = mean, width = 5,
                                align = "center",  partial = TRUE)
       Lower_LD25  <- ((ef_file$LD) > 5 * (ef_file$LD75))
       Higher_LD75 <- ((ef_file$LD) < 5 * (ef_file$LD25))
@@ -432,7 +432,7 @@ server <- function(input, output, session) {
       CEV <- data.frame(ef_file$Date, ef_file$cev1)
       CEV$ef_file.cev1[!is.na(CEV$ef_file.cev1)] <- 1
       CEV <- data.frame(CEV)
-      date_file <- data.frame(ef_file$Date,  ef_file$BC2, ef_file$BC3)
+      date_file <- data.frame(ef_file$Date, ef_file$BC2, ef_file$BC3)
       completeFun <- function(data, desiredColumns) {
         completeVec <- complete.cases(data[ , desiredColumns])
         return(data[completeVec, ])
@@ -470,7 +470,7 @@ server <- function(input, output, session) {
       }
       BC$BC_Fi <- BC$BC_Factor * BC$BC1
       BC$BC_Fi[BC$BC_Fi == 0] <- NA
-      BC$Tr <- exp(- BC$ATN /  100)
+      BC$Tr <- exp(- BC$ATN / 100)
       BC$CF <- 1 / (0.88 * BC$Tr + 0.12)
       BC$BC_Final <- BC$BC_Fi * BC$CF
       BC$BC_Fi[BC$BC_Fi < 0] <- NA
@@ -696,11 +696,11 @@ server <- function(input, output, session) {
                                 sep = ",", skip = 15, row.names = NULL,
                                 stringsAsFactors = FALSE)
       BC_f_header <- BC_f_header[1, ]
-      BC_f<- read.delim("data/AE51/2019_09_25_h091000_KAN_AE51.csv", skip = 17,
+      BC_f <- read.delim("data/AE51/2019_09_25_h091000_KAN_AE51.csv", skip = 17,
                         header = FALSE, sep = ",")
       colnames(BC_f) <- unlist(BC_f_header)
-      BC_f<-completeFun(BC_f, c("BC"))
-      BC_f$date1<- with(BC_f,
+      BC_f <-completeFun(BC_f, c("BC"))
+      BC_f$date1 <- with(BC_f,
                         as.POSIXct(paste(as.Date(Date, format="%Y/%m/%d"),
                                                Time), tz="Asia/Kolkata"))
       BC_f$Date <- BC_f$date1
@@ -711,18 +711,18 @@ server <- function(input, output, session) {
       names(ef_file) <- c("Date", "ATN", "BC")
       ef_file$BC1 <- (ef_file$BC / 1000)
       BC_Final <- ef_file
-      ef_file$LD   <- ef_file$BC1 - rollapply(ef_file$BC1 , FUN = mean,
+      ef_file$LD <- ef_file$BC1 - rollapply(ef_file$BC1, FUN = mean,
                                               width = 30, align = "center",
                                               partial = TRUE)
       ef_file$LD25 <- runquantile(ef_file$LD, 300, 0.25, type = 2,
                                   endrule = c("NA"))
       ef_file$LD75 <- runquantile(ef_file$LD, 300, 0.75, type = 2,
                                   endrule = c("NA"))
-      ef_file$BC2  <- ef_file$BC1
-      ef_file$BC3  <- ef_file$BC1
+      ef_file$BC2 <- ef_file$BC1
+      ef_file$BC3 <- ef_file$BC1
       ef_file$BC2[ef_file$BC2 >= 0] <- 0
       ef_file$BC2[ef_file$BC2 < 0] <- 1
-      ef_file$BC2 <- rollapply(ef_file$BC2 , FUN = mean, width = 5,
+      ef_file$BC2 <- rollapply(ef_file$BC2, FUN = mean, width = 5,
                                align = "center",
                                partial = TRUE)
       Lower_LD25  <- ((ef_file$LD) > 5 * (ef_file$LD75))
@@ -731,7 +731,7 @@ server <- function(input, output, session) {
       CEV <- data.frame(ef_file$Date, ef_file$cev1)
       CEV$ef_file.cev1[!is.na(CEV$ef_file.cev1)] <- 1
       CEV <- data.frame(CEV)
-      date_file <- data.frame(ef_file$Date,  ef_file$BC2, ef_file$BC3)
+      date_file <- data.frame(ef_file$Date, ef_file$BC2, ef_file$BC3)
       completeFun <- function(data, desiredColumns) {
         completeVec <- complete.cases(data[ , desiredColumns])
         return(data[completeVec, ])
@@ -769,7 +769,7 @@ server <- function(input, output, session) {
       }
       BC$BC_Fi <- BC$BC_Factor * BC$BC1
       BC$BC_Fi[BC$BC_Fi == 0] <- NA
-      BC$Tr <- exp(- BC$ATN/  100)
+      BC$Tr <- exp(- BC$ATN / 100)
       BC$CF <- 1 / (0.88 * BC$Tr + 0.12)
       BC$BC_Final <- BC$BC_Fi * BC$CF
       BC$BC_Fi[BC$BC_Fi < 0] <- NA
@@ -801,8 +801,8 @@ server <- function(input, output, session) {
                               tz = "Asia/Kolkata")
       attributes(DT_f$date )$tzone <- "Asia/Kolkata"
       DT_f$PM2.5 <- as.numeric(as.character(DT_f$PM2.5))
-      DT_f$PM2.5 <-DT_f$PM2.5 * 1000
-      DT_f <- dplyr::select(DT_f, date,  PM2.5 )
+      DT_f$PM2.5 <- DT_f$PM2.5 * 1000
+      DT_f <- dplyr::select(DT_f, date, PM2.5)
       DT_f <- data.table(DT_f)
       setkey(DT_f, date)
 
@@ -826,7 +826,7 @@ server <- function(input, output, session) {
       RH_f_Date <- RH_f[ ,2]
       RH_f_Time <- RH_f[ ,3]
       RH <- RH_f[ , grepl("RH" , names(RH_f) ) ]
-      RH_f <-data.frame(RH_f_Date, RH_f_Time, RH)
+      RH_f <- data.frame(RH_f_Date, RH_f_Time, RH)
       names(RH_f)  <- c("LogDate", "LogTime", "RH")
       RH_f$LogTime <- gsub(".", ":", RH_f$LogTime, fixed = TRUE)
       RH_f$LogTime <- gsub("AM", "", RH_f$LogTime, fixed = TRUE)
@@ -849,7 +849,6 @@ server <- function(input, output, session) {
           return (1)
         }
       }
-
       joined_GPS_CO2 <- left_join(GPS_f, CO2_f, by = "date")
       joined_GPS_CO2 <- dplyr::select(joined_GPS_CO2, date, CO2, latitude,
                                       longitude )
@@ -863,8 +862,8 @@ server <- function(input, output, session) {
       setkey(joined_GPS_DT, date)
       DT_f <- RH_f[joined_GPS_DT, roll = "nearest"]
       DT_f$RH <- DT_f$RH / 100
-      DT_f <- dplyr::select(DT_f, date, latitude, longitude,  PM2.5, RH )
-      names(DT_f) <- c("date", "latitude", "longitude",  "PM2.5", "RH")
+      DT_f <- dplyr::select(DT_f, date, latitude, longitude, PM2.5, RH )
+      names(DT_f) <- c("date", "latitude", "longitude", "PM2.5", "RH")
       DT_f$CF <- sapply(DT_f$RH, FUN = VecFunc)
       DT_f$PM2.5_RHC     <- DT_f$PM2.5 / DT_f$CF
       DT_f$PM2.5_Ref     <- (DT_f$PM2.5 * 1 ) + 0
@@ -894,8 +893,8 @@ server <- function(input, output, session) {
         dplyr::select(date, latitude, longitude, BC, BC_NR, BC_NR_LC, PM2.5,
                       PM2.5_RHC, PM2.5_RHC_Ref, PM2.5_Ref, RH, Particle_conc,
                       CO2)
-      names(joined)<-c("date", "Latitude", "Longitude",  "BC", "BC_NR",
-                       "BC_NR_LC", "PM2.5","PM2.5_RHC", "PM2.5_RHC_Ref",
+      names(joined) <- c("date", "Latitude", "Longitude",  "BC", "BC_NR",
+                       "BC_NR_LC", "PM2.5", "PM2.5_RHC", "PM2.5_RHC_Ref",
                        "PM2.5_Ref", "RH", "Particle_conc", "CO2")
       attributes(joined$date )$tzone <- "Asia/Kolkata"
       joined <- joined[!duplicated(joined$date), ]
@@ -909,11 +908,10 @@ server <- function(input, output, session) {
     GPS_f <- GPS_f()
     CO2_f <- CO2_f()
     if (is.null(CO2_f)) {
-      joined_GPS_CO2 <- dplyr::select(GPS_f, date,  latitude, longitude)
+      joined_GPS_CO2 <- dplyr::select(GPS_f, date, latitude, longitude)
       joined_GPS_CO2$CO2 <- NA
-      joined_GPS_CO2$CO2 <- as.numeric(joined_GPS_CO2$CO2)
-
-    }
+      joined_GPS_CO2$CO2 <- as.numeric(as.character(joined_GPS_CO2$CO2))
+      }
     if (!is.null(CO2_f)) {
       validate(
         need(try(file_name_GPS() == file_name_CO2()), "GPS File mandatory! File
@@ -938,12 +936,11 @@ server <- function(input, output, session) {
     GPS_f <- GPS_f()
     DT_f <- DT_f()
     if (is.null(DT_f)) {
-      joined_GPS_DT <- dplyr::select(GPS_f, date,  latitude, longitude)
+      joined_GPS_DT <- dplyr::select(GPS_f, date, latitude, longitude)
       joined_GPS_DT$PM2.5 <- NA
       joined_GPS_DT$PM2.5_RHC <- NA
       joined_GPS_DT$PM2.5 <- as.numeric(joined_GPS_DT$PM2.5)
-
-    }
+      }
     if (!is.null(DT_f)) {
       validate(
         need(try(file_name_GPS() == file_name_DT()), "GPS File mandatory!
@@ -954,7 +951,7 @@ server <- function(input, output, session) {
         need(try(GPS_f_date() == DT_f_date()), "The files have different date
              entries in GPS and DustTrak-8530! Please check once again.")
       )
-      joined_GPS_DT<-left_join(GPS_f, DT_f, by = "date")
+      joined_GPS_DT <- left_join(GPS_f, DT_f, by = "date")
       joined_GPS_DT$PM2.5_RHC <- NA
       joined_GPS_DT <- dplyr::select(joined_GPS_DT, date, PM2.5, PM2.5_RHC,
                                      latitude, longitude )
@@ -996,8 +993,8 @@ server <- function(input, output, session) {
       setkey(RH_f, date)
       DT_f <- RH_f[joined_GPS_DT, roll = "nearest"]
       DT_f$RH <- DT_f$RH / 100
-      DT_f <- dplyr::select(DT_f, date,latitude, longitude,  PM2.5, RH )
-      names(DT_f) <- c("date","latitude", "longitude",  "PM2.5", "RH")
+      DT_f <- dplyr::select(DT_f, date, latitude, longitude, PM2.5, RH )
+      names(DT_f) <- c("date", "latitude", "longitude", "PM2.5", "RH")
       DT_f$CF <- sapply(DT_f$RH, FUN = VecFunc)
       DT_f$PM2.5_RHC <- DT_f$PM2.5 / DT_f$CF
       DT_f$PM2.5_Ref <- (DT_f$PM2.5 * Slope) + Intercept
@@ -1016,7 +1013,7 @@ server <- function(input, output, session) {
     GPS_f <- GPS_f()
     BC_Final <- BC_f()
     if (is.null(BC_f())) {
-      joined_GPS_BC <- dplyr::select(GPS_f, date,  latitude, longitude)
+      joined_GPS_BC <- dplyr::select(GPS_f, date, latitude, longitude)
       joined_GPS_BC$BC <- NA
       joined_GPS_BC$BC_NR <- NA
       joined_GPS_BC$BC_NR_LC <- NA
@@ -1035,7 +1032,7 @@ server <- function(input, output, session) {
         date entries in GPS and AE51! Please check once again.")
       )
       joined_GPS_BC <- left_join(GPS_f, BC_Final, by = "date")
-      joined_GPS_BC <- dplyr::select(joined_GPS_BC, date,  BC, BC_NR, BC_NR_LC,
+      joined_GPS_BC <- dplyr::select(joined_GPS_BC, date, BC, BC_NR, BC_NR_LC,
                                      latitude, longitude )
     }
     joined_GPS_BC <- data.table(joined_GPS_BC)
@@ -1049,11 +1046,11 @@ server <- function(input, output, session) {
     GPS_f <- GPS_f()
     CPC_f <- CPC_f()
     if (is.null(CPC_f)) {
-      joined_GPS_CPC <- dplyr::select(GPS_f, date,  latitude, longitude)
+      joined_GPS_CPC <- dplyr::select(GPS_f, date, latitude, longitude)
       joined_GPS_CPC$Particle_conc <- NA
-      joined_GPS_CPC$Particle_conc <- as.numeric(joined_GPS_CPC$Particle_conc)
-
-    }
+      joined_GPS_CPC$Particle_conc <- as.numeric(
+        as.character(joined_GPS_CPC$Particle_conc))
+      }
     if (!is.null(CPC_f)) {
       validate(
         need(try(file_name_GPS() == file_name_CPC()), "GPS File mandatory!
@@ -1067,7 +1064,7 @@ server <- function(input, output, session) {
       joined_GPS_CPC <- left_join(GPS_f, CPC_f, by = "date")
       joined_GPS_CPC <- dplyr::select(joined_GPS_CPC, date, Particle_conc,
                                       latitude, longitude )
-    }
+      }
     joined_GPS_CPC <- data.table(joined_GPS_CPC)
     setkey(joined_GPS_CPC, date)
     return(joined_GPS_CPC)
@@ -1108,9 +1105,9 @@ server <- function(input, output, session) {
     setkey(joined_1, date)
     joined <- joined_1[joined_GPS_BC, roll = "nearest"]
     joined <- joined %>%
-      dplyr::select(date,latitude,longitude, BC, BC_NR, BC_NR_LC, PM2.5,
+      dplyr::select(date, latitude, longitude, BC, BC_NR, BC_NR_LC, PM2.5,
                     PM2.5_RHC, PM2.5_RHC_Ref, PM2.5_Ref, RH, Particle_conc, CO2)
-    names(joined) <- c("date", "Latitude", "Longitude",  "BC", "BC_NR",
+    names(joined) <- c("date", "Latitude", "Longitude", "BC", "BC_NR",
                        "BC_NR_LC", "PM2.5", "PM2.5_RHC", "PM2.5_RHC_Ref",
                        "PM2.5_Ref", "RH", "Particle_conc", "CO2")
     attributes(joined$date )$tzone <- input$timezone
@@ -1154,18 +1151,16 @@ server <- function(input, output, session) {
     data_joined$RH            <- round(as.numeric(data_joined$RH),
                                        digits = 2)
     data_joined <- data_joined %>%
-      dplyr::select(date,Latitude,Longitude, BC, BC_NR, BC_NR_LC, PM2.5,
+      dplyr::select(date, Latitude, Longitude, BC, BC_NR, BC_NR_LC, PM2.5,
                     PM2.5_RHC, PM2.5_RHC_Ref, PM2.5_Ref, RH,
                     Particle_conc, CO2)
-    names(data_joined) <- c("date", "Latitude", "Longitude",  "AE51_BC (ug/m3)",
+    names(data_joined) <- c("date", "Latitude", "Longitude", "AE51_BC (ug/m3)",
                             "AE51_BC_NR (ug/m3)", "AE51_BC_NR_LC (ug/m3)",
-                            "DT8530_PM2.5 (ug/m3)",
-                            "DT8530_PM2.5_RHC (ug/m3)",
+                            "DT8530_PM2.5 (ug/m3)", "DT8530_PM2.5_RHC (ug/m3)",
                             "DT8530_PM2.5_RHC_Ref (ug/m3)",
                             "DT8530_PM2.5_Ref (ug/m3)", "RH(%)",
                             "CPC3007_Particle Concentration (#/cm3)",
                             "LI-COR_CO2 (ppm)")
-
     datatable(data_joined, options = list("pageLength" = 25))
   })
 
@@ -1207,7 +1202,7 @@ server <- function(input, output, session) {
       data <- data_joined()
     }
     data <- dplyr::select(data, BC, BC_NR, BC_NR_LC, PM2.5, PM2.5_RHC,
-                          PM2.5_RHC_Ref, PM2.5_Ref, RH, Particle_conc,  CO2)
+                          PM2.5_RHC_Ref, PM2.5_Ref, RH, Particle_conc, CO2)
     data[["BC"]] <- as.numeric(as.character(data[["BC"]]))
     data[["BC_NR"]] <- as.numeric(as.character(data[["BC_NR"]]))
     data[["BC_NR_LC"]] <- as.numeric(as.character(data[["BC_NR_LC"]]))
@@ -1219,7 +1214,7 @@ server <- function(input, output, session) {
                      "DT8530_PM2.5_Ref (ug/m3)", "RH(%)",
                      "CPC3007_Particle Concentration (#/cm3)",
                      "LI-COR_CO2 (ppm)")
-    columns <- c("AE51_BC (ug/m3)","AE51_BC_NR (ug/m3)","AE51_BC_NR_LC (ug/m3)",
+    columns <- c("AE51_BC (ug/m3)", "AE51_BC_NR (ug/m3)", "AE51_BC_NR_LC (ug/m3)",
                  "DT8530_PM2.5 (ug/m3)", "DT8530_PM2.5_RHC (ug/m3)",
                  "DT8530_PM2.5_RHC_Ref (ug/m3)", "DT8530_PM2.5_Ref (ug/m3)",
                  "RH(%)", "CPC3007_Particle Concentration (#/cm3)",
@@ -1311,7 +1306,7 @@ server <- function(input, output, session) {
       files3 <- lapply(inFile$datapath, function(y) {
         JSON_csv <- read.delim(y, header = FALSE, sep = ",", row.names = NULL,
                                skip = 1)
-        names(JSON_csv)<-c("Setting", "Value")
+        names(JSON_csv) <- c("Setting", "Value")
         JSON_csv <- JSON_csv[1:13, ]
         JSON_csv <- JSON_csv[ ,1:2]
         JSON_csv
@@ -1325,7 +1320,7 @@ server <- function(input, output, session) {
   output$table2 <- DT::renderDataTable({
     inFile <- input$file2
     if (is.null(BC_f())) {}
-    else if (!is.null(BC_f())){
+    else if (!is.null(BC_f())) {
       files3 <- lapply(inFile$datapath, function(y) {
         JSON_csv_header <- read.delim(y, header = FALSE, sep=",", skip = 15,
                                       row.names = NULL, stringsAsFactors = FALSE)
@@ -1356,9 +1351,9 @@ server <- function(input, output, session) {
       BC_f <- BC_f[1:14, ]
       names(BC_f) <- c("Setting")
       datatable(BC_f, options = list("pageLength" = 14))
-    }
-    else if (is.null(BC_f())) {"No AE51 files available"}
-    else if (!is.null(BC_f())){
+    }else if (is.null(BC_f())) {
+      "No AE51 files available"
+      }else if (!is.null(BC_f())){
       files3 <- lapply(inFile$datapath, function(y){
         JSON_csv <- read.delim(y, header = FALSE, sep = " ",
                                skip = 1, row.names = NULL)
@@ -1369,8 +1364,7 @@ server <- function(input, output, session) {
       BC_f <- data
       names(BC_f) <- c("Setting")
       datatable(BC_f, options = list("pageLength" = 14))
-
-    }
+      }
   })
 
 
@@ -1505,7 +1499,7 @@ server <- function(input, output, session) {
                  labs(title = "Relative Humidity (%)",
                       y = "",
                       x = "") +
-                 scale_x_datetime(date_labels  = "%H:%M") +
+                 scale_x_datetime(date_labels = "%H:%M") +
                  scale_y_continuous(limits = c(20,100)) +
                  theme_minimal() +
                  theme(legend.text = element_text(size = 18),
@@ -1547,7 +1541,7 @@ server <- function(input, output, session) {
                  labs(title = "AE51_BC (ug/m3)",
                       y = "",
                       x = "") +
-                 scale_x_datetime(date_labels  = "%H:%M") +
+                 scale_x_datetime(date_labels = "%H:%M") +
                  scale_y_continuous() +
                  theme_minimal() +
                  theme(legend.text = element_text(size = 18),
@@ -1566,7 +1560,7 @@ server <- function(input, output, session) {
                  labs(title = "AE51_BC (ug/m3)",
                       y = "",
                       x = "") +
-                 scale_x_datetime(date_labels  = "%H:%M") +
+                 scale_x_datetime(date_labels = "%H:%M") +
                  scale_y_continuous() +
                  theme_minimal() +
                  theme(legend.text = element_text(size = 18),
@@ -1608,7 +1602,7 @@ server <- function(input, output, session) {
                  labs(title = "CPC3007_Particle Concentration (#/cm3)",
                       y = "",
                       x = "") +
-                 scale_x_datetime( date_labels  = "%H:%M") +
+                 scale_x_datetime(date_labels = "%H:%M") +
                  scale_y_continuous() +
                  theme_minimal() +
                  theme(legend.text = element_text(size = 18),
@@ -1630,7 +1624,7 @@ server <- function(input, output, session) {
                  labs(title = "LI-COR_CO2 (ppm)",
                       y = "",
                       x = "") +
-                 scale_x_datetime( date_labels  = "%H:%M") +
+                 scale_x_datetime(date_labels = "%H:%M") +
                  scale_y_continuous() +
                  theme_minimal() +
                  theme(legend.text = element_text(size = 18),
@@ -1648,7 +1642,7 @@ server <- function(input, output, session) {
                  labs(title = "LI-COR_CO2 (ppm)",
                       y = "",
                       x = "") +
-                 scale_x_datetime( date_labels  = "%H:%M") +
+                 scale_x_datetime(date_labels = "%H:%M") +
                  scale_y_continuous() +
                  theme_minimal() +
                  theme(legend.text = element_text(size = 18),
@@ -1737,17 +1731,17 @@ server <- function(input, output, session) {
       pal <- colorBin( "Spectral", bins = risk.bins, na.color = "#808080",
                        reverse = TRUE)
     } else if (input$palleInp == "BC") {
-      risk.bins <- c( -100, -40, -20, 0, 5, 10, 20, 40, 100, 500, 2000)
-      pal <- colorBin( "Spectral", bins = risk.bins, na.color = "#808080",
+      risk.bins <- c(-100, -40, -20, 0, 5, 10, 20, 40, 100, 500, 2000)
+      pal <- colorBin("Spectral", bins = risk.bins, na.color = "#808080",
                        reverse = TRUE)
     } else if (input$palleInp == "PM2.5") {
       risk.bins <- c(0, 10, 25, 50, 100, 500, 2000, 5000, 10000)
-      pal <- colorBin( "Spectral", bins = risk.bins, na.color = "#808080",
+      pal <- colorBin("Spectral", bins = risk.bins, na.color = "#808080",
                        reverse = TRUE)
     } else if (input$palleInp == "Particle_conc") {
       risk.bins <- c(0, 5000, 10000, 20000, 40000, 70000, 100000, 150000,
                      200000, 500000)
-      pal <- colorBin( "Spectral", bins = risk.bins, na.color = "#808080",
+      pal <- colorBin("Spectral", bins = risk.bins, na.color = "#808080",
                        reverse = TRUE)
     }else if (input$palleInp == "RH") {
       pal <- colorNumeric("RdYlGn", domain = data$RH, na.color = "#808080",
@@ -1760,7 +1754,7 @@ server <- function(input, output, session) {
                           reverse = TRUE)
     }else {
       risk.bins <- c(0, 10, 25, 50, 100, 500, 2000, 5000, 10000)
-      pal <- colorBin( "Spectral", bins = risk.bins, na.color = "#808080",
+      pal <- colorBin("Spectral", bins = risk.bins, na.color = "#808080",
                        reverse = TRUE)
     }
 
