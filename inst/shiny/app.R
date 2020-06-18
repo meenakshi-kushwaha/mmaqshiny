@@ -91,7 +91,6 @@ ui <- fluidPage(
                                                         "text/comma-separated-values,
                                                         text/plain",
                                                         ".csv")),
-
                                    tags$hr(),
                                    fileInput("file4", "CPC3007 -
                                              Particle Concentration files",
@@ -117,14 +116,13 @@ ui <- fluidPage(
                                    actionButton("join_button", "JOIN"),
                                    tags$hr(),
                                    downloadButton('download',"Download as csv"),
-                                   tags$hr())
-                ),
+                                   tags$hr())),
                 mainPanel(
                   tags$a(img(src = 'logo.png', align = "right", height = 70,
                              width = 120),
-                         href="https://www.ilklabs.com/", target = "_blank"),
+                         href = "https://www.ilklabs.com/", target = "_blank"),
                   tags$head(
-                    tags$style(type ='text/css',
+                    tags$style(type = 'text/css',
                                ".nav-tabs {
                                font-size: 18px
                                } ")),
@@ -156,12 +154,12 @@ ui <- fluidPage(
                               ),
                               tabPanel(value = 6,
                                        title = "Alarms and Settings",
-                                       h5("AE51 Status:"),
+                                       h5("AE51 Status: "),
                                        dataTableOutput("table5"),
                                        dataTableOutput("table2"),
-                                       h5("DT8530 Notes/Alarms:"),
+                                       h5("DT8530 Notes/Alarms: "),
                                        dataTableOutput("table4"),
-                                       h5("CPC3007 Notes/Alarms:"),
+                                       h5("CPC3007 Notes/Alarms: "),
                                        dataTableOutput("table3")
                               )))
   ))
