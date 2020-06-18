@@ -73,7 +73,7 @@ mmaqshiny::mmaqshiny_run()
 A preloaded dataset appears which is a joined file of sample data collected during a mobile monitoring campaign in Bangalore, India.
 
 
-### Instrument Description
+### Instrument Details
 
 
 | Instrument (model/ make) | Parameters | Units| Operating Principle | 
