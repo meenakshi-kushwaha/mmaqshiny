@@ -1,6 +1,8 @@
 
-#' @title mmaqshiny: R-Shiny Package to Explore Air-Quality Mobile Monitoring Data
-#' @description The R-Shiny package we present here is for analysing, visualising and spatial-mapping of high-resolution air quality data collected by specific devices installed on a moving platform.
+#' @title mmaqshiny: Explore Air Quality Mobile Monitoring Data
+#' @description The package is for analysing, visualising and spatial mapping of
+#' high-resolution air quality data collected by specific devices installed on
+#' a moving platform.
 #' @keywords mmaqshiny
 #' @examples
 #' \dontrun{

@@ -4,20 +4,26 @@
 \name{mmaqshiny-package}
 \alias{mmaqshiny}
 \alias{mmaqshiny-package}
-\title{mmaqshiny: R-Shiny Package to Explore Air-Quality Mobile Monitoring Data}
+\title{mmaqshiny: Explore Air Quality Mobile Monitoring Data}
 \description{
-The R-Shiny package here is for analysing, visualising and spatial-mapping of high-resolution air quality
-    data collected by specific devices installed on a moving platform. 1-Hz data of PM2.5 (mass concentrations of particulate 
-    matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, 
-    carbon-di-oxide along with GPS coordinates and relative humidity (RH) data collected by some popular portable instruments 
-    (TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-830, Garmin GPSMAP 64s, Omega USB RH probe respectively) 
-    can be handled by this package. It incorporates device-specific cleaning and correction algorithms. RH correction is applied 
-    to DustTrak PM2.5 following Chakrabarti et al., (2004). Provision is given to input linear regression coefficients for 
-    correcting the PM2.5 data (if required). BC data will be cleaned for the vibration generated noise, by adopting the statistical 
-    procedure as explained in Apte et al., (2011), followed by a loading correction as suggested by Ban-Weiss et al., (2009). 
-    For the number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; 
-    default value is 1). The package joins the raw, cleaned and corrected data from the above said instruments and outputs as a 
-    downloadable csv file.
+mmaqshiny is for analysing, visualising and spatial mapping of 
+    high-resolution air quality data collected by specific devices installed on 
+    a moving platform. 1 Hz data of PM2.5 (mass concentrations of particulate  
+    matter with size less than 2.5 microns), Black carbon mass concentrations 
+    (BC), ultra-fine particle number concentrations, carbon dioxide along with 
+    GPS coordinates and relative humidity (RH) data collected by some popular 
+    portable instruments (TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, 
+    LICOR Li-830, Garmin GPSMAP 64s, Omega USB RH probe respectively). It 
+    incorporates device-specific cleaning and correction algorithms. RH correction 
+    is applied to DustTrak PM2.5 following the Chakrabarti et al., (2004). 
+    Provision is given to add linear regression coefficients for correcting the 
+    PM2.5 data (if required). BC data will be cleaned for the vibration generated
+    noise, by adopting the statistical procedure as explained in Apte et al., (2011), 
+    followed by a loading correction as suggested by Ban-Weiss et al., (2009). 
+    For the number concentration data, provision is given for dilution correction 
+    factor (if a diluter is used with CPC3007; default value is 1). The package 
+    joins the raw, cleaned and corrected data from the above said instruments 
+    and outputs as a downloadable csv file.
 }
 \seealso{
 Useful links:
