@@ -149,7 +149,7 @@ It is a highly sensitive, palm-held and battery-operated instrument designed for
 
 3. Condensation Particle Counter 3007 (CPC)
 
-It is an alcohol based handheld instrument used to measure ultrafine particles. It works on the optical detection principle, and operates at a flow rate of 0.7 LPM.The instrument detects and measures the particles in the size range of 10 nm to > 1 µm.  More technical details of the instrument can be [found here.](https://www.tsi.com/condensation-particle-counter-3007/)
+It is an alcohol based handheld instrument used to measure ultra-fine particles. It works on the optical detection principle, and operates at a flow rate of 0.7 LPM.The instrument detects and measures the particles in the size range of 10 nm to > 1 µm.  More technical details of the instrument can be [found here.](https://www.tsi.com/condensation-particle-counter-3007/)
 
 4. LI-COR 850
 

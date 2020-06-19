@@ -258,7 +258,7 @@ server <- function(input, output, session) {
       BC_f_date1 <- as.character(BC_f[1, 1])
       BC_f_date <- as.Date(BC_f_date1, format = "%d-%m-%Y")
       if (is.na(BC_f_date)) {
-        BC_f_date <- as.Date(BC_f_date1, format = "%Y/%m/%d")     #"%d-%m-%Y"; "%Y/%m/%d"
+        BC_f_date <- as.Date(BC_f_date1, format = "%Y/%m/%d") #"%d-%m-%Y"; "%Y/%m/%d"
       }
       return(BC_f_date)
     }
@@ -815,7 +815,8 @@ server <- function(input, output, session) {
       names(CPC_f) <- c("Time", "Particle_conc")
       CPC_f$Particle_conc <- CPC_f$Particle_conc * 5.5
       w <- as.Date("2019-09-25")
-      CPC_f <- mutate(CPC_f, date = ymd_hms(paste(w, Time), tz = "Asia/Kolkata"))
+      CPC_f <- mutate(CPC_f, date = ymd_hms(paste(w, Time),
+                                            tz = "Asia/Kolkata"))
       CPC_f <- dplyr::select(CPC_f,date, Particle_conc )
       CPC_f <- data.table(CPC_f)
       setkey(CPC_f, date)
@@ -1771,12 +1772,14 @@ server <- function(input, output, session) {
                                "RH(%):",
                                round(as.numeric(data$RH), digits = 2), "<br>",
                                "CPC3007_Particle Concentration (#/cm3):",
-                               round(as.numeric(data$Particle_conc), digits = 2),"<br>",
+                               round(as.numeric(data$Particle_conc), digits = 2),
+                               "<br>",
                                "CO2:", round(as.numeric(data$CO2),digits = 2)),
                  weight = 3, radius = 8,
                  col = ~pal(data[[input$palleInp]]), stroke = TRUE,
                  fillOpacity = 0.8) %>%
-      leaflet::addLegend("bottomright", pal = pal, values = ~data[[input$palleInp]],
+      leaflet::addLegend("bottomright", pal = pal,
+                         values = ~data[[input$palleInp]],
                          title = paste(input$palleInp))
   })
 }
