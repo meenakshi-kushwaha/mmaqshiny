@@ -82,7 +82,7 @@ A preloaded dataset appears which is a joined file of sample data collected duri
 | :-----:|:-----:|:-----:|:-----:|
 | GPSMAP 64s (Garmin) | Location (latitude, longitude, altitude) | °, °, m | Trilateration|
 | USB RH probe (Omega) | Relative Humidity (RH) | % | Electrical detection | 
-| Micro-Aethalometer (AE51, Aethlabs)  | Black Carbon mass concentration (BC) | ng/m³ | Light absorption technique |
+| microAeth (AE51, Aethlabs)  | Black Carbon mass concentration (BC) | ng/m³ | Light absorption technique |
 | DustTrak II (DT8530, TSI) | PM<sub>2.5</sub> | mg/m³ |  Light scattering technique | 
 | Li-850 (LICOR) | CO<sub>2</sub> | ppm | Non-Dispersive Infrared |
 | CPC (3007, TSI) | Particle concentration | count/cm³ | Light scattering technique |
