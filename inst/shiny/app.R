@@ -15,7 +15,6 @@ library(zoo)
 library(caTools)
 library(xts)
 
-
 ui <- fluidPage(
   h1("Explore Mobile Monitoring Air Pollution Data"),
   tags$head(
