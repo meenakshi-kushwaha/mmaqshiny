@@ -1,0 +1,13 @@
+app <- ShinyDriver$new("../", seed = 8, loadTimeout = 1e+05)
+app$snapshotInit("test_mac_map")
+
+app$uploadFile(file1 = "2019_09_16_h094851_KAN_Garmin_3.gpx")
+app$uploadFile(file2 = "2019_09_16_h094851_KAN_AE12.csv")
+app$uploadFile(file3 = "2019_09_16_h094851_KAN_DT809.csv")
+app$setInputs(join_button = "click", timeout_ = 100000)
+app$setInputs(tabs1 = "2")
+Sys.sleep(10)
+app$snapshot()
+app$setInputs(tabs1 = "4")
+Sys.sleep(10)
+app$snapshot()
