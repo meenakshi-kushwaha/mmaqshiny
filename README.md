@@ -1,9 +1,9 @@
 
-# mmaqshiny v1.0: R-Shiny package to explore air quality mobile monitoring data 
+# mmaqshiny v1.0: R-Shiny package to explore air-quality mobile-monitoring data 
 
 ## Summary
 
-The R-Shiny package `mmaqshiny` is for analysing, visualising and spatial plotting of high-resolution air quality data collected by specific devices installed on a moving platform.  With the click of a button, the app generates: summary statistics, time series plots and spatial map of pollutant concentrations. This app reduces the time consumed for analysing each pollutant individually. It helps check the quality of the data at near real time (same day) and instantly visualise pollution hotspots. The time series plots of each pollutant help in understanding the temporal patterns of concentrations and performance of the instruments. 
+`mmaqshiny` is for analysing, visualising and spatial plotting of high-resolution air-quality data collected by specific devices installed on a moving platform.  With the click of a button, the app generates: summary statistics, time series plots and spatial map of pollutant concentrations. This app reduces the time consumed for analysing each pollutant individually. It helps check the quality of the data at near real time (same day) and instantly visualise pollution hotspots. The time series plots of each pollutant help in understanding the temporal patterns of concentrations and performance of the instruments. 
 
 High frequency (1 Hz) data of PM<sub>2.5</sub> (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide (CO<sub>2</sub>) along with GPS coordinates and relative humidity (RH) data are collected by some popular portable instruments (TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-850, Garmin GPSMAP 64s, Omega USB RH probe respectively) can be handled by this package. The package incorporates device specific cleaning and correction algorithms. RH correction is applied to DustTrak PM<sub>2.5</sub> following a method described in @Chakrabarti:2004. If required, user can also input linear regression coefficients for correcting the PM<sub>2.5</sub> data.
 An example of DustTrak PM<sub>2.5</sub> raw and corrected data, using slope=0.21, intercept=11.1 is shown below.
@@ -38,19 +38,19 @@ The example data included [here](https://github.com/meenakshi-kushwaha/mmaqshiny
 
 The output is displayed in five different tabs.
 
-1) `Joined File` displays all cleaned and joined data 
-2) `Summary` displays summary statistics for each parameter,
+1) `Joined File` displays all cleaned and joined data.
+2) `Summary` displays summary statistics for each parameter.
 3)  `Plots` displays interactive  time series line plots for raw parameters. 
-4) `Map` provides a spatial map for the user selected pollutant on an OpenStreetMap background. 
+4) `Map` provides a spatial map for the user selected pollutant on an OpenStreetMap basemap. 
 5) `Alarm and Settings` tab displays each instrument's settings and alarms (if any).
 
 
 ## Limitations
 
-1) handles single day data at a time
-2) provision for only linear correction coefficients of PM<sub>2.5</sub>
-3) instrument specific 
-4) file renaming (with date prefix) is required
+1) It handles single day data at a time.
+2) It has provision for only linear correction coefficients of PM<sub>2.5</sub>.
+3) It is instrument specific.
+4) It is mandatory to rename files (with date prefix).
 
 
 ## Installation
@@ -64,7 +64,7 @@ devtools::install_github("meenakshi-kushwaha/mmaqshiny")
 library(mmaqshiny)
 mmaqshiny::mmaqshiny_run()
 ```
-A preloaded dataset appears which is a joined file of sample data collected during a mobile monitoring campaign in Bangalore, India.
+A preloaded dataset appears which is a joined file of sample data collected during a mobile-monitoring campaign in Bangalore, India.
 
 ## User Guide
 
