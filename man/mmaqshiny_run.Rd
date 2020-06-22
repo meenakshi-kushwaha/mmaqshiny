@@ -17,7 +17,7 @@ for analysing, visualising and spatial plotting of high-resolution air quality
 data collected by specific devices installed on a moving platform.
 }
 \examples{
-if(interactive()){
+\dontrun{
 library(mmaqshiny)
 mmaqshiny::mmaqshiny_run()
 }
