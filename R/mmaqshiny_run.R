@@ -10,7 +10,7 @@
 #' data collected by specific devices installed on a moving platform.
 #' @keywords mmaqshiny
 #' @examples
-#' if(interactive()){
+#' \dontrun{
 #' library(mmaqshiny)
 #' mmaqshiny::mmaqshiny_run()
 #' }

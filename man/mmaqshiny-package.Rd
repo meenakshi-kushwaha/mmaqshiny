@@ -40,11 +40,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Adithi R. Upadhya \email{adithi@ilklabs.com} [copyright holder]
+\strong{Maintainer}: Adithi Upadhya \email{adithi@ilklabs.com}
 
 Authors:
 \itemize{
-  \item Meenakshi cph Kushwaha \email{meenakshi@ilklabs.com}
+  \item Meenakshi Kushwaha \email{meenakshi@ilklabs.com}
 }
 
 Other contributors:

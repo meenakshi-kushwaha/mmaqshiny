@@ -2,14 +2,10 @@ Package: mmaqshiny
 Title: Explore Air-Quality Mobile-Monitoring Data
 Version: 1.0.0
 Authors@R:  c(
-    person(given = "Adithi", family = "Upadhya", middle = "R.", 
-    email = "adithi@ilklabs.com", role = c("aut", "cre", "cph")),
-    person(given = "Pratyush", family = "Agrawal", email = "pratyush@ilklabs.com", 
-    role = "dtc"),
-    person(given = "Sreekanth", family = "Vakacherla", email = "sree.hcu@gmail.com",
-    role = c("aui", "ctb")),
-    person(given = "Meenakshi", family = "Kushwaha", email = "meenakshi@ilklabs.com", 
-    role = "aut", "cph"))
+    person("Adithi", "Upadhya", email = "adithi@ilklabs.com", role = c("aut", "cre")),
+    person("Pratyush", "Agrawal", email = "pratyush@ilklabs.com", role = "dtc"),
+    person("Sreekanth", "Vakacherla", email = "sree.hcu@gmail.com", role = c("aui", "ctb")),
+    person("Meenakshi", "Kushwaha", email = "meenakshi@ilklabs.com",  role = "aut"))
 Description: Mobile-monitoring or “sensors on a mobile platform”, is an increasingly 
     popular approach to measure high-resolution pollution data at the street level. 
     Coupled with location data, spatial visualisation of air-quality parameters 
