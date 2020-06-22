@@ -4,10 +4,16 @@
 \name{mmaqshiny-package}
 \alias{mmaqshiny}
 \alias{mmaqshiny-package}
-\title{mmaqshiny: Explore Air Quality Mobile Monitoring Data}
+\title{mmaqshiny: Explore Air-Quality Mobile-Monitoring Data}
 \description{
-mmaqshiny is for analysing, visualising and spatial plotting of 
-    high-resolution air quality data collected by specific devices installed on 
+Mobile-monitoring or “sensors on a mobile platform”, is an increasingly 
+    popular approach to measure high-resolution pollution data at the street level. 
+    Coupled with location data, spatial visualisation of air-quality parameters 
+    helps detect localized areas of high air-pollution, also called hotspots. 
+    In this approach, portable sensors are mounted on a vehicle and driven on 
+    predetermined routes to collect high frequency data (1 Hz). 
+    mmaqshiny is for analysing, visualising and spatial plotting of 
+    high-resolution air-quality data collected by specific devices installed on 
     a moving platform. 1 Hz data of PM2.5 (mass concentrations of particulate  
     matter with size less than 2.5 microns), Black carbon mass concentrations 
     (BC), ultra-fine particle number concentrations, carbon dioxide along with 
@@ -34,11 +40,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Adithi Upadhya \email{adithi@ilklabs.com}
+\strong{Maintainer}: Adithi R. Upadhya \email{adithi@ilklabs.com} [copyright holder]
 
 Authors:
 \itemize{
-  \item Meenakshi Kushwaha \email{meenakshi@ilklabs.com}
+  \item Meenakshi cph Kushwaha \email{meenakshi@ilklabs.com}
 }
 
 Other contributors:
