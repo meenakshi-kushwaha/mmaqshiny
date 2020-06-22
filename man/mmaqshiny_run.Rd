@@ -2,7 +2,7 @@
 % Please edit documentation in R/mmaqshiny_run.R
 \name{mmaqshiny_run}
 \alias{mmaqshiny_run}
-\title{mmaqshiny: Explore Air Quality Mobile Monitoring Data}
+\title{mmaqshiny: Explore Air-Quality Mobile-Monitoring Data}
 \usage{
 mmaqshiny_run()
 }
@@ -12,12 +12,12 @@ popular approach to measure high-resolution pollution data at the street level.
 Coupled with location data, spatial visualisation of air-quality parameters
 helps detect localized areas of high air-pollution, also called hotspots.
 In this approach, portable sensors are mounted on a vehicle and driven on
-predetermined routes to collect high frequency data (1 Hz).The package is
-for analysing, visualising and spatial plotting of high-resolution air quality
+predetermined routes to collect high frequency data (1 Hz). The package is
+for analysing, visualising and spatial plotting of high-resolution air-quality
 data collected by specific devices installed on a moving platform.
 }
 \examples{
-\dontrun{
+if(interactive()){
 library(mmaqshiny)
 mmaqshiny::mmaqshiny_run()
 }
