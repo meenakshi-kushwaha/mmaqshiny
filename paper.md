@@ -1,5 +1,5 @@
 ---
-title: 'mmaqshiny v1.0: R-Shiny package to explore air-quality mobile-monitoring data data'
+title: 'mmaqshiny v1.0: R-Shiny package to explore air-quality mobile-monitoring data'
 authors:
 - affiliation: '1'
   name: Adithi R. Upadhya
