@@ -23,7 +23,7 @@ The package cleans BC data for the vibration generated noise, by adopting a stat
 The package joins the raw, cleaned and corrected data from the above mentioned instruments and generates a downloadable csv file. It accepts multiple files for each parameter. The input files should have a date prefix of the format `yyyy_mm_dd` in their file names. The package can process multiple files for a given date at a time and the file name prefix is used to perform the check. An error message will be generated if the prefix is not matched between various pollutant filenames.
 
 
-The package requires GPS file (.gpx) as a mandatory input along with timezone whihc can be selected using the dropdown menu(a link to all accepted timezone formats in R is also included). All other pollutant files are optional. A testing data set is provided in the "data" folder inside inst/shiny; with each instrument folder containing 2 days of data.
+The package requires GPS file (.gpx) as a mandatory input along with timezone whihc can be selected using the dropdown menu (a link to all accepted timezone formats in R is also included). All other pollutant files are optional. A testing data set is provided in the "data" folder inside inst/shiny; with each instrument folder containing 2 days of data.
 
 
 The example data included [here](https://github.com/meenakshi-kushwaha/mmaqshiny/tree/master/inst/shiny/data) contains with following file names - 
