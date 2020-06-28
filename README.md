@@ -1,5 +1,8 @@
 
-# mmaqshiny v1.0: R-Shiny package to explore air-quality mobile-monitoring data 
+# mmaqshiny v1.0: R-Shiny package to explore air-quality mobile-monitoring data  
+
+[![status](https://joss.theoj.org/papers/4640e0e9a6f03a68833905bf378a0652/status.svg)](https://joss.theoj.org/papers/4640e0e9a6f03a68833905bf378a0652)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3911659.svg)](https://doi.org/10.5281/zenodo.3911659)
 
 ## Summary
 
