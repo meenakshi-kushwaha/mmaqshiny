@@ -6,6 +6,7 @@
 
 2020-09-23: Bug fixes!!
 - Changed the code to tigy version! Usage of reactive elements and joining table preview.(removed repeated code of joining and manipulation)
+- Fixed shinyjs update, shifting from XML to xml2 happening soon!
 ## Summary
 
 `mmaqshiny` is for analysing, visualising and spatial plotting of high-resolution air-quality data collected by specific devices installed on a moving platform.  With the click of a button, the app generates: summary statistics, time series plots and spatial map of pollutant concentrations. This app reduces the time consumed for analysing each pollutant individually. It helps check the quality of the data at near real time (same day) and instantly visualise pollution hotspots. The time series plots of each pollutant help in understanding the temporal patterns of concentrations and performance of the instruments. 
