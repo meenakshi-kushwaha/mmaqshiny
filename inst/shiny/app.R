@@ -301,8 +301,6 @@ server <- function(input, output, session) {
         mutate(date = as.POSIXct(paste(as.Date(Date, format = "%d-%m-%Y"), Time),
                            tz = input$timezone)) %>%
         select(date, CO2)
-      setDT(CO2_f)
-      setkey(CO2_f, date)
       return(CO2_f)
     }
   })
@@ -327,8 +325,6 @@ server <- function(input, output, session) {
       mutate(date = with_tz(ymd_hms(time), input$timezone)) %>%
       distinct(date, .keep_all = TRUE) %>%
       select(date, latitude, longitude)
-    setDT(GPS_f)
-    setkey(GPS_f, date)
     return(GPS_f)
   })
 
@@ -430,8 +426,6 @@ server <- function(input, output, session) {
       BC_Final <- BC %>%
         select("date" = Date, "BC" = BC3, "BC_NR" = BC_Fi, "BC_NR_LC" = BC_Final) %>%
         mutate_at(c('BC', 'BC_NR', 'BC_NR_LC'), as.numeric)
-      setDT(BC_Final)
-      setkey(BC_Final, date)
       return(BC_Final)
     }
   })
@@ -460,8 +454,6 @@ server <- function(input, output, session) {
       DT_f <- DT_f %>%
         mutate(PM2.5 = PM2.5 * 1000) %>%
         dplyr::select(date, PM2.5)
-      setDT(DT_f)
-      setkey(DT_f, date)
       return(DT_f)
     }
   })
@@ -498,8 +490,6 @@ server <- function(input, output, session) {
       CPC_f <- CPC_f %>%
         mutate(date = ymd_hms(paste(w, Time), tz = input$timezone)) %>%
         select(date, Particle_conc)
-      setDT(CPC_f)
-      setkey(CPC_f, date)
       return(CPC_f)
     }
   })
@@ -523,8 +513,6 @@ server <- function(input, output, session) {
       RH_f <- RH_f%>%
         dplyr::select(date, RH) %>%
         mutate_at(c('RH'), as.numeric)
-      setDT(RH_f)
-      setkey(RH_f, date)
       return(RH_f)
     }
   })
@@ -611,8 +599,6 @@ server <- function(input, output, session) {
       joined_GPS_CO2 <- dplyr::select(joined_GPS_CO2, date, CO2,
                                       latitude, longitude)
     }
-    setDT(joined_GPS_CO2)
-    setkey(joined_GPS_CO2, date)
     return(joined_GPS_CO2)
   })
 
@@ -642,8 +628,6 @@ server <- function(input, output, session) {
         mutate(PM2.5_RHC = NA) %>%
         dplyr::select(date, PM2.5, PM2.5_RHC, latitude, longitude)
     }
-    setDT(joined_GPS_DT)
-    setkey(joined_GPS_DT, date)
     return(joined_GPS_DT)
   })
 
@@ -673,20 +657,20 @@ server <- function(input, output, session) {
         need(try(file_name_DT() == file_name_RH()), "File names of DustTrak
              8530 and RH do not match, Please select the correct files")
       )
+      setDT(RH_f)
       setkey(RH_f, date)
       DT_f <- RH_f[joined_GPS_DT, roll = "nearest"]
       DT_f$RH <- DT_f$RH / 100
-      DT_f <- dplyr::select(DT_f, date, latitude, longitude, PM2.5, RH)
+      setDT(DT_f)
       DT_f$CF <- sapply(DT_f$RH, FUN = VecFunc)
       DT_f <- DT_f %>%
+        select(date, latitude, longitude, PM2.5, RH, CF) %>%
         mutate(PM2.5_RHC = (PM2.5 / CF),
                PM2.5_Ref = ((PM2.5 * Slope) + Intercept),
                PM2.5_RHC_Ref = ((PM2.5_RHC * Slope) + Intercept),
                date = as.POSIXct(date, format = '%Y-%m-%d %H:%M:%S',
                                  tz = input$timezone))
       }
-    setDT(DT_f)
-    setkey(DT_f, date)
     return(DT_f)
   })
 
@@ -714,8 +698,6 @@ server <- function(input, output, session) {
       joined_GPS_BC <- dplyr::select(joined_GPS_BC, date, BC, BC_NR, BC_NR_LC,
                                      latitude, longitude )
     }
-    setDT(joined_GPS_BC)
-    setkey(joined_GPS_BC, date)
     return(joined_GPS_BC)
   })
 
@@ -742,8 +724,6 @@ server <- function(input, output, session) {
       joined_GPS_CPC <- dplyr::select(joined_GPS_CPC, date, Particle_conc,
                                       latitude, longitude )
     }
-    setDT(joined_GPS_CPC)
-    setkey(joined_GPS_CPC, date)
     return(joined_GPS_CPC)
   })
 
@@ -774,10 +754,8 @@ server <- function(input, output, session) {
     DT_f <- DT_f()
     RH_f <- RH_f()
     CO2_f <- CO2_f()
-    joined2 <- left_join(joined_GPS_CPC, joined_GPS_CO2, by = "date")
-    setDT(joined2)
-    setkey(joined2, date)
-    joined_1 <- left_join(DT_RH, joined2, by = "date")
+    joined_1 <- left_join(joined_GPS_CPC, joined_GPS_CO2, by = 'date') %>%
+      left_join(., DT_RH, by = 'date')
     setDT(joined_1)
     setkey(joined_1, date)
     joined <- joined_1[joined_GPS_BC, roll = "nearest"]
@@ -1003,6 +981,7 @@ server <- function(input, output, session) {
                          panel.border = element_rect(colour = "black",
                                                      fill = NA, size = 1.2)))
   })
+
   output$plot5 <- renderPlotly({
     if (is.null(input$file1) & is.null(input$file2) &
         is.null(input$file3) & is.null(input$file4)
