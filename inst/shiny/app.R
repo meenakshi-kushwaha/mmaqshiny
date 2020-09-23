@@ -992,8 +992,7 @@ server <- function(input, output, session) {
   })
 
   ## Raw pollutants/GPS plot
-
-  output$plot5 <- renderPlotly({
+  theme1 <- reactive({
     theme1 <- list(geom_line(size = 0.6, color = "dodgerblue2"),
                    scale_x_datetime(date_labels  = "%H:%M"),
                    theme_minimal(),
@@ -1003,6 +1002,8 @@ server <- function(input, output, session) {
                          axis.text = element_text(size = 14, face = "bold"),
                          panel.border = element_rect(colour = "black",
                                                      fill = NA, size = 1.2)))
+  })
+  output$plot5 <- renderPlotly({
     if (is.null(input$file1) & is.null(input$file2) &
         is.null(input$file3) & is.null(input$file4)
         & is.null(input$file5) & is.null(input$file6)) {
@@ -1011,7 +1012,7 @@ server <- function(input, output, session) {
                  geom_line(size = 0.6, color = "dodgerblue2") +
                  labs(title = "Latitude (degree)",
                       y = "",
-                      x = "") + theme1
+                      x = "") + theme1()
       )}
     else if (is.null(GPS_f())) {}
     else if (!is.null(GPS_f())) {
@@ -1020,20 +1021,11 @@ server <- function(input, output, session) {
                  geom_line(size = 0.6, color = "dodgerblue2") +
                  labs(title = "Latitude (degree)",
                       y = "",
-                      x = "") + theme1
+                      x = "") + theme1()
       )}
   })
 
   output$plot6 <- renderPlotly({
-    theme1 <- list(geom_line(size = 0.6, color = "dodgerblue2"),
-                   scale_x_datetime(date_labels  = "%H:%M"),
-                   theme_minimal(),
-                   theme(legend.text = element_text(size = 18),
-                         plot.title = element_text(size = 14, face = "bold"),
-                         axis.title = element_text(size = 14),
-                         axis.text = element_text(size = 14, face = "bold"),
-                         panel.border = element_rect(colour = "black",
-                                                     fill = NA, size = 1.2)))
     if (is.null(input$file1) & is.null(input$file2) &
         is.null(input$file3) & is.null(input$file4)
         & is.null(input$file5) & is.null(input$file6)){
@@ -1042,7 +1034,7 @@ server <- function(input, output, session) {
                  geom_line(size = 0.6, color = "dodgerblue2") +
                  labs(title = "Longitude (degree)",
                       y = "",
-                      x = "") + theme1
+                      x = "") + + theme1()
       )}
     else if (is.null(GPS_f())) {}
     else if (!is.null(GPS_f())) {
@@ -1051,20 +1043,11 @@ server <- function(input, output, session) {
                  geom_line(size = 0.6, color = "dodgerblue2") +
                  labs(title = "Longitude (degree)",
                       y = "",
-                      x = "") + theme1
+                      x = "") + + theme1()
       )}
   })
 
   output$plot <- renderPlotly({
-    theme1 <- list(geom_line(size = 0.6, color = "dodgerblue2"),
-                   scale_x_datetime(date_labels  = "%H:%M"),
-                   theme_minimal(),
-                   theme(legend.text = element_text(size = 18),
-                         plot.title = element_text(size = 14, face = "bold"),
-                         axis.title = element_text(size = 14),
-                         axis.text = element_text(size = 14, face = "bold"),
-                         panel.border = element_rect(colour = "black",
-                                                     fill = NA, size = 1.2)))
     if (is.null(input$file1) & is.null(input$file2) &
         is.null(input$file3) & is.null(input$file4)
         & is.null(input$file5) & is.null(input$file6)) {
@@ -1073,7 +1056,7 @@ server <- function(input, output, session) {
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(PM2.5))) +
                  labs(title = "DT8530_PM2.5 (ug/m3)",
                       y = "",
-                      x = "") + theme1
+                      x = "") + + theme1()
       )}
     else if (is.null(DT_f())) {}
     else if (!is.null(DT_f())) {
@@ -1082,20 +1065,11 @@ server <- function(input, output, session) {
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(PM2.5))) +
                  labs(title = "DT8530_PM2.5 (ug/m3)",
                       y = "",
-                      x = "") + theme1
+                      x = "") + + theme1()
       )}
   })
 
   output$plot4<- renderPlotly({
-    theme1 <- list(geom_line(size = 0.6, color = "dodgerblue2"),
-                   scale_x_datetime(date_labels  = "%H:%M"),
-                   theme_minimal(),
-                   theme(legend.text = element_text(size = 18),
-                         plot.title = element_text(size = 14, face = "bold"),
-                         axis.title = element_text(size = 14),
-                         axis.text = element_text(size = 14, face = "bold"),
-                         panel.border = element_rect(colour = "black",
-                                                     fill = NA, size = 1.2)))
     if (is.null(input$file1) & is.null(input$file2) &
         is.null(input$file3) & is.null(input$file4)
         & is.null(input$file5) & is.null(input$file6)) {
@@ -1104,7 +1078,7 @@ server <- function(input, output, session) {
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(RH))) +
                  labs(title = "Relative Humidity (%)",
                       y = "",
-                      x = "") + theme1
+                      x = "") + + theme1()
       )}
     else if (is.null(RH_f())) {}
     else if (!is.null(RH_f())) {
@@ -1113,20 +1087,11 @@ server <- function(input, output, session) {
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(RH))) +
                  labs(title = "Relative Humidity (%)",
                       y = "",
-                      x = "") + theme1
+                      x = "") + + theme1()
       )}
   })
 
   output$plot2 <- renderPlotly({
-    theme1 <- list(geom_line(size = 0.6, color = "dodgerblue2"),
-                   scale_x_datetime(date_labels  = "%H:%M"),
-                   theme_minimal(),
-                   theme(legend.text = element_text(size = 18),
-                         plot.title = element_text(size = 14, face = "bold"),
-                         axis.title = element_text(size = 14),
-                         axis.text = element_text(size = 14, face = "bold"),
-                         panel.border = element_rect(colour = "black",
-                                                     fill = NA, size = 1.2)))
     if (is.null(input$file1) & is.null(input$file2) &
         is.null(input$file3) & is.null(input$file4)
         & is.null(input$file5) & is.null(input$file6)) {
@@ -1135,7 +1100,7 @@ server <- function(input, output, session) {
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(BC))) +
                  labs(title = "AE51_BC (ug/m3)",
                       y = "",
-                      x = "") + theme1
+                      x = "") + + theme1()
       )}
     else if (is.null(BC_f())) {}
     else if (!is.null(BC_f())) {
@@ -1144,20 +1109,11 @@ server <- function(input, output, session) {
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(BC))) +
                  labs(title = "AE51_BC (ug/m3)",
                       y = "",
-                      x = "") + theme1
+                      x = "") + + theme1()
       )}
   })
 
   output$plot3 <- renderPlotly({
-    theme1 <- list(geom_line(size = 0.6, color = "dodgerblue2"),
-                   scale_x_datetime(date_labels  = "%H:%M"),
-                   theme_minimal(),
-                   theme(legend.text = element_text(size = 18),
-                         plot.title = element_text(size = 14, face = "bold"),
-                         axis.title = element_text(size = 14),
-                         axis.text = element_text(size = 14, face = "bold"),
-                         panel.border = element_rect(colour = "black",
-                                                     fill = NA, size = 1.2)))
     if (is.null(input$file1) & is.null(input$file2) &
         is.null(input$file3) & is.null(input$file4)
         & is.null(input$file5) & is.null(input$file6)) {
@@ -1166,7 +1122,7 @@ server <- function(input, output, session) {
       ggplotly(ggplot(data, aes(as.POSIXct(date), Particle_conc)) +
                  labs(title = "CPC3007_Particle Concentration (#/cm3)",
                       y = "",
-                      x = "") + theme1
+                      x = "") + theme1()
       )}
     else if (is.null(CPC_f())) {}
     else if (!is.null(CPC_f())) {
@@ -1175,20 +1131,11 @@ server <- function(input, output, session) {
       ggplotly(ggplot(data, aes(as.POSIXct(date), Particle_conc)) +
                  labs(title = "CPC3007_Particle Concentration (#/cm3)",
                       y = "",
-                      x = "") + theme1
+                      x = "") + theme1()
       )}
   })
 
   output$plot7 <- renderPlotly({
-    theme1 <- list(geom_line(size = 0.6, color = "dodgerblue2"),
-      scale_x_datetime(date_labels  = "%H:%M"),
-      theme_minimal(),
-      theme(legend.text = element_text(size = 18),
-            plot.title = element_text(size = 14, face = "bold"),
-            axis.title = element_text(size = 14),
-            axis.text = element_text(size = 14, face = "bold"),
-            panel.border = element_rect(colour = "black",
-                                        fill = NA, size = 1.2)))
     if (is.null(input$file1) & is.null(input$file2) &
         is.null(input$file3) & is.null(input$file4)
         & is.null(input$file5) & is.null(input$file6)) {
@@ -1196,7 +1143,7 @@ server <- function(input, output, session) {
       ggplotly(ggplot(data, aes(as.POSIXct(date), CO2)) +
                  labs(title = "LI-COR_CO2 (ppm)",
                       y = "",
-                      x = "") + theme1
+                      x = "") + theme1()
       )}
     else if (is.null(CO2_f())) {}
     else if (!is.null(CO2_f())) {
@@ -1204,7 +1151,7 @@ server <- function(input, output, session) {
       ggplotly(ggplot(data, aes(as.POSIXct(date), CO2)) +
                  labs(title = "LI-COR_CO2 (ppm)",
                       y = "",
-                      x = "") + theme1
+                      x = "") + theme1()
       )}
   })
 
