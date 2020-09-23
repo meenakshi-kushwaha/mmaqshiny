@@ -5,7 +5,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3911659.svg)](https://doi.org/10.5281/zenodo.3911659)
 
 2020-09-23: Bug fixes!!
-- Changed the code to tigy version! Usage of reactive elements and joining table preview.(removed repeated code of joining and manipulation)
+- Changed the code to tidy version! Usage of reactive elements and joining table preview.(removed repeated code of joining and manipulation)
 - Fixed shinyjs update, shifting from XML to xml2 happening soon!
 ## Summary
 
