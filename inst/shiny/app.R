@@ -1034,7 +1034,7 @@ server <- function(input, output, session) {
                  geom_line(size = 0.6, color = "dodgerblue2") +
                  labs(title = "Longitude (degree)",
                       y = "",
-                      x = "") + + theme1()
+                      x = "") + theme1()
       )}
     else if (is.null(GPS_f())) {}
     else if (!is.null(GPS_f())) {
@@ -1043,7 +1043,7 @@ server <- function(input, output, session) {
                  geom_line(size = 0.6, color = "dodgerblue2") +
                  labs(title = "Longitude (degree)",
                       y = "",
-                      x = "") + + theme1()
+                      x = "") + theme1()
       )}
   })
 
@@ -1056,7 +1056,7 @@ server <- function(input, output, session) {
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(PM2.5))) +
                  labs(title = "DT8530_PM2.5 (ug/m3)",
                       y = "",
-                      x = "") + + theme1()
+                      x = "") + theme1()
       )}
     else if (is.null(DT_f())) {}
     else if (!is.null(DT_f())) {
@@ -1065,7 +1065,7 @@ server <- function(input, output, session) {
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(PM2.5))) +
                  labs(title = "DT8530_PM2.5 (ug/m3)",
                       y = "",
-                      x = "") + + theme1()
+                      x = "") + theme1()
       )}
   })
 
@@ -1078,7 +1078,7 @@ server <- function(input, output, session) {
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(RH))) +
                  labs(title = "Relative Humidity (%)",
                       y = "",
-                      x = "") + + theme1()
+                      x = "") + theme1()
       )}
     else if (is.null(RH_f())) {}
     else if (!is.null(RH_f())) {
@@ -1087,7 +1087,7 @@ server <- function(input, output, session) {
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(RH))) +
                  labs(title = "Relative Humidity (%)",
                       y = "",
-                      x = "") + + theme1()
+                      x = "") + theme1()
       )}
   })
 
@@ -1100,7 +1100,7 @@ server <- function(input, output, session) {
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(BC))) +
                  labs(title = "AE51_BC (ug/m3)",
                       y = "",
-                      x = "") + + theme1()
+                      x = "") + theme1()
       )}
     else if (is.null(BC_f())) {}
     else if (!is.null(BC_f())) {
@@ -1109,7 +1109,7 @@ server <- function(input, output, session) {
       ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(BC))) +
                  labs(title = "AE51_BC (ug/m3)",
                       y = "",
-                      x = "") + + theme1()
+                      x = "") + theme1()
       )}
   })
 
