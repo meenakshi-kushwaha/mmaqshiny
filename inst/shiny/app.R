@@ -1,7 +1,6 @@
 library(shiny)
 library(Cairo)
 library(DT)
-library(plotly)
 library(data.table)
 library(tidyverse)
 library(leaflet)
@@ -40,7 +39,12 @@ ui <- fluidPage(
                                               tags$hr()),
                              conditionalPanel(condition = "input.tabs1 == 2",
                                               tags$hr(),
-                                              h4("Time series plots"),
+                                              h4("Plots"),
+                                              selectInput("palleInp1", "Plot this pollutant",
+                                                          "Select"),
+                                              actionButton("ts", "Time series"),
+                                              actionButton("den", "Density Plot"),
+                                              actionButton("qq", "QQ Plot"),
                                               tags$hr()
                              ),
                              conditionalPanel(condition = "input.tabs1 == 1",
@@ -137,13 +141,9 @@ ui <- fluidPage(
                               tabPanel(
                                 value = 2,
                                 title = "Plots",
-                                plotlyOutput("plot5", width = 800),
-                                plotlyOutput("plot6", width = 800),
-                                plotlyOutput("plot2", width = 800),
-                                plotlyOutput("plot", width = 800),
-                                plotlyOutput("plot4", width = 800),
-                                plotlyOutput("plot3", width = 800),
-                                plotlyOutput("plot7", width = 800)
+                                plotOutput("plot5", width = 800),
+                                plotOutput("plot6", width = 800),
+                                plotOutput("plot", width = 800)
                               ),
                               tabPanel(
                                 value = 4,
@@ -165,11 +165,11 @@ ui <- fluidPage(
 
 
 server <- function(input, output, session) {
-
+  
   options(shiny.maxRequestSize = 30*1024^2, shiny.launch.browser = TRUE)
-
+  
   ## date matching
-
+  
   CPC_f_date <- reactive({
     if (is.null(input$file4)) {
       return(NULL)
@@ -187,7 +187,7 @@ server <- function(input, output, session) {
     CPC_f2_date <- df_list[[1]]
     return(CPC_f2_date)
   })
-
+  
   GPS_f_date <- reactive({
     GPS_f  <- data.frame()
     if (is.null(input$file1)) {
@@ -209,7 +209,7 @@ server <- function(input, output, session) {
     GPS_f_date <- as.Date(as.Date(GPS_f[1, 1]), format="%Y-%m-%d") #"%m/%d/%Y"
     return(GPS_f_date)
   })
-
+  
   BC_f_date <- reactive({
     if (is.null(input$file2)) {
       return(NULL)
@@ -243,7 +243,7 @@ server <- function(input, output, session) {
       return(BC_f_date)
     }
   })
-
+  
   DT_f_date <- reactive({
     if (is.null(input$file3)) {
       return(NULL)
@@ -263,7 +263,7 @@ server <- function(input, output, session) {
       return(DT_f_date)
     }
   })
-
+  
   CO2_f_date <- reactive({
     if (is.null(input$file6)) {
       return(NULL)
@@ -281,9 +281,9 @@ server <- function(input, output, session) {
       return(CO2_f_date)
     }
   })
-
+  
   ## GPS and pollutant file joining
-
+  
   CO2_f <- reactive({
     if (is.null(input$file6)) {
       return(NULL)
@@ -299,12 +299,12 @@ server <- function(input, output, session) {
       CO2_f <- do.call(rbind, df_list)
       CO2_f <- CO2_f %>%
         mutate(date = as.POSIXct(paste(as.Date(Date, format = "%d-%m-%Y"), Time),
-                           tz = input$timezone)) %>%
+                                 tz = input$timezone)) %>%
         select(date, CO2)
       return(CO2_f)
     }
   })
-
+  
   GPS_f <- reactive({
     if (is.null(input$file1)) {
       return(NULL)
@@ -313,7 +313,7 @@ server <- function(input, output, session) {
     files3 <- lapply(input$file1$datapath, function(y) {
       pfile2 <- XML::htmlTreeParse(y, error = function (...) {}, useInternalNodes = T)
       elevations <- as.numeric(XML::xpathSApply(pfile2, path = "//trkpt/ele",
-                                           xmlValue))
+                                                xmlValue))
       times  <- XML::xpathSApply(pfile2, path = "//trkpt/time", xmlValue)
       coords <- XML::xpathSApply(pfile2, path = "//trkpt", xmlAttrs)
       geodf2 <- data.frame(latitude = as.numeric(coords["lat", ]),
@@ -327,7 +327,7 @@ server <- function(input, output, session) {
       select(date, latitude, longitude)
     return(GPS_f)
   })
-
+  
   BC_f <- reactive({
     if (is.null(input$file2)) {
       return(NULL)
@@ -360,8 +360,8 @@ server <- function(input, output, session) {
         filter(Status == 0) %>%
         select(Date, ATN, BC) %>%
         mutate(BC1 = (BC / 1000), LD = BC1 - rollapply(BC1, FUN = mean,
-                                    width = 30, align = "center",
-                                    partial = TRUE)) %>%
+                                                       width = 30, align = "center",
+                                                       partial = TRUE)) %>%
         mutate(LD75 = runquantile(LD, 300, 0.75, type = 2,
                                   endrule = c("NA")),
                LD25 = runquantile(LD, 300, 0.25, type = 2,
@@ -370,7 +370,7 @@ server <- function(input, output, session) {
         mutate(BC2 = ifelse(BC2 >= 0, 0, BC2),
                BC2 = ifelse(BC2 < 0, 1, BC2)) %>%
         mutate(BC2 = rollapply(BC2, FUN = mean, width = 5,
-                         align = "center",  partial = TRUE),
+                               align = "center",  partial = TRUE),
                cev1 = ifelse((LD > 5 * LD75) |
                                (LD < 5 * LD25), BC1, NA))
       ATN <- ef_file[1, 2]
@@ -429,7 +429,7 @@ server <- function(input, output, session) {
       return(BC_Final)
     }
   })
-
+  
   DT_f <- reactive({
     if (is.null(input$file3)) {
       return(NULL)
@@ -457,9 +457,9 @@ server <- function(input, output, session) {
       return(DT_f)
     }
   })
-
+  
   ## file name matching
-
+  
   file_name_CPC <- reactive({
     if (is.null(input$file4)) {
       return(NULL)
@@ -468,7 +468,7 @@ server <- function(input, output, session) {
       return(name_CPC)
     }
   })
-
+  
   CPC_f <- reactive({
     DF <- input$DF
     name_CPC <- file_name_CPC()
@@ -493,7 +493,7 @@ server <- function(input, output, session) {
       return(CPC_f)
     }
   })
-
+  
   RH_f <- reactive({
     if (is.null(input$file5)) {
       return(NULL)
@@ -516,7 +516,7 @@ server <- function(input, output, session) {
       return(RH_f)
     }
   })
-
+  
   file_name_CO2 <- reactive({
     if (is.null(input$file6)) {
       return(NULL)
@@ -525,7 +525,7 @@ server <- function(input, output, session) {
       return(name_CO2)
     }
   })
-
+  
   file_name_RH <- reactive({
     if (is.null(input$file5)) {
       return(NULL)
@@ -534,7 +534,7 @@ server <- function(input, output, session) {
       return(name_RH)
     }
   })
-
+  
   file_name_GPS <- reactive({
     if (is.null(input$file1)) {
       return(NULL)
@@ -543,7 +543,7 @@ server <- function(input, output, session) {
       return(name_GPS)
     }
   })
-
+  
   file_name_BC <- reactive({
     if (is.null(input$file2)) {
       return(NULL)
@@ -552,7 +552,7 @@ server <- function(input, output, session) {
       return(name_BC)
     }
   })
-
+  
   file_name_DT <- reactive({
     if (is.null(input$file3)) {
       return(NULL)
@@ -561,13 +561,13 @@ server <- function(input, output, session) {
       return(name_DT)
     }
   })
-
+  
   ## preloaded table
-
+  
   data_blank <- reactive({
     if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) &
         is.null(input$file4) & is.null(input$file5) & is.null(input$file6)) {
-      joined <- read.delim("data/joined_file.csv", header = TRUE, sep = ",") %>%
+      joined <- read.delim("D:/Dropbox/ILKConsultancy/mmaqshiny/inst/shiny/data/joined_file.csv", header = TRUE, sep = ",") %>%
         select(- starts_with("X")) %>%
         distinct(date.LT., .keep_all = TRUE)
       names(joined) <- c("date", "Latitude", "Longitude",  "BC", "BC_NR",
@@ -576,7 +576,7 @@ server <- function(input, output, session) {
       joined
     }
   })
-
+  
   joined_GPS_CO2 <- reactive({
     name_GPS <- file_name_GPS()
     name_CO2 <- file_name_CO2()
@@ -601,7 +601,7 @@ server <- function(input, output, session) {
     }
     return(joined_GPS_CO2)
   })
-
+  
   joined_GPS_DT <- reactive({
     name_GPS <- file_name_GPS()
     name_DT  <- file_name_DT()
@@ -630,7 +630,7 @@ server <- function(input, output, session) {
     }
     return(joined_GPS_DT)
   })
-
+  
   DT_RH <- reactive({
     name_RH <- file_name_RH()
     name_DT <- file_name_DT()
@@ -670,10 +670,10 @@ server <- function(input, output, session) {
                PM2.5_RHC_Ref = ((PM2.5_RHC * Slope) + Intercept),
                date = as.POSIXct(date, format = '%Y-%m-%d %H:%M:%S',
                                  tz = input$timezone))
-      }
+    }
     return(DT_f)
   })
-
+  
   joined_GPS_BC <- reactive({
     name_GPS <- file_name_GPS()
     name_BC <- file_name_BC()
@@ -700,7 +700,7 @@ server <- function(input, output, session) {
     }
     return(joined_GPS_BC)
   })
-
+  
   joined_GPS_CPC <- reactive({
     name_GPS <- file_name_GPS()
     name_CPC <- file_name_CPC()
@@ -726,19 +726,19 @@ server <- function(input, output, session) {
     }
     return(joined_GPS_CPC)
   })
-
+  
   observeEvent(input$timezone,{
     toggleState(id = "join_button",
                 condition = (input$timezone != "" |
                                is.null(input$timezone) | is.na(input$timezone)))
   })
-
+  
   data_joined <- eventReactive(input$join_button,{
-
+    
     joined_GPS_CPC <- joined_GPS_CPC()
     joined_GPS_CO2 <- joined_GPS_CO2()
     joined_GPS_BC  <- joined_GPS_BC()
-
+    
     DT_RH <- DT_RH()
     joined_GPS_DT <- joined_GPS_DT()
     name_GPS <- file_name_GPS()
@@ -747,7 +747,7 @@ server <- function(input, output, session) {
     name_DT  <- file_name_DT()
     name_RH  <- file_name_RH()
     name_CO2 <- file_name_CO2()
-
+    
     GPS_f <- GPS_f()
     CPC_f <- CPC_f()
     BC_Final <- BC_f()
@@ -766,12 +766,32 @@ server <- function(input, output, session) {
       distinct(date, .keep_all = TRUE) %>%
       mutate_at(c('BC', 'BC_NR', 'BC_NR_LC', 'PM2.5', 'PM2.5_RHC', 'PM2.5_RHC_Ref',
                   'PM2.5_Ref', 'RH', 'Particle_conc', 'CO2'), as.numeric)
-
+    
     return(joined)
   })
-
+  data_qq <- eventReactive(input$qq, {
+    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) &
+        is.null(input$file4) & is.null(input$file5) & is.null(input$file6)) {
+      data <- data_blank()
+    } else { data <- data_joined() }
+    return(data)
+  })
+  data_den <- eventReactive(input$den, {
+    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) &
+        is.null(input$file4) & is.null(input$file5) & is.null(input$file6)) {
+      data <- data_blank()
+    } else { data <- data_joined() }
+    return(data)
+  })
+  data_ts <- eventReactive(input$ts, {
+    if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) &
+        is.null(input$file4) & is.null(input$file5) & is.null(input$file6)) {
+      data <- data_blank()
+    } else { data <- data_joined() }
+    return(data)
+  })
   ## Final corrected, joined table
-
+  
   output$table1 <- DT::renderDataTable({
     if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) &
         is.null(input$file4) & is.null(input$file5) & is.null(input$file6)) {
@@ -799,9 +819,9 @@ server <- function(input, output, session) {
                             "LI-COR_CO2 (ppm)")
     datatable(data_joined, options = list("pageLength" = 25))
   })
-
+  
   ## Download the csv generated
-
+  
   output$download <- downloadHandler(
     filename <- function() {"joined_file.csv"},
     content <- function(fname) {
@@ -825,9 +845,9 @@ server <- function(input, output, session) {
                               "LI-COR_CO2 (ppm)")
       write.csv(data_joined, fname)
     })
-
+  
   ## Summary Statistics
-
+  
   output$table <- DT::renderDataTable({
     if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) &
         is.null(input$file4) & is.null(input$file5) & is.null(input$file6)) {
@@ -837,7 +857,7 @@ server <- function(input, output, session) {
     }
     data <- data %>%
       dplyr::select(BC, BC_NR, BC_NR_LC, PM2.5, PM2.5_RHC,
-                          PM2.5_RHC_Ref, PM2.5_Ref, RH, Particle_conc, CO2) %>%
+                    PM2.5_RHC_Ref, PM2.5_Ref, RH, Particle_conc, CO2) %>%
       mutate(RH = (RH * 100))
     names(data) <- c("AE51_BC (ug/m3)", "AE51_BC_NR (ug/m3)",
                      "AE51_BC_NR_LC (ug/m3)",
@@ -874,9 +894,9 @@ server <- function(input, output, session) {
     tmp <- t(tmp1)
     datatable(tmp, options = list("pageLength" = 13))
   })
-
+  
   ## Alarms and settings
-
+  
   output$table4 <- DT::renderDataTable({
     if (is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) &
         is.null(RH_f()) & is.null(CO2_f())) {
@@ -900,7 +920,7 @@ server <- function(input, output, session) {
       datatable(DT_f, options = list("pageLength" = 11))
     }
   })
-
+  
   output$table3 <- DT::renderDataTable({
     if (is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) &
         is.null(RH_f()) & is.null(CO2_f())) {
@@ -925,7 +945,7 @@ server <- function(input, output, session) {
       datatable(CPC_f, options = list("pageLength" = 13))
     }
   })
-
+  
   output$table2 <- DT::renderDataTable({
     if (is.null(BC_f())) {}
     else if (!is.null(BC_f())) {
@@ -944,7 +964,7 @@ server <- function(input, output, session) {
       BC_f
     }
   })
-
+  
   output$table5 <- DT::renderDataTable({
     if (is.null(GPS_f()) & is.null(BC_f()) & is.null(CPC_f()) & is.null(DT_f()) &
         is.null(RH_f()) & is.null(CO2_f())) {
@@ -966,14 +986,12 @@ server <- function(input, output, session) {
       BC_f <- do.call(rbind, files3)
       names(BC_f) <- c("Setting")
       datatable(BC_f, options = list("pageLength" = 14))
-     }
+    }
   })
-
+  
   ## Raw pollutants/GPS plot
   theme1 <- reactive({
-    theme1 <- list(geom_line(size = 0.6, color = "dodgerblue2"),
-                   scale_x_datetime(date_labels  = "%H:%M"),
-                   theme_minimal(),
+    theme1 <- list(theme_minimal(),
                    theme(legend.text = element_text(size = 18),
                          plot.title = element_text(size = 14, face = "bold"),
                          axis.title = element_text(size = 14),
@@ -981,159 +999,7 @@ server <- function(input, output, session) {
                          panel.border = element_rect(colour = "black",
                                                      fill = NA, size = 1.2)))
   })
-
-  output$plot5 <- renderPlotly({
-    if (is.null(input$file1) & is.null(input$file2) &
-        is.null(input$file3) & is.null(input$file4)
-        & is.null(input$file5) & is.null(input$file6)) {
-      data <- data_blank()
-      ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(Latitude))) +
-                 geom_line(size = 0.6, color = "dodgerblue2") +
-                 labs(title = "Latitude (degree)",
-                      y = "",
-                      x = "") + theme1()
-      )}
-    else if (is.null(GPS_f())) {}
-    else if (!is.null(GPS_f())) {
-      data <- data_joined()
-      ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(Latitude))) +
-                 geom_line(size = 0.6, color = "dodgerblue2") +
-                 labs(title = "Latitude (degree)",
-                      y = "",
-                      x = "") + theme1()
-      )}
-  })
-
-  output$plot6 <- renderPlotly({
-    if (is.null(input$file1) & is.null(input$file2) &
-        is.null(input$file3) & is.null(input$file4)
-        & is.null(input$file5) & is.null(input$file6)){
-      data <- data_blank()
-      ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(Longitude))) +
-                 geom_line(size = 0.6, color = "dodgerblue2") +
-                 labs(title = "Longitude (degree)",
-                      y = "",
-                      x = "") + theme1()
-      )}
-    else if (is.null(GPS_f())) {}
-    else if (!is.null(GPS_f())) {
-      data <- data_joined()
-      ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(Longitude))) +
-                 geom_line(size = 0.6, color = "dodgerblue2") +
-                 labs(title = "Longitude (degree)",
-                      y = "",
-                      x = "") + theme1()
-      )}
-  })
-
-  output$plot <- renderPlotly({
-    if (is.null(input$file1) & is.null(input$file2) &
-        is.null(input$file3) & is.null(input$file4)
-        & is.null(input$file5) & is.null(input$file6)) {
-      data <- data_blank()
-      data$PM2.5 <- as.numeric(as.character(data$PM2.5))
-      ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(PM2.5))) +
-                 labs(title = "DT8530_PM2.5 (ug/m3)",
-                      y = "",
-                      x = "") + theme1()
-      )}
-    else if (is.null(DT_f())) {}
-    else if (!is.null(DT_f())) {
-      data <- data_joined()
-      data$PM2.5 <- as.numeric(as.character(data$PM2.5))
-      ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(PM2.5))) +
-                 labs(title = "DT8530_PM2.5 (ug/m3)",
-                      y = "",
-                      x = "") + theme1()
-      )}
-  })
-
-  output$plot4<- renderPlotly({
-    if (is.null(input$file1) & is.null(input$file2) &
-        is.null(input$file3) & is.null(input$file4)
-        & is.null(input$file5) & is.null(input$file6)) {
-      data <- data_blank()
-      data$RH <- data$RH * 100
-      ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(RH))) +
-                 labs(title = "Relative Humidity (%)",
-                      y = "",
-                      x = "") + theme1()
-      )}
-    else if (is.null(RH_f())) {}
-    else if (!is.null(RH_f())) {
-      data <- data_joined()
-      data$RH <- data$RH * 100
-      ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(RH))) +
-                 labs(title = "Relative Humidity (%)",
-                      y = "",
-                      x = "") + theme1()
-      )}
-  })
-
-  output$plot2 <- renderPlotly({
-    if (is.null(input$file1) & is.null(input$file2) &
-        is.null(input$file3) & is.null(input$file4)
-        & is.null(input$file5) & is.null(input$file6)) {
-      data <- data_blank()
-      data$BC <- as.numeric(as.character(data$BC))
-      ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(BC))) +
-                 labs(title = "AE51_BC (ug/m3)",
-                      y = "",
-                      x = "") + theme1()
-      )}
-    else if (is.null(BC_f())) {}
-    else if (!is.null(BC_f())) {
-      data <- data_joined()
-      data$BC <- as.numeric(as.character(data$BC))
-      ggplotly(ggplot(data, aes(as.POSIXct(date), as.numeric(BC))) +
-                 labs(title = "AE51_BC (ug/m3)",
-                      y = "",
-                      x = "") + theme1()
-      )}
-  })
-
-  output$plot3 <- renderPlotly({
-    if (is.null(input$file1) & is.null(input$file2) &
-        is.null(input$file3) & is.null(input$file4)
-        & is.null(input$file5) & is.null(input$file6)) {
-      data <- data_blank()
-      data$Particle_conc <- as.numeric(as.character(data$Particle_conc))
-      ggplotly(ggplot(data, aes(as.POSIXct(date), Particle_conc)) +
-                 labs(title = "CPC3007_Particle Concentration (#/cm3)",
-                      y = "",
-                      x = "") + theme1()
-      )}
-    else if (is.null(CPC_f())) {}
-    else if (!is.null(CPC_f())) {
-      data <- data_joined()
-      data$Particle_conc <- as.numeric(as.character(data$Particle_conc))
-      ggplotly(ggplot(data, aes(as.POSIXct(date), Particle_conc)) +
-                 labs(title = "CPC3007_Particle Concentration (#/cm3)",
-                      y = "",
-                      x = "") + theme1()
-      )}
-  })
-
-  output$plot7 <- renderPlotly({
-    if (is.null(input$file1) & is.null(input$file2) &
-        is.null(input$file3) & is.null(input$file4)
-        & is.null(input$file5) & is.null(input$file6)) {
-      data <- data_blank()
-      ggplotly(ggplot(data, aes(as.POSIXct(date), CO2)) +
-                 labs(title = "LI-COR_CO2 (ppm)",
-                      y = "",
-                      x = "") + theme1()
-      )}
-    else if (is.null(CO2_f())) {}
-    else if (!is.null(CO2_f())) {
-      data <- data_joined()
-      ggplotly(ggplot(data, aes(as.POSIXct(date), CO2)) +
-                 labs(title = "LI-COR_CO2 (ppm)",
-                      y = "",
-                      x = "") + theme1()
-      )}
-  })
-
+  
   observe({
     if (is.null(input$file1) & is.null(input$file2) &
         is.null(input$file3) & is.null(input$file4)
@@ -1145,7 +1011,7 @@ server <- function(input, output, session) {
       data_joined <- data_joined()
       data_joined <- data_joined %>%
         select(- date, - Latitude, - Longitude)
-
+      
       if (is.null(CPC_f())) {
         data_joined$Particle_conc <- NULL
       }
@@ -1182,10 +1048,76 @@ server <- function(input, output, session) {
       }
     }
     updateSelectInput(session, "palleInp", choices = names(data_joined))
+    updateSelectInput(session, "palleInp1", choices = names(data_joined))
   })
-
+  
+  output$plot5 <- renderPlot({
+    if (is.null(input$file1) & is.null(input$file2) &
+        is.null(input$file3) & is.null(input$file4)
+        & is.null(input$file5) & is.null(input$file6)) {
+      data <- data_ts()
+      ggplot(data, aes(as.POSIXct(date), as.numeric(BC))) +
+        scale_x_datetime(date_labels  = "%H:%M") +
+        geom_line(size = 0.6, color = "deepskyblue") +
+        labs(y = "BC (degree)", x = "") + theme1()
+      }
+    else {
+      data <- data_ts()
+      y <- as.numeric(as.character(data[[input$palleInp1]]))
+      ggplot(data, aes(as.POSIXct(date), y)) +
+        scale_x_datetime(date_labels  = "%H:%M") +
+        labs(y = input$palleInp1, x = "") + theme1() + 
+        geom_line(size = 0.6, color = "deepskyblue")
+    }
+  })
+  
+  output$plot6 <- renderPlot({
+    if (is.null(input$file1) & is.null(input$file2) &
+        is.null(input$file3) & is.null(input$file4)
+        & is.null(input$file5) & is.null(input$file6)){
+      data <- data_den()
+      ggplot(data, aes(x = as.numeric(BC))) +
+        geom_density(color = "deepskyblue", fill = "lightblue") +
+        labs(y = "density", x = "BC", title = "Density Plot") + theme1()
+      }
+    else {
+      data <- data_den()
+      y <- as.numeric(as.character(data[[input$palleInp1]]))
+      ggplot(data, aes(x = y)) +
+        geom_density(color = "deepskyblue", fill = "lightblue") +
+        labs(y = "density", x = input$palleInp1, title = "Density Plot") + theme1()
+    }
+  })
+  
+  output$plot <- renderPlot({
+    ticks <- qnorm(c(0.01, 0.05, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 0.99))
+    labels <- c(1, 5, 10, 25, 50, 75, 90, 95, 99)
+    if (is.null(input$file1) & is.null(input$file2) &
+        is.null(input$file3) & is.null(input$file4)
+        & is.null(input$file5) & is.null(input$file6)) {
+      data <- data_qq()
+      data$BC <- as.numeric(as.character(data$BC))
+      ggplot(data, aes(sample = log10(BC))) +
+        stat_qq(size = 2, geom = 'point', color = "deepskyblue") +
+        stat_qq_line(size = 1, linetype = 2) + 
+        scale_x_continuous(breaks = ticks, labels = labels) +
+        labs(x = "Emperical percentile",
+             y = "BC") + theme1()
+      }
+    else { 
+      data <- data_qq()
+      y <- as.numeric(as.character(data[[input$palleInp1]]))
+      ggplot(data, aes(sample = log10(y))) +
+        stat_qq(size = 2, geom = 'point', color = "deepskyblue") +
+        stat_qq_line(size = 1, linetype = 2) + 
+        scale_x_continuous(breaks = ticks, labels = labels) +
+        labs(x = "Emperical percentile",
+             y =  input$palleInp1) + theme1()
+      }
+  })
+  
   ## Mapping pollutant
-
+  
   output$map <- renderLeaflet({
     if (is.null(input$file1) & is.null(input$file2) &
         is.null(input$file3) & is.null(input$file4)
@@ -1212,21 +1144,21 @@ server <- function(input, output, session) {
                      200000, 500000)
       pal <- colorBin("Spectral", bins = risk.bins, na.color = "#808080",
                       reverse = TRUE)
-    }else if (input$palleInp == "RH") {
+    } else if (input$palleInp == "RH") {
       pal <- colorNumeric("RdYlGn", domain = data$RH, na.color = "#808080",
                           reverse = TRUE)
-    }else if (input$palleInp == "CO2") {
+    } else if (input$palleInp == "CO2") {
       pal <- colorNumeric("RdYlGn", domain = data$CO2, na.color = "#808080",
                           reverse = TRUE)
-    }else if (input$palleInp == "Latitude") {
+    } else if (input$palleInp == "Latitude") {
       pal <- colorNumeric("RdYlGn", domain = data$Latitude, na.color = "#808080",
                           reverse = TRUE)
-    }else {
+    } else {
       risk.bins <- c(0, 10, 25, 50, 100, 500, 2000, 5000, 10000)
       pal <- colorBin("Spectral", bins = risk.bins, na.color = "#808080",
                       reverse = TRUE)
     }
-
+    
     leaflet(data) %>%
       addProviderTiles(providers$Stamen.TonerLite) %>%
       addCircles(data = data,
@@ -1253,9 +1185,3 @@ server <- function(input, output, session) {
 }
 ## Run app
 shinyApp(ui, server)
-
-
-
-
-
-
