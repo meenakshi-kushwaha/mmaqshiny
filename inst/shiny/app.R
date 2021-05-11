@@ -579,7 +579,7 @@ server <- function(input, output, session) {
   data_blank <- reactive({
     if (is.null(input$file1) & is.null(input$file2) & is.null(input$file3) &
         is.null(input$file4) & is.null(input$file5) & is.null(input$file6)) {
-      joined <- read.delim("D:/Dropbox/ILKConsultancy/mmaqshiny/inst/shiny/data/joined_file.csv", header = TRUE, sep = ",") %>%
+      joined <- read.delim("joined_file.csv", header = TRUE, sep = ",") %>%
         select(- starts_with("X")) %>%
         distinct(date.LT., .keep_all = TRUE)
       names(joined) <- c("date", "Latitude", "Longitude",  "BC", "BC_NR",

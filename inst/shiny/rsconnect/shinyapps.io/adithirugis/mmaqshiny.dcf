@@ -1,0 +1,12 @@
+name: mmaqshiny
+title: mmaqshiny
+username:
+account: adithirugis
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4114220
+bundleId: 4585533
+url: https://adithirugis.shinyapps.io/mmaqshiny/
+when: 1620738001.51966
+asMultiple: FALSE
+asStatic: FALSE

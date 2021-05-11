@@ -79,11 +79,11 @@ A preloaded dataset appears which is a joined file of sample data collected duri
 
 To use the app, follow the steps below.
 
-1. User needs to add the timezone of data collection. 
+1. User needs to add the timezone of data collection. This is a mandatory step. Since all the files are joined using the date time column. 
 
-2. Add .gpx files from GPSMAP64s (location data). NOTE: A warning message will appear if input files are from different dates. 
+2. Add .gpx files from GPSMAP64s (location data). NOTE: A warning message will appear if input files are from different dates. This is a mandatory step too, since all the files are joined to GPS file, since mobile monitoring studies are based on location this file is required.
 
-3. Add pollutant .csv files as downloaded from the instruments.
+3. Add pollutant .csv files as downloaded from the instruments (the number of files in each instrument and also the number of different instrument's data available does not matter since the app is capable of handling any number).
 
 4. User can add slope and intercept if a linear correction is required for the DustTrak measured PM<sub>2.5</sub>. 
 
