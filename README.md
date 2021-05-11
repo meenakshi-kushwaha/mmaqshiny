@@ -103,9 +103,13 @@ To use the app, follow the steps below.
 
 ![\label{fig:example}](inst/images/Image4.JPG)
 
-9. The Plots tab displays time series plots of all the raw (uncorrected) location and pollutant parameters. 
+9. The Plots tab now allows user to select a parameter to plot time series, density plot and qq plot of all the raw (uncorrected) parameters. 
 
-![\label{fig:example}](inst/images/Image5.JPG)
+![\label{fig:example}](inst/images/Image11.JPG)
+
+![\label{fig:example}](inst/images/Image12.JPG)
+
+![\label{fig:example}](inst/images/Image13.JPG)
 
 10. The Map tab visualises interactive maps for spatial visualization of selected pollutant.
 
