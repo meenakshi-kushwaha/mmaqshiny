@@ -1,0 +1,12 @@
+name: mmaqshiny
+title: mmaqshiny
+username:
+account: aruapps
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4303977
+bundleId: 4743309
+url: https://aruapps.shinyapps.io/mmaqshiny/
+when: 1624367711.81776
+asMultiple: FALSE
+asStatic: FALSE

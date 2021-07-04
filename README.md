@@ -3,6 +3,7 @@
 
 [![status](https://joss.theoj.org/papers/4640e0e9a6f03a68833905bf378a0652/status.svg)](https://joss.theoj.org/papers/4640e0e9a6f03a68833905bf378a0652)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3911659.svg)](https://doi.org/10.5281/zenodo.3911659)
+[![R-CMD-check](https://github.com/meenakshi-kushwaha/mmaqshiny/workflows/R-CMD-check/badge.svg)](https://github.com/meenakshi-kushwaha/mmaqshiny/actions)
 
 2021-01-04: Add in's!!
 - Added qq plot and density plot.
