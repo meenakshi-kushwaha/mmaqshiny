@@ -1,19 +1,66 @@
 {
   "input": {
+    "den": 0,
     "DF": 1,
-    "file1": null,
-    "file2": null,
-    "file3": null,
+    "file1": {
+      "name": [
+        "2019_09_16_h094851_KAN_Garmin_3.gpx"
+      ],
+      "size": [
+        316317
+      ],
+      "type": [
+        ""
+      ],
+      "datapath": [
+        "0.gpx"
+      ]
+    },
+    "file2": {
+      "name": [
+        "2019_09_16_h094851_KAN_AE12.csv"
+      ],
+      "size": [
+        719888
+      ],
+      "type": [
+        "text/csv"
+      ],
+      "datapath": [
+        "0.csv"
+      ]
+    },
+    "file3": {
+      "name": [
+        "2019_09_16_h094851_KAN_DT809.csv"
+      ],
+      "size": [
+        331580
+      ],
+      "type": [
+        "text/csv"
+      ],
+      "datapath": [
+        "0.csv"
+      ]
+    },
     "file4": null,
     "file5": null,
     "file6": null,
-    "Intercept": 0,
-    "join_button": 0,
+    "Intercept": 11.1,
+    "join_button": 1,
     "palleInp": "BC",
-    "Slope": 1,
+    "palleInp1": "BC",
+    "qq": 0,
+    "Slope": 0.21,
+    "switch_tab": 0,
     "table_cell_clicked": {
 
     },
+    "table_cells_selected": [
+
+    ],
+    "table_columns_selected": null,
     "table_rows_all": [
       1,
       2,
@@ -50,6 +97,10 @@
     "table1_cell_clicked": {
 
     },
+    "table1_cells_selected": [
+
+    ],
+    "table1_columns_selected": null,
     "table1_rows_all": [
       1,
       2,
@@ -3082,8 +3133,9 @@
     "table1_rows_selected": null,
     "table1_search": "",
     "table1_state": null,
-    "tabs1": "3",
-    "timezone": "Asia/Kolkata"
+    "tabs1": "1",
+    "timezone": "Asia/Kolkata",
+    "ts": 0
   },
   "output": {
     "table": {
@@ -3135,7 +3187,8 @@
         "selection": {
           "mode": "multiple",
           "selected": null,
-          "target": "row"
+          "target": "row",
+          "selectable": null
         }
       },
       "evals": [
@@ -3164,9 +3217,9 @@
         },
         {
           "name": "jquery",
-          "version": "1.11.3",
+          "version": "3.5.1",
           "src": {
-            "href": "jquery-1.11.3"
+            "href": "jquery-3.5.1"
           },
           "meta": null,
           "script": "jquery.min.js",
@@ -3177,9 +3230,9 @@
         },
         {
           "name": "crosstalk",
-          "version": "1.1.0.1",
+          "version": "1.1.1",
           "src": {
-            "href": "crosstalk-1.1.0.1"
+            "href": "crosstalk-1.1.1"
           },
           "meta": null,
           "script": "js/crosstalk.min.js",
@@ -3234,7 +3287,8 @@
         "selection": {
           "mode": "multiple",
           "selected": null,
-          "target": "row"
+          "target": "row",
+          "selectable": null
         }
       },
       "evals": [
@@ -3263,9 +3317,9 @@
         },
         {
           "name": "jquery",
-          "version": "1.11.3",
+          "version": "3.5.1",
           "src": {
-            "href": "jquery-1.11.3"
+            "href": "jquery-3.5.1"
           },
           "meta": null,
           "script": "jquery.min.js",
@@ -3276,9 +3330,9 @@
         },
         {
           "name": "crosstalk",
-          "version": "1.1.0.1",
+          "version": "1.1.1",
           "src": {
-            "href": "crosstalk-1.1.0.1"
+            "href": "crosstalk-1.1.1"
           },
           "meta": null,
           "script": "js/crosstalk.min.js",

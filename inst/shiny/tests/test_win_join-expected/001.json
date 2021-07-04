@@ -1,5 +1,6 @@
 {
   "input": {
+    "den": 0,
     "DF": 1,
     "file1": null,
     "file2": null,
@@ -10,10 +11,17 @@
     "Intercept": 0,
     "join_button": 0,
     "palleInp": "BC",
+    "palleInp1": "BC",
+    "qq": 0,
     "Slope": 1,
+    "switch_tab": 0,
     "table1_cell_clicked": {
 
     },
+    "table1_cells_selected": [
+
+    ],
+    "table1_columns_selected": null,
     "table1_rows_all": [
       1,
       2,
@@ -3047,7 +3055,8 @@
     "table1_search": "",
     "table1_state": null,
     "tabs1": "1",
-    "timezone": "Asia/Kolkata"
+    "timezone": "Asia/Kolkata",
+    "ts": 0
   },
   "output": {
     "table1": {
@@ -3094,7 +3103,8 @@
         "selection": {
           "mode": "multiple",
           "selected": null,
-          "target": "row"
+          "target": "row",
+          "selectable": null
         }
       },
       "evals": [
@@ -3123,9 +3133,9 @@
         },
         {
           "name": "jquery",
-          "version": "1.11.3",
+          "version": "3.5.1",
           "src": {
-            "href": "jquery-1.11.3"
+            "href": "jquery-3.5.1"
           },
           "meta": null,
           "script": "jquery.min.js",
@@ -3136,9 +3146,9 @@
         },
         {
           "name": "crosstalk",
-          "version": "1.1.0.1",
+          "version": "1.1.1",
           "src": {
-            "href": "crosstalk-1.1.0.1"
+            "href": "crosstalk-1.1.1"
           },
           "meta": null,
           "script": "js/crosstalk.min.js",
