@@ -2,7 +2,7 @@
 % Please edit documentation in R/mmaqshiny_run.R
 \name{mmaqshiny_run}
 \alias{mmaqshiny_run}
-\title{mmaqshiny: Explore Air-Quality Mobile-Monitoring Data}
+\title{mmaqshiny: Explore Air Quality Mobile-Monitoring Data}
 \usage{
 mmaqshiny_run()
 }

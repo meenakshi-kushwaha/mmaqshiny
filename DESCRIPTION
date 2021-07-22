@@ -1,18 +1,18 @@
 Package: mmaqshiny
-Title: Explore Air-Quality Mobile-Monitoring Data
+Title: Explore Air Quality Mobile-Monitoring Data
 Version: 1.0.0
 Authors@R: c(
     person(given = "Adithi R.", family = "Upadhya", email = "adithi@ilklabs.com", role = c("aut", "cre", "cph")),
     person(given = "Pratyush", family = "Agrawal", email = "pratyush@ilklabs.com", role = "dtc"),
     person(given = "Sreekanth", family = "Vakacherla", email = "sree.hcu@gmail.com", role = c("aui", "ctb")),
     person(given = "Meenakshi", family = "Kushwaha", email = "meenakshi@ilklabs.com", role = c("aut", "cph")))
-Description: Mobile-monitoring or "sensors on a mobile platform", is an increasingly 
+Description: Mobile-monitoring or sensors on a mobile platform, is an increasingly 
     popular approach to measure high-resolution pollution data at the street level. 
-    Coupled with location data, spatial visualisation of air-quality parameters 
-    helps detect localized areas of high air-pollution, also called hotspots. 
+    Coupled with location data, spatial visualization of air-quality parameters 
+    helps detect localized areas of high air pollution, also called hotspots. 
     In this approach, portable sensors are mounted on a vehicle and driven on 
     predetermined routes to collect high frequency data (1 Hz). 
-    'mmaqshiny' is for analysing, visualising and spatial mapping of 
+    'mmaqshiny' is for analysing, visualizing and spatial mapping of 
     high-resolution air-quality data collected by specific devices installed on 
     a moving platform. 1 Hz data of PM2.5 (mass concentrations of particulate  
     matter with size less than 2.5 microns), Black carbon mass concentrations 
@@ -37,27 +37,27 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    htmltools,
-    Cairo,
-    xts,
-    lubridate,
-    zoo,
-    caTools,
-    data.table,
-    DT,
-    dplyr,
-    ggplot2,
-    tidyverse,
-    leaflet,
-    shiny,
-    XML,
-    shinyjs,
-    plotly
+    htmltools (>= 0.5.1.1),
+    Cairo (>= 1.5.12.2),
+    xts (>= 0.12.1),
+    lubridate (>= 1.7.10),
+    zoo (>= 1.8.9),
+    caTools (>= 1.18.2),
+    data.table (>= 1.14.0),
+    DT (>= 0.17),
+    dplyr (>= 1.0.5),
+    ggplot2 (>= 3.3.3),
+    tidyverse (>= 1.3.0),
+    leaflet (>= 2.0.4.1),
+    shiny (>= 1.6.0),
+    XML (>= 3.99.0.6),
+    shinyjs (>= 2.0.0),
+    plotly (>= 4.9.3)
 Suggests: 
-    testthat,
-    devtools,
-    usethis,
-    shinytest
+    testthat (>= 3.0.2),
+    devtools (>= 2.4.0),
+    usethis (>= 2.0.1),
+    shinytest (>= 1.5.0)
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 URL: https://github.com/meenakshi-kushwaha/mmaqshiny

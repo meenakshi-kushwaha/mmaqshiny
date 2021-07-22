@@ -1,5 +1,5 @@
 
-#' @title mmaqshiny: Explore Air-Quality Mobile-Monitoring Data
+#' @title mmaqshiny: Explore Air Quality Mobile-Monitoring Data
 #' @description Mobile-monitoring or “sensors on a mobile platform”, is an increasingly
 #' popular approach to measure high-resolution pollution data at the street level.
 #' Coupled with location data, spatial visualisation of air-quality parameters

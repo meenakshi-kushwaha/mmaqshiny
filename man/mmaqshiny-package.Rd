@@ -4,15 +4,15 @@
 \name{mmaqshiny-package}
 \alias{mmaqshiny}
 \alias{mmaqshiny-package}
-\title{mmaqshiny: Explore Air-Quality Mobile-Monitoring Data}
+\title{mmaqshiny: Explore Air Quality Mobile-Monitoring Data}
 \description{
-Mobile-monitoring or "sensors on a mobile platform", is an increasingly 
+Mobile-monitoring or sensors on a mobile platform, is an increasingly 
     popular approach to measure high-resolution pollution data at the street level. 
-    Coupled with location data, spatial visualisation of air-quality parameters 
-    helps detect localized areas of high air-pollution, also called hotspots. 
+    Coupled with location data, spatial visualization of air-quality parameters 
+    helps detect localized areas of high air pollution, also called hotspots. 
     In this approach, portable sensors are mounted on a vehicle and driven on 
     predetermined routes to collect high frequency data (1 Hz). 
-    'mmaqshiny' is for analysing, visualising and spatial mapping of 
+    'mmaqshiny' is for analysing, visualizing and spatial mapping of 
     high-resolution air-quality data collected by specific devices installed on 
     a moving platform. 1 Hz data of PM2.5 (mass concentrations of particulate  
     matter with size less than 2.5 microns), Black carbon mass concentrations 
