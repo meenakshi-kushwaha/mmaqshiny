@@ -1,5 +1,5 @@
 
-# mmaqshiny v1.0: R-Shiny package to explore air-quality mobile-monitoring data  
+# mmaqshiny v1.0: R-Shiny package to explore air quality mobile-monitoring data  
 
 [![status](https://joss.theoj.org/papers/4640e0e9a6f03a68833905bf378a0652/status.svg)](https://joss.theoj.org/papers/4640e0e9a6f03a68833905bf378a0652)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3911659.svg)](https://doi.org/10.5281/zenodo.3911659)
@@ -13,7 +13,7 @@
 - Fixed shinyjs update, shifting from XML to xml2 happening soon!
 ## Summary
 
-`mmaqshiny` is for analysing, visualising and spatial plotting of high-resolution air-quality data collected by specific devices installed on a moving platform.  With the click of a button, the app generates: summary statistics, time series plots and spatial map of pollutant concentrations. This app reduces the time consumed for analysing each pollutant individually. It helps check the quality of the data at near real time (same day) and instantly visualise pollution hotspots. The time series plots of each pollutant help in understanding the temporal patterns of concentrations and performance of the instruments. 
+`mmaqshiny` is for analysing, visualising and spatial plotting of high-resolution air quality data collected by specific devices installed on a moving platform.  With the click of a button, the app generates: summary statistics, time series plots and spatial map of pollutant concentrations. This app reduces the time consumed for analysing each pollutant individually. It helps check the quality of the data at near real time (same day) and instantly visualise pollution hotspots. The time series plots of each pollutant help in understanding the temporal patterns of concentrations and performance of the instruments. 
 
 High frequency (1 Hz) data of PM<sub>2.5</sub> (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide (CO<sub>2</sub>) along with GPS coordinates and relative humidity (RH) data are collected by some popular portable instruments (TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-850, Garmin GPSMAP 64s, Omega USB RH probe respectively) can be handled by this package. The package incorporates device specific cleaning and correction algorithms. RH correction is applied to DustTrak PM<sub>2.5</sub> following a method described in @Chakrabarti:2004. If required, user can also input linear regression coefficients for correcting the PM<sub>2.5</sub> data.
 An example of DustTrak PM<sub>2.5</sub> raw and corrected data, using slope=0.21, intercept=11.1 is shown below.
