@@ -871,7 +871,6 @@ server <- function(input, output, session) {
 
   ## Raw pollutants/GPS plot
 
-
   observe({
     data_joined <- data() %>%
       dplyr::select(-date, -latitude, -longitude)
@@ -1029,4 +1028,4 @@ server <- function(input, output, session) {
 shinyApp(ui, server)
 
 
-# make the alarms and settings and also dt and RH
+# also dt and RH

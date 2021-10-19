@@ -5,6 +5,10 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3911659.svg)](https://doi.org/10.5281/zenodo.3911659)
 [![R-CMD-check](https://github.com/meenakshi-kushwaha/mmaqshiny/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/meenakshi-kushwaha/mmaqshiny/actions/workflows/R-CMD-check.yaml)
 
+2021-10-19: Add in's!!
+- Added two new instruments DustTrak 8533 and Equinox RH sensor.
+- All codes now changed to functional programs. 
+
 2021-01-04: Add in's!!
 - Added qq plot and density plot.
 
