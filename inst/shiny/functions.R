@@ -100,6 +100,14 @@ ui <- fluidPage(
                   accept = c("text/csv",
                              "text/comma-separated-values, text/plain", ".csv")),
         tags$hr(),
+        radioButtons(
+          "rh_c",
+          "File to use for RH correction of PM2.5",
+          c("RH Equinox" = "equ",
+            "RH Probe" = "pro"),
+          selected = "equ"
+        ),
+        tags$hr(),
         fileInput("file4", "CPC3007 - Particle Concentration files", multiple = TRUE,
                   accept = c("text/csv",
                     "text/comma-separated-values, text/plain", ".csv")),
@@ -127,11 +135,7 @@ ui <- fluidPage(
       tags$head(
         tags$style(
           type = "text/css",
-          ".nav-tabs {
-                               font-size: 18px
-                               } "
-        )
-      ),
+          ".nav-tabs { font-size: 18px } ")),
       tabsetPanel(
         id = "tabs1",
         tabPanel(
@@ -525,7 +529,7 @@ server <- function(input, output, session) {
     }
     return(list(RH_Ef, RH_Ef_date, RH_Ef_error))
   }
-  DT_3 <- function(file_g, path, time_z) {
+  DT_3 <- function(file_g, path, time_z, Slope, Intercept) {
     if (is.null(file_g)) {
       DT_f3 <- NULL
       DT_3_date <- NULL
@@ -548,6 +552,7 @@ server <- function(input, output, session) {
       DT_f3 <- DT_f3 %>%
         dplyr::select(date, everything(), -Date, -Time) %>%
         mutate_if(is.numeric, ~ . * 1000) %>%
+        mutate(PM2.5_8533_Ref = ((PM2.5_8533 * Slope) + Intercept))
         arrange(date)
       DT_3_date <- as.Date(DT_f3[1, "date"], format = "%y-%m-%d", tz = time_z)
       files3 <- lapply(path, function(y) {
@@ -642,7 +647,7 @@ server <- function(input, output, session) {
     c(RH_Ef, RH_Ef_date, RH_Ef_error) := RH_E(input$file8, input$file8$datapath, input$timezone)
     RH_Ef <- data.frame(RH_Ef)
     RH_Ef_date <- RH_Ef_date
-    c(DT_f3, DT_3_date, DT_3_error) := DT_3(input$file7, input$file7$datapath, input$timezone)
+    c(DT_f3, DT_3_date, DT_3_error) := DT_3(input$file7, input$file7$datapath, input$timezone, input$Slope, input$Intercept)
     DT_f3 <- data.frame(DT_f3)
     DT_3_date <- DT_3_date
     validate_date(input$file4, CPC_date, "CPC 3007", GPS_date)
