@@ -238,21 +238,24 @@ server <- function(input, output, session) {
       return(NA)
     }
   }
-  CPC <- function(file_name_CPC, path, DF, time_z, file_g) {
+  CPC <- function(path, DF, time_z, file_g) {
     if (is.null(file_g)) {
       CPC_date <- NULL
       CPC_f <- NULL
       CPC_f_error <- NULL
     } else {
       df_list <- lapply(path, function(y) {
-        name_file <- substr(sub(".csv$", "", basename(file_name_CPC)), 1, 10)
+        JSON_csv1 <- read.delim(y, header = FALSE, sep = ",", row.names = NULL,
+                                skip = 1)
+        names(JSON_csv1) <- c("Setting", "Value")
+        JSON_csv_date <- as.Date(as.character(subset(JSON_csv1, Setting == "Start Date")$Value), format = "%m/%d/%y",
+                                 tz = time_z)
         JSON_csv <- read.delim(y, header = TRUE, sep = ",", row.names = NULL,
                                skip = 17, stringsAsFactors = FALSE, fileEncoding = "latin1")
-        w <- str_replace_all(stringr::str_extract(name_file, "[0-9]{4}\\_[0-9]{2}\\_[0-9]{2}"), "_", "-")
         JSON_csv <- JSON_csv[, 1:2]
         names(JSON_csv) <- c("Time", "Particle_conc")
         JSON_csv <- JSON_csv %>%
-          mutate(date = ymd_hms(paste(w, Time), tz = time_z))
+          mutate(date = ymd_hms(paste(JSON_csv_date, Time), tz = time_z))
       })
       CPC_f <- do.call(rbind, df_list)
       CPC_f <- CPC_f %>%
@@ -624,7 +627,7 @@ server <- function(input, output, session) {
     )
   })
   data_joined <- eventReactive(input$join_button, {
-    c(CPC_f, CPC_date, CPC_f_error) := CPC(input$file4$name, input$file4$datapath, input$DF, input$timezone, input$file4)
+    c(CPC_f, CPC_date, CPC_f_error) := CPC(input$file4$datapath, input$DF, input$timezone, input$file4)
     CPC_f <- data.frame(CPC_f)
     CPC_date <- CPC_date
     c(GPS_f, GPS_date) := GPS(input$file1, input$file1$datapath, input$timezone)
