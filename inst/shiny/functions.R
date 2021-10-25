@@ -227,10 +227,15 @@ server <- function(input, output, session) {
     dist_m <- (RadE * cir) * 1000
   }
   VecFunc <- function(x) {
-    if (x > 0.6) {
+    x <- as.numeric(as.character(x))
+    if (x <= 1 & x > 0.6) {
       return(1 + (0.25 * ((x * x) / (1 - x))))
-    } else {
+    } else if (is.na(x) | is.null(x)) {
+      return(NA)
+    }  else if (x > 0 & x <= 0.6) {
       return(1)
+    } else {
+      return(NA)
     }
   }
   CPC <- function(file_name_CPC, path, DF, time_z, file_g) {
@@ -497,7 +502,9 @@ server <- function(input, output, session) {
                                  format = "%d-%m-%Y %H:%M:%S", tz = time_z)) %>%
         dplyr::select(date, RH) %>%
         mutate_at(c("RH"), as.numeric) %>%
-        arrange(date)
+        arrange(date) %>%
+        na.omit()
+      RH_f$CF <- sapply(as.numeric(as.character(RH_f$RH / 100)), FUN = VecFunc)
       RH_date <- as.Date(RH_f[1, "date"], format = "%y-%m-%d", tz = time_z)
     }
     return(list(RH_f, RH_date))
@@ -506,6 +513,7 @@ server <- function(input, output, session) {
     if (is.null(file_g)) {
       RH_Ef <- NULL
       RH_Ef_date <- NULL
+      RH_Ef_error <- NULL
     } else {
       df_list <- lapply(path, function(y) {
         JSON_csv <- read.csv(y, header = TRUE, sep = ",", row.names = NULL,
@@ -519,7 +527,9 @@ server <- function(input, output, session) {
         mutate(TIME = gsub("/", " ", as.character(TIME))) %>%
         mutate(date = as.POSIXct(TIME, format = '%d-%m-%y %H:%M:%S', tz = time_z)) %>%
         arrange(date) %>%
+        na.omit() %>%
         dplyr::select(date, Temp, "RH_E" = RH)
+      RH_Ef$CF_E <- sapply(as.numeric(as.character(RH_Ef$RH_E / 100)), FUN = VecFunc)
       RH_Ef_date <- as.Date(RH_Ef[1, "date"], format = "%y-%m-%d", tz = time_z)
       files3 <- lapply(path, function(y) {
         JSON_csv <- read.delim(y, header = FALSE, sep = ",", row.names = NULL)
@@ -533,6 +543,7 @@ server <- function(input, output, session) {
     if (is.null(file_g)) {
       DT_f3 <- NULL
       DT_3_date <- NULL
+      DT_3_error <- NULL
     } else {
       df_list <- lapply(path, function(y) {
         JSON_csv <- read.delim(y, header = TRUE, sep = ",", row.names = NULL,
@@ -587,19 +598,6 @@ server <- function(input, output, session) {
       )
     }
   }
-  DT_RH <- function(file_g, file_h, DT, RH){
-    if (is.null(file_g & file_h)) {
-      DT <- NULL
-      } else {
-        DT <- DT %>%
-          left_join(., RH, by = "date") %>%
-          dplyr::select(everything(), "RH" = contains("RH")) %>%
-          mutate(RH = RH / 100)
-        DT$CF <- sapply(DT$RH, FUN = VecFunc)
-        DT <- DT %>%
-          mutate(PM2.5_RHC = (PM2.5 / CF))
-      }
-    }
 
   ## preloaded table
 
@@ -662,6 +660,31 @@ server <- function(input, output, session) {
       if((nrow(i) != 0) & ncol(i) != 0 & !is.null(i)){
         data_f <-  data_f %>%
           left_join(., i, by = "date")
+      }
+    }
+    if (input$rh_c == "pro") {
+      if((nrow(RH_f) != 0) & ncol(RH_f) != 0 & !is.null(RH_f) &
+         (nrow(DT_f) != 0) & ncol(DT_f) != 0 & !is.null(DT_f)) {
+        data_f <- data_f %>%
+          mutate(PM2.5_RH_corrected = PM2.5 / CF,
+                 PM2.5_Ref_RH_corrected = PM2.5_Ref / CF)
+      } else if((nrow(RH_f) != 0) & ncol(RH_f) != 0 & !is.null(RH_f) &
+                (nrow(DT_f3) != 0) & ncol(DT_f3) != 0 & !is.null(DT_f3)) {
+        data_f <- data_f %>%
+          mutate(PM2.5_8533_RH_corrected = PM2.5_8533 / CF,
+                 PM2.5_8533_Ref_RH_corrected = PM2.5_8533_Ref / CF)
+      }
+    } else if(input$rh_c == "equ") {
+      if((nrow(RH_Ef) != 0) & ncol(RH_Ef) != 0 & !is.null(RH_Ef) &
+         (nrow(DT_f) != 0) & ncol(DT_f) != 0 & !is.null(DT_f)) {
+        data_f <- data_f %>%
+          mutate(PM2.5_RH_E_corrected = PM2.5 / CF_E,
+                 PM2.5_Ref_RH_E_corrected = PM2.5_Ref / CF_E)
+      } else if((nrow(RH_Ef) != 0) & ncol(RH_Ef) != 0 & !is.null(RH_Ef) &
+                (nrow(DT_f3) != 0) & ncol(DT_f3) != 0 & !is.null(DT_f3)) {
+        data_f <- data_f %>%
+          mutate(PM2.5_8533_RH_E_corrected = PM2.5_8533 / CF_E,
+                 PM2.5_8533_Ref_RH_E_corrected = PM2.5_8533_Ref / CF_E)
       }
     }
     return(data_f)
