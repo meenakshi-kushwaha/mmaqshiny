@@ -283,23 +283,23 @@ server <- function(input, output, session) {
         pfile2 <- XML::htmlTreeParse(y, error = function(...) {}, useInternalNodes = T)
         elevations <- as.numeric(XML::xpathSApply(pfile2,
                                                   path = "//trkpt/ele",
-                                                  xmlValue
-        ))
+                                                  xmlValue))
         times <- XML::xpathSApply(pfile2, path = "//trkpt/time", xmlValue)
         coords <- XML::xpathSApply(pfile2, path = "//trkpt", xmlAttrs)
         geodf2 <- data.frame(
           latitude = as.numeric(coords["lat", ]),
           longitude = as.numeric(coords["lon", ]),
-          elevation = elevations, time = times
-        )
+          elevation = elevations, time = times)
+        geodf2 <- geodf2 %>%
+          arrange(time) %>%
+          mutate(speed_m_s = dist_sp(lag(latitude), lag(longitude), latitude, longitude))
       })
       GPS_f <- do.call(rbind, files3)
       GPS_f <- GPS_f %>%
         mutate(date = with_tz(ymd_hms(time), time_z)) %>%
         distinct(date, .keep_all = TRUE) %>%
-        dplyr::select(date, latitude, longitude) %>%
-        arrange(date) %>%
-        mutate(dist_m = dist_sp(lag(latitude), lag(longitude), latitude, longitude))
+        dplyr::select(date, latitude, longitude, speed_m_s) %>%
+        arrange(date)
       GPS_date <- as.Date(GPS_f[1, "date"], format = "%y-%m-%d", tz = time_z)
     }
     return(list(GPS_f, GPS_date))
@@ -1043,7 +1043,8 @@ server <- function(input, output, session) {
         lng = ~longitude,
         lat = ~latitude,
         popup = paste(
-          "Date:", data$date, "<br>"),
+          "Date:", data$date, "<br>",
+          input$palleInp, ":", data[[input$palleInp]]),
         weight = 3, radius = 8,
         col = ~ pal(data[[input$palleInp]]), stroke = TRUE,
         fillOpacity = 0.8
