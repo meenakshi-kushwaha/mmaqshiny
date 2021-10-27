@@ -566,9 +566,9 @@ server <- function(input, output, session) {
       DT_f3 <- DT_f3 %>%
         dplyr::select(date, everything(), -Date, -Time) %>%
         mutate_if(is.numeric, ~ . * 1000) %>%
-        mutate(PM2.5_8533_Ref = ((PM2.5_8533 * Slope) + Intercept))
-      arrange(date)
-      DT_3_date <- as.Date(DT_f3[1, "date"], format = "%y-%m-%d", tz = time_z)
+        mutate(PM2.5_8533_Ref = ((PM2.5_8533 * Slope) + Intercept)) %>%
+        arrange(date)
+      DT_3_date <- as.Date(DT_f3[1, "date"], format = "%Y-%m-%d", tz = time_z)
       files3 <- lapply(path, function(y) {
         JSON_csv <- read.delim(y, header = FALSE, sep = ",", row.names = NULL,
                                skip = 2)
