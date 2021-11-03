@@ -917,7 +917,7 @@ server <- function(input, output, session) {
       ggplot(data, aes(as.POSIXct(date), as.numeric(BC))) +
         scale_x_datetime(date_labels = "%H:%M") +
         geom_line(size = 0.6, color = "deepskyblue") +
-        labs(y = "BC (degree)", x = "") +
+        labs(y = "BC", x = "") +
         theme1()
     }
     else {
