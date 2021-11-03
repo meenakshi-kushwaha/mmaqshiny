@@ -1,11 +1,11 @@
 
-# mmaqshiny v1.0: R-Shiny package to explore air quality mobile-monitoring data  
+# mmaqshiny v1.1: R package to explore air quality mobile monitoring data  
 
 [![status](https://joss.theoj.org/papers/4640e0e9a6f03a68833905bf378a0652/status.svg)](https://joss.theoj.org/papers/4640e0e9a6f03a68833905bf378a0652)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3911659.svg)](https://doi.org/10.5281/zenodo.3911659)
 [![R-CMD-check](https://github.com/meenakshi-kushwaha/mmaqshiny/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/meenakshi-kushwaha/mmaqshiny/actions/workflows/R-CMD-check.yaml)
 
-2021-10-19: Add in's!!
+2021-10-19: Add in's for v1.1!!
 - Added two new instruments DustTrak 8533 and Equinox RH sensor.
 - All codes now changed to functional programs. 
 
@@ -19,8 +19,8 @@
 
 `mmaqshiny` is for analysing, visualising and spatial plotting of high-resolution air quality data collected by specific devices installed on a moving platform.  With the click of a button, the app generates: summary statistics, time series plots and spatial map of pollutant concentrations. This app reduces the time consumed for analysing each pollutant individually. It helps check the quality of the data at near real time (same day) and instantly visualise pollution hotspots. The time series plots of each pollutant help in understanding the temporal patterns of concentrations and performance of the instruments. 
 
-High frequency (1 Hz) data of PM<sub>2.5</sub> (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide (CO<sub>2</sub>) along with GPS coordinates and relative humidity (RH) data are collected by some popular portable instruments (TSI DustTrak-8530, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-850, Garmin GPSMAP 64s, Omega USB RH probe respectively) can be handled by this package. The package incorporates device specific cleaning and correction algorithms. RH correction is applied to DustTrak PM<sub>2.5</sub> following a method described in @Chakrabarti:2004. If required, user can also input linear regression coefficients for correcting the PM<sub>2.5</sub> data.
-An example of DustTrak PM<sub>2.5</sub> raw and corrected data, using slope=0.21, intercept=11.1 is shown below.
+High frequency (1 Hz) data of PM<sub>2.5</sub> (mass concentrations of particulate matter with size less than 2.5 microns), Black carbon mass concentrations (BC), ultra-fine particle number concentrations, carbon-di-oxide (CO<sub>2</sub>) along with GPS coordinates and relative humidity (RH) data are collected by some popular portable instruments (TSI DustTrak-8530 / 8533, Aethlabs microAeth-AE51, TSI CPC3007, LICOR Li-850, Garmin GPSMAP 64s, Omega USB RH probe and Equinox RH sensor respectively) can be handled by this package. The package incorporates device specific cleaning and correction algorithms. RH correction is applied to DustTrak PM<sub>2.5</sub> following a method described in @Chakrabarti:2004. If required, user can also input linear regression coefficients for correcting the PM<sub>2.5</sub> data.
+An example of DustTrak PM<sub>2.5</sub> raw and corrected data, using slope = 0.21, intercept = 11.1 is shown below.
 
 | ![\Uncorrected{fig: `DT8530_PM2.5`}](inst/images/Image9.JPG) | 
 |:--:| 
@@ -34,10 +34,9 @@ An example of DustTrak PM<sub>2.5</sub> raw and corrected data, using slope=0.21
 The package cleans BC data for the vibration generated noise, by adopting a statistical procedure as explained in @Apte:2011, followed by a loading correction as suggested by @Ban-Weiss:2009. For the ultra-fine particle number concentration data, provision is given for dilution correction factor (if a diluter is used with CPC3007; default value is 1). 
 
 
-The package joins the raw, cleaned and corrected data from the above mentioned instruments and generates a downloadable csv file. It accepts multiple files for each parameter. The input files should have a date prefix of the format `yyyy_mm_dd` in their file names. The package can process multiple files for a given date at a time and the file name prefix is used to perform the check. An error message will be generated if the prefix is not matched between various pollutant filenames.
+The package joins the raw, cleaned and corrected data from the above mentioned instruments and generates a downloadable csv file. It accepts multiple files for each parameter. 
 
-
-The package requires GPS file (.gpx) as a mandatory input along with timezone whihc can be selected using the dropdown menu (a link to all accepted timezone formats in R is also included). All other pollutant files are optional. A testing data set is provided in the "data" folder inside inst/shiny; with each instrument folder containing 2 days of data.
+The package requires GPS file (.gpx) as a mandatory input along with timezone which can be selected using the dropdown menu (a link to all accepted timezone formats in R is also included). All other pollutant files are optional. A testing data set is provided in the "data" folder inside inst/shiny; with each instrument folder containing 2 days of data.
 
 
 The example data included [here](https://github.com/meenakshi-kushwaha/mmaqshiny/tree/master/inst/shiny/data) contains with following file names - 
@@ -45,7 +44,9 @@ The example data included [here](https://github.com/meenakshi-kushwaha/mmaqshiny
 - xxx_Garmin correspond to Garmin GPS location files
 - xxx_AE51 correspond to AE51 BC files
 - xxx_DT8530 correspond to DustTrak 8530 PM<sub>2.5</sub> files
+- xxx_DT8533 correspond to DustTrak 8533 PM files
 - xxx_RH correspond to RH files
+- xxx_RH172 correspond to Equinox RH files
 - xxx_CPC3007 correspond to CPC3007 Particle Concentration files
 - xxx_LI_COR correspond to LI-COR CO<sub>2</sub> files
 
@@ -54,17 +55,15 @@ The output is displayed in five different tabs.
 
 1) `Joined File` displays all cleaned and joined data.
 2) `Summary` displays summary statistics for each parameter.
-3)  `Plots` displays interactive  time series line plots for raw parameters. 
+3)  `Plots` displays interactive  time series line plots, density and qq plots for the selected parameter. 
 4) `Map` provides a spatial map for the user selected pollutant on an OpenStreetMap basemap. 
 5) `Alarm and Settings` tab displays each instrument's settings and alarms (if any).
 
 
 ## Limitations
 
-1) It handles single day data at a time.
-2) It has provision for only linear correction coefficients of PM<sub>2.5</sub>.
-3) It is instrument specific.
-4) It is mandatory to rename files (with date prefix).
+1) It has provision for only linear correction coefficients of PM<sub>2.5</sub>.
+2) It is instrument specific.
 
 
 ## Installation
@@ -78,7 +77,7 @@ install.package("devtools")
 devtools::install_github("meenakshi-kushwaha/mmaqshiny")
 mmaqshiny::mmaqshiny_run()
 ```
-A preloaded dataset appears which is a joined file of sample data collected during a mobile-monitoring campaign in Bangalore, India.
+A preloaded dataset appears which is a joined file of sample data collected during a mobile monitoring campaign in Bangalore, India.
 
 ## User Guide
 
@@ -108,7 +107,7 @@ To use the app, follow the steps below.
 
 ![\label{fig:example}](inst/images/Image4.JPG)
 
-9. The Plots tab now allows user to select a parameter to plot time series, density plot and qq plot of all the raw (uncorrected) parameters. 
+9. The Plots tab now allows user to select a parameter to plot time series, density plot and qq plot of all the parameters. 
 
 ![\label{fig:example}](inst/images/Image11.JPG)
 
@@ -130,15 +129,19 @@ To use the app, follow the steps below.
 ## Glossary
 - `Latitude`:Latitude
 - `Longitude`: Longitude
-- `AE51_BC`: Raw BC data 
-- `AE51_BC_NR`: Noise removed BC 
-- `AE51_BC_NR_LC`: Noise removed and loading corrected BC
-- `DT8530_PM2.5`: Raw PM2.5
-- `DT8530_PM2.5_RHC`: RH corrected PM2.5
-- `DT8530_PM2.5_RHC_Ref`: Reference and RH corrected PM2.5
-- `DT8530_PM2.5_Ref`: Reference corrected PM2.5
-- `CPC3007_Particle Concentration`: Dilution corrected ultra-fine particle number concentration
-- `Li-COR_CO2`: CO<sub>2</sub> data
+- `BC`: Raw BC data 
+- `BC_NR`: Noise removed BC 
+- `BC_NR_LC`: Noise removed and loading corrected BC
+- `PM2.5`: Raw PM2.5 from DustTrak 8530
+- `PM2.5_RHC`: RH corrected PM2.5 from DustTrak 8530
+- `PM2.5_RHC_Ref`: Reference and RH corrected PM2.5 from DustTrak 8530
+- `PM2.5_Ref`: Reference corrected PM2.5 from DustTrak 8530
+- `PM2.5`: Raw PM2.5 from DustTrak 8533
+- `PM2.5_RHC`: RH corrected PM2.5 from DustTrak 8533
+- `PM2.5_RHC_Ref`: Reference and RH corrected PM2.5 from DustTrak 8533
+- `PM2.5_Ref`: Reference corrected PM2.5 from DustTrak 8533
+- `Particle Concentration`: Dilution corrected ultra-fine particle number concentration
+- `CO2`: CO<sub>2</sub> data
 
 
 ## Community guidelines
@@ -156,7 +159,7 @@ To use the app, follow the steps below.
 ## Instrument Description
 
 
-1. DustTrak 8530
+1. DustTrak 
 
 It utilises the well-established aerosol light scattering technique to estimate the real-time aerosol mass loadings and works at a flow rate of 3 LPM (liters per minute). Detailed specifications can be [found here.](https://tsi.com/products/aerosol-and-dust-monitors/dust-monitors/dusttrak-ii-aerosol-monitor-8530/)
 
