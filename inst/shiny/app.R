@@ -823,7 +823,7 @@ server <- function(input, output, session) {
                                      !is.null(input$file6) | !is.null(input$file7) |
                                      is.null(input$file8))) {}
     else if (!is.null(input$file4)) {
-      c(CPC_f, CPC_date, CPC_f_error) := CPC(input$file4$name, input$file4$datapath, input$DF, input$timezone, input$file4)
+      c(CPC_f, CPC_date, CPC_f_error) := CPC(input$file4$datapath, input$DF, input$timezone, input$file4)
       CPC_f_error <- data.frame(CPC_f_error)
       datatable(CPC_f_error, options = list("pageLength" = 13))
     }
