@@ -252,9 +252,14 @@ server <- function(input, output, session) {
                                  tz = time_z)
         JSON_csv <- read.delim(y, header = TRUE, sep = ",", row.names = NULL,
                                skip = 17, stringsAsFactors = FALSE, fileEncoding = "latin1")
+        if(is.null(JSON_csv_date) | is.na(JSON_csv_date)) {
+          JSON_csv_date <- as.Date(as.character(subset(JSON_csv1, Setting == "Start Date")$Value),
+                                   format = "%m-%d-%Y", tz = time_z)
+        }
         JSON_csv <- JSON_csv[, 1:2]
         names(JSON_csv) <- c("Time", "Particle_conc")
         JSON_csv <- JSON_csv %>%
+          mutate(Time = gsub(".", ":", Time, fixed = TRUE)) %>%
           mutate(date = ymd_hms(paste(JSON_csv_date, Time), tz = time_z))
       })
       CPC_f <- do.call(rbind, df_list)
@@ -313,17 +318,18 @@ server <- function(input, output, session) {
         JSON_csv <- read.delim(y, skip = 1, sep = ",", header = TRUE, row.names = NULL,
                                stringsAsFactors = FALSE
         )
-        JSON_csv <- JSON_csv[, 1:3]
-        names(JSON_csv) <- c("Date", "Time", "CO2")
+        JSON_csv <- JSON_csv[, 1:4]
+        names(JSON_csv) <- c("Date", "Time", "CO2", "H2O")
         JSON_csv
       })
       CO2_f <- do.call(rbind, df_list)
       CO2_f <- CO2_f %>%
+        mutate(Time = gsub(".", ":", Time, fixed = TRUE)) %>%
         mutate(date = as.POSIXct(paste(as.Date(Date, format = "%d-%m-%Y"), Time),
                                  tz = time_z)) %>%
-        dplyr::select(date, CO2) %>%
+        dplyr::select(date, CO2, H2O) %>%
         arrange(date)
-      CO2_date <- as.Date(CO2_f[1, "date"], format = "%y-%m-%d", tz = time_z)
+      CO2_date <- as.Date(CO2_f[1, "date"], format = "%Y-%m-%d", tz = time_z)
     }
     return(list(CO2_f, CO2_date))
   }
@@ -498,17 +504,15 @@ server <- function(input, output, session) {
       RH_f <- data.frame(RH_f_Date, RH_f_Time, RH)
       names(RH_f) <- c("LogDate", "LogTime", "RH")
       RH_f$LogTime <- gsub(".", ":", RH_f$LogTime, fixed = TRUE)
-      RH_f$LogTime <- gsub("AM", "", RH_f$LogTime, fixed = TRUE)
-      RH_f$LogTime <- gsub("PM", "", RH_f$LogTime, fixed = TRUE)
       RH_f <- RH_f %>%
         mutate(date = as.POSIXct(paste(LogDate, LogTime),
-                                 format = "%d-%m-%Y %H:%M:%S", tz = time_z)) %>%
+                                 format = "%d-%m-%Y %I:%M:%S %p", tz = time_z)) %>%
         dplyr::select(date, RH) %>%
         mutate_at(c("RH"), as.numeric) %>%
         arrange(date) %>%
         na.omit()
       RH_f$CF <- sapply(as.numeric(as.character(RH_f$RH / 100)), FUN = VecFunc)
-      RH_date <- as.Date(RH_f[1, "date"], format = "%y-%m-%d", tz = time_z)
+      RH_date <- as.Date(RH_f[1, "date"], format = "%Y-%m-%d", tz = time_z)
     }
     return(list(RH_f, RH_date))
   }
