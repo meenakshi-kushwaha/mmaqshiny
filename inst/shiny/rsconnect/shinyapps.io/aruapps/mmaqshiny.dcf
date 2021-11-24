@@ -5,8 +5,8 @@ account: aruapps
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 4303977
-bundleId: 5279066
+bundleId: 5287496
 url: https://aruapps.shinyapps.io/mmaqshiny/
-when: 1637573022.31161
+when: 1637732085.95262
 asMultiple: FALSE
 asStatic: FALSE

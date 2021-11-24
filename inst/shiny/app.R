@@ -497,8 +497,11 @@ server <- function(input, output, session) {
       RH_f <- NULL
       RH_date <- NULL
     } else {
-      RH_f <- data.frame(read.delim(path, header = TRUE,
-                                    sep = ",", skip = 6, row.names = NULL))
+      df_list <- lapply(path, function(y) {
+        JSON_csv <- data.frame(read.delim(y, header = TRUE,
+                                          sep = ",", skip = 6, row.names = NULL))
+      })
+      RH_f <- do.call(rbind, df_list)
       RH_f_Date <- RH_f[, 2]
       RH_f_Time <- RH_f[, 3]
       RH <- RH_f[, grepl("RH", names(RH_f))]
