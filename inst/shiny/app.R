@@ -117,6 +117,15 @@ ui <- fluidPage(
         fileInput("file6", "LI-COR - CO2 files", multiple = TRUE,
                   accept = c( "text/csv",
                               ".txt", "text/comma-separated-values, text/plain", ".csv")),
+        radioButtons(
+          "delim",
+          "Delimiter for CO2 files",
+          c("Tab" = "\t",
+            "Comma" = ",",
+            "Semicolon" = ";"),
+          selected = "\t"
+        ),
+        tags$hr(),
         helpText("*mandatory"),
         tags$hr(),
         actionButton("join_button", "JOIN"),
@@ -182,7 +191,7 @@ ui <- fluidPage(
 
 
 server <- function(input, output, session) {
-  options(shiny.maxRequestSize = 30 * 1024^2, shiny.launch.browser = TRUE)
+  options(shiny.maxRequestSize = 30000 * 1024 ^ 2, shiny.launch.browser = TRUE)
 
   query_modal <- modalDialog(
     title = "What to expect?",
@@ -309,13 +318,13 @@ server <- function(input, output, session) {
     }
     return(list(GPS_f, GPS_date))
   }
-  CO2 <- function(file_g, path, time_z) {
+  CO2 <- function(file_g, path, time_z, delim) {
     if (is.null(file_g)) {
       CO2_f <- NULL
       CO2_date <- NULL
     } else {
       df_list <- lapply(path, function(y) {
-        JSON_csv <- read.delim(y, skip = 1, sep = ",", header = TRUE, row.names = NULL,
+        JSON_csv <- read.delim(y, skip = 1, sep = delim, header = TRUE, row.names = NULL,
                                stringsAsFactors = FALSE
         )
         JSON_csv <- JSON_csv[, 1:4]
@@ -325,9 +334,13 @@ server <- function(input, output, session) {
       CO2_f <- do.call(rbind, df_list)
       CO2_f <- CO2_f %>%
         mutate(Time = gsub(".", ":", Time, fixed = TRUE)) %>%
-        mutate(date = as.POSIXct(paste(as.Date(Date, format = "%d-%m-%Y"), Time),
-                                 tz = time_z)) %>%
-        dplyr::select(date, CO2, H2O) %>%
+        mutate(date = as.POSIXct(as.character(paste(as.Date(CO2_f$Date,
+                                                            tryFormats = c("%Y-%m-%d", "%Y/%m/%d",
+                                                                           "%d-%m-%Y")), Time)),
+                                 tz = time_z, format = "%Y-%m-%d %H:%M:%S"),
+               CO2 = as.numeric(as.character(CO2)), H2O = as.numeric(as.character(H2O)),
+               CO2_c = CO2 - min(CO2, na.rm = TRUE)) %>%
+        dplyr::select(date, CO2, H2O, CO2_c) %>%
         arrange(date)
       CO2_date <- as.Date(CO2_f[1, "date"], format = "%Y-%m-%d", tz = time_z)
     }
@@ -641,7 +654,7 @@ server <- function(input, output, session) {
     c(GPS_f, GPS_date) := GPS(input$file1, input$file1$datapath, input$timezone)
     GPS_f <- data.frame(GPS_f)
     GPS_date <- GPS_date
-    c(CO2_f, CO2_date) := CO2(input$file6, input$file6$datapath, input$timezone)
+    c(CO2_f, CO2_date) := CO2(input$file6, input$file6$datapath, input$timezone, input$delim)
     CO2_f <- data.frame(CO2_f)
     CO2_date <- CO2_date
     c(BC_f, BC_date, BC_f_status, BC_f_error) := BC(input$file2, input$file2$datapath, input$timezone)
@@ -749,6 +762,7 @@ server <- function(input, output, session) {
     content <- function(fname) {
       data_joined <- data()
       data_joined <- data_joined %>%
+        mutate(date = as.character(date)) %>%
         dplyr::select(date, latitude, longitude, everything())
       write.csv(data_joined, fname)
     }
@@ -881,7 +895,7 @@ server <- function(input, output, session) {
                                      !is.null(input$file6) | !is.null(input$file3) |
                                      is.null(input$file8))) {}
     else if (!is.null(input$file7)) {
-      c(DT_f3, DT_3_date, DT_3_error) := DT_3(input$file7, input$file7$datapath, input$timezone)
+      c(DT_f3, DT_3_date, DT_3_error) := DT_3(input$file7, input$file7$datapath, input$timezone, input$Slope, input$Intercept)
       DT_3_error <- data.frame(DT_3_error)
       datatable(DT_3_error, options = list("pageLength" = 11))
     }
