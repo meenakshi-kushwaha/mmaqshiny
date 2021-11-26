@@ -74,6 +74,15 @@ ui <- fluidPage(
                     selected = "Asia/Kolkata"
         ),
         tags$hr(),
+        radioButtons(
+          "gps_s",
+          "GPS file of choice",
+          c("Garmin" = "gps",
+            "GPS" = "gps_p"),
+          selected = "gps"
+        ),
+        fileInput("file10", "GPS Phone - location files", multiple = TRUE,
+                  accept = c(".csv")),
         fileInput("file1", "GPSMAP 64s - location files", multiple = TRUE,
                   accept = c(".gpx")),
         tags$hr(),
@@ -206,7 +215,10 @@ server <- function(input, output, session) {
     easyClose = F
   )
   showModal(query_modal)
-
+  observe({
+    shinyjs::toggleState("file10", input$gps_s == "gps_p")
+    shinyjs::toggleState("file1", input$gps_s == "gps")
+  })
   ## date matching
   ':=' <- function(lhs, rhs) {
     frame <- parent.frame()
@@ -323,7 +335,10 @@ server <- function(input, output, session) {
       GPS_f_p <- NULL
       GPS_date_p <- NULL
     } else {
-      GPS_f_p <- read.csv(z, sep = ",")
+      df_list <- lapply(path, function(y) {
+        JSON_csv <- read.csv(y, sep = ",")
+      })
+      GPS_f_p <- do.call(rbind, df_list)
       GPS_f_p <- GPS_f_p %>%
         mutate(date = gsub(" 00:", " 12:", date, fixed = TRUE)) %>%
         mutate(date = as.POSIXct(strptime(date, "%m/%d/%Y %I:%M:%OS %p"), format = '%Y-%m-%d %H:%M:%S',
@@ -672,12 +687,18 @@ server <- function(input, output, session) {
     )
   })
   data_joined <- eventReactive(input$join_button, {
+    if(input$gps_s == "gps") {
+      c(GPS_f, GPS_date) := GPS(input$file1, input$file1$datapath, input$timezone)
+      GPS_f <- data.frame(GPS_f)
+      GPS_date <- GPS_date
+    } else if(input$gps_s == "gps_p") {
+      c(GPS_f_p, GPS_date_p) := GPS_phone(input$file10, input$file10$datapath, input$timezone)
+      GPS_f <- data.frame(GPS_f_p)
+      GPS_date <- GPS_date_p
+    }
     c(CPC_f, CPC_date, CPC_f_error) := CPC(input$file4$datapath, input$DF, input$timezone, input$file4)
     CPC_f <- data.frame(CPC_f)
     CPC_date <- CPC_date
-    c(GPS_f, GPS_date) := GPS(input$file1, input$file1$datapath, input$timezone)
-    GPS_f <- data.frame(GPS_f)
-    GPS_date <- GPS_date
     c(CO2_f, CO2_date) := CO2(input$file6, input$file6$datapath, input$timezone, input$delim)
     CO2_f <- data.frame(CO2_f)
     CO2_date <- CO2_date
