@@ -314,9 +314,25 @@ server <- function(input, output, session) {
         distinct(date, .keep_all = TRUE) %>%
         dplyr::select(date, latitude, longitude, speed_m_s) %>%
         arrange(date)
-      GPS_date <- as.Date(GPS_f[1, "date"], format = "%y-%m-%d", tz = time_z)
+      GPS_date <- as.Date(GPS_f[1, "date"], format = "%Y-%m-%d", tz = time_z)
     }
     return(list(GPS_f, GPS_date))
+  }
+  GPS_phone <- function(file_g, path, time_z) {
+    if (is.null(file_g)) {
+      GPS_f_p <- NULL
+      GPS_date_p <- NULL
+    } else {
+      GPS_f_p <- read.csv(z, sep = ",")
+      GPS_f_p <- GPS_f_p %>%
+        mutate(date = gsub(" 00:", " 12:", date, fixed = TRUE)) %>%
+        mutate(date = as.POSIXct(strptime(date, "%m/%d/%Y %I:%M:%OS %p"), format = '%Y-%m-%d %H:%M:%S',
+                                 tz = time_z)) %>%
+        dplyr::select(date, latitude, longitude, speed, satellites, altitude,
+                      accuracy)
+      GPS_date_p <- as.Date(GPS_f_p[1, "date"], format = "%Y-%m-%d", tz = time_z)
+    }
+    return(list(GPS_f_p, GPS_date_p))
   }
   CO2 <- function(file_g, path, time_z, delim) {
     if (is.null(file_g)) {
@@ -417,7 +433,7 @@ server <- function(input, output, session) {
         Date_Table <- unique(remove_cev[c("Date")])
         if (nrow(Date_Table) == 0 | is.na(nrow(Date_Table))) {
           BC <- ef_file %>%
-            mutate(BC_factor = 1)
+            mutate(BC_Factor = 1)
         } else {
           Date_Table <- Date_Table %>%
             mutate(BC_Factor = 0, Date = as.POSIXct(Date, tz = time_z))
@@ -524,9 +540,17 @@ server <- function(input, output, session) {
       RH_f <- RH_f %>%
         mutate(date = as.POSIXct(paste(LogDate, LogTime),
                                  format = "%d-%m-%Y %I:%M:%S %p", tz = time_z)) %>%
-        dplyr::select(date, RH) %>%
+        dplyr::select(LogDate, LogTime, date, RH) %>%
         mutate_at(c("RH"), as.numeric) %>%
-        arrange(date) %>%
+        arrange(date)
+      if(is.na(RH_f[1, "date"]) | is.null(RH_f[1, "date"])) {
+        RH_f <- RH_f %>%
+          mutate(date = as.POSIXct(paste(LogDate, LogTime),
+                                    format = "%d-%m-%Y %H:%M:%S", tz = time_z)) %>%
+          dplyr::select(LogDate, LogTime, date, RH)
+      }
+      RH_f <- RH_f %>%
+        select(date, RH) %>%
         na.omit()
       RH_f$CF <- sapply(as.numeric(as.character(RH_f$RH / 100)), FUN = VecFunc)
       RH_date <- as.Date(RH_f[1, "date"], format = "%Y-%m-%d", tz = time_z)
@@ -762,7 +786,7 @@ server <- function(input, output, session) {
     content <- function(fname) {
       data_joined <- data()
       data_joined <- data_joined %>%
-        mutate(date = as.character(date)) %>%
+        mutate(date = as.POSIXct(date, format = "%Y-%m-%d %H:%M:%S", tz = time_z)) %>%
         dplyr::select(date, latitude, longitude, everything())
       write.csv(data_joined, fname)
     }
@@ -822,7 +846,7 @@ server <- function(input, output, session) {
     else if (is.null(input$file3) & (!is.null(input$file1) | !is.null(input$file2) |
                                      !is.null(input$file4) | !is.null(input$file5) |
                                      !is.null(input$file6) | !is.null(input$file7) |
-                                     is.null(input$file8))) {}
+                                     !is.null(input$file8))) {}
     else if (!is.null(input$file3)) {
       c(DT_f, DT_0_date, DT_f_error) := DT_0(input$file3, input$file3$datapath, input$timezone, input$Slope, input$Intercept)
       DT_f_error <- data.frame(DT_f_error)
@@ -843,7 +867,7 @@ server <- function(input, output, session) {
     else if (is.null(input$file4) & (!is.null(input$file1) | !is.null(input$file2) |
                                      !is.null(input$file3) | !is.null(input$file5) |
                                      !is.null(input$file6) | !is.null(input$file7) |
-                                     is.null(input$file8))) {}
+                                     !is.null(input$file8))) {}
     else if (!is.null(input$file4)) {
       c(CPC_f, CPC_date, CPC_f_error) := CPC(input$file4$datapath, input$DF, input$timezone, input$file4)
       CPC_f_error <- data.frame(CPC_f_error)
@@ -871,7 +895,7 @@ server <- function(input, output, session) {
     } else if (is.null(input$file2) & (!is.null(input$file1) | !is.null(input$file4) |
                                        !is.null(input$file3) | !is.null(input$file5) |
                                        !is.null(input$file6) | !is.null(input$file7) |
-                                       is.null(input$file8))) {}
+                                       !is.null(input$file8))) {}
     else if (!is.null(input$file2)) {
       c(BC_f, BC_date, BC_f_status, BC_f_error) := BC(input$file2, input$file2$datapath, input$timezone)
       BC_f_error <- data.frame(BC_f_error)
@@ -893,7 +917,7 @@ server <- function(input, output, session) {
     else if (is.null(input$file7) & (!is.null(input$file1) | !is.null(input$file2) |
                                      !is.null(input$file4) | !is.null(input$file5) |
                                      !is.null(input$file6) | !is.null(input$file3) |
-                                     is.null(input$file8))) {}
+                                     !is.null(input$file8))) {}
     else if (!is.null(input$file7)) {
       c(DT_f3, DT_3_date, DT_3_error) := DT_3(input$file7, input$file7$datapath, input$timezone, input$Slope, input$Intercept)
       DT_3_error <- data.frame(DT_3_error)
@@ -914,7 +938,7 @@ server <- function(input, output, session) {
     else if (is.null(input$file8) & (!is.null(input$file1) | !is.null(input$file2) |
                                      !is.null(input$file4) | !is.null(input$file5) |
                                      !is.null(input$file6) | !is.null(input$file3) |
-                                     is.null(input$file7))) {}
+                                     !is.null(input$file7))) {}
     else if (!is.null(input$file8)) {
       c(RH_Ef, RH_Ef_date, RH_Ef_error) := RH_E(input$file8, input$file8$datapath, input$timezone)
       RH_Ef_error <- data.frame(RH_Ef_error)
