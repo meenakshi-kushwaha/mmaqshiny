@@ -285,7 +285,7 @@ server <- function(input, output, session) {
       })
       CPC_f <- do.call(rbind, df_list)
       CPC_f <- CPC_f %>%
-        mutate(Particle_conc = Particle_conc * DF) %>%
+        mutate(Particle_conc = as.numeric(as.character(Particle_conc)) * DF) %>%
         filter(!is.na(Time)) %>%
         dplyr::select(date, Particle_conc) %>%
         arrange(date)
@@ -365,9 +365,9 @@ server <- function(input, output, session) {
       CO2_f <- do.call(rbind, df_list)
       CO2_f <- CO2_f %>%
         mutate(Time = gsub(".", ":", Time, fixed = TRUE)) %>%
-        mutate(date = as.POSIXct(as.character(paste(as.Date(CO2_f$Date,
-                                                            tryFormats = c("%Y-%m-%d", "%Y/%m/%d",
-                                                                           "%d-%m-%Y")), Time)),
+        mutate(date = as.POSIXct(as.character(paste(as.Date(Date, tryFormats =
+                                                              c("%Y-%m-%d", "%Y/%m/%d",
+                                                                "%d-%m-%Y")), Time)),
                                  tz = time_z, format = "%Y-%m-%d %H:%M:%S"),
                CO2 = as.numeric(as.character(CO2)), H2O = as.numeric(as.character(H2O)),
                CO2_c = CO2 - min(CO2, na.rm = TRUE)) %>%
@@ -469,8 +469,8 @@ server <- function(input, output, session) {
         BC$BC_Final[BC$BC_Final < 0] <- NA
         BC$BC_Final[is.na(BC$BC_Final)] <- " "
         BC_f <- BC %>%
-          dplyr::select("date" = Date, "BC" = BC3, "BC_NR" = BC_Fi, "BC_NR_LC" = BC_Final) %>%
-          mutate_at(c("BC", "BC_NR", "BC_NR_LC"), as.numeric) %>%
+          dplyr::select("date" = Date, "BC" = BC3, "BC_NR" = BC_Fi, "BC_NR_LC" = BC_Final, ATN) %>%
+          mutate_at(c("BC", "BC_NR", "BC_NR_LC", "ATN"), as.numeric) %>%
           arrange(date)
         BC_f <- as.data.frame(BC_f)
       })
