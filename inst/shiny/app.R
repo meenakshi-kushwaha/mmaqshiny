@@ -566,7 +566,8 @@ server <- function(input, output, session) {
       }
       RH_f <- RH_f %>%
         select(date, RH) %>%
-        na.omit()
+        na.omit() %>%
+        filter(RH != 0)
       RH_f$CF <- sapply(as.numeric(as.character(RH_f$RH / 100)), FUN = VecFunc)
       RH_date <- as.Date(RH_f[1, "date"], format = "%Y-%m-%d", tz = time_z)
     }
