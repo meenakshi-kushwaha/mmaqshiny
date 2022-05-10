@@ -584,6 +584,10 @@ server <- function(input, output, session) {
                              skip = 10)
       })
       RH_Ef <- do.call(rbind, df_list)
+      TIME <- RH_Ef[, grepl("TIME", names(RH_Ef))]
+      RH <- RH_Ef[, grepl("RH", names(RH_Ef))]
+      Temp <- RH_Ef[, grepl("Temp", names(RH_Ef))]
+      RH_Ef <- data.frame(TIME, Temp, RH)
       RH_Ef <- RH_Ef %>%
         dplyr::select(TIME, RH, Temp) %>%
         mutate(RH = as.numeric(as.character(gsub("%RH", "", RH))),
